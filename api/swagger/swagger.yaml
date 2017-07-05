@@ -14,3 +14,29 @@ security:
   # enable OAuth protection for all REST endpoints
   # (only active if the TOKENINFO_URL environment variable is set)
   - oauth2: [uid]
+
+parameters:
+  id:
+    name: id
+    description: Bucket list's Unique identifier
+    in: path
+    type: integer
+    required: true
+  item_id:
+    name: item_id
+    description: Item's unique identifier
+    in: path
+    type: integer
+    required: true
+  username:
+    name: username
+    description: User's username
+    in: path
+    type: string
+    required: true
+  password:
+    name: password
+    description: User's password
+    in: path
+    type: string
+    required: true
