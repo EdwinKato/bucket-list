@@ -34,6 +34,22 @@ paths:
             $ref: '#/definitions/User'
         405:
           description: Invalid input
+  /auth/register:
+    post:
+      tags: [User]
+      summary: Add a new user to the system
+      operationId: api.register
+      parameters:
+        - name: User
+          description: Details of user to be added to the system
+          in: body
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        200:
+          description: Successful operation
+        400:
+          description: "Bad JSON formatting in the request"
 
 parameters:
   id:
