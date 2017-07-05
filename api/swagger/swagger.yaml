@@ -14,6 +14,26 @@ security:
   # enable OAuth protection for all REST endpoints
   # (only active if the TOKENINFO_URL environment variable is set)
   - oauth2: [uid]
+paths:
+  /auth/login/:
+    post:
+      tags: [User]
+      summary: Logs a user into the system and returns an access token
+      operationId: api.login
+      parameters:
+        - name: body
+          in: body
+          required: true
+          description: The login credentials
+          schema:
+            $ref: '#/definitions/Login'
+      responses:
+        200:
+          description: User has been successfully logged in
+          schema:
+            $ref: '#/definitions/User'
+        405:
+          description: Invalid input
 
 parameters:
   id:
