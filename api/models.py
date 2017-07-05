@@ -1,0 +1,51 @@
+from flask import current_app
+from passlib.apps import custom_app_context as pwd_context
+from itsdangerous import (TimedJSONWebSignatureSerializer
+                          as Serializer, BadSignature, SignatureExpired)
+from datetime import datetime
+
+from api import db
+
+
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    first_name = db.Column(db.String(30))
+    last_name = db.Column(db.String(30))
+    email = db.Column(db.String(64), unique=True)
+    username = db.Column(db.String(80), unique=True)
+    password_hash = db.Column(db.String(128))
+    bucket_lists = db.relationship('BucketList', backref='user', lazy='dynamic')
+
+    def __init__(self, first_name, last_name, email, username):
+        self.first_name = first_name
+        self.last_name = last_name
+        self.email = email
+        self.username = username
+
+    def __repr__(self):
+        return '<User %r>' % self.username
+
+    def full_name(self):
+        return '%s %s' % (self.first_name, self.last_name)
+
+    def hash_password(self, password):
+        self.password_hash = pwd_context.encrypt(password)
+
+    def verify_password(self, password):
+        return pwd_context.verify(password, self.password_hash)
+
+    def generate_auth_token(self, expiration=7200):
+        s = Serializer(current_app.config['SECRET_KEY'], expires_in=expiration)
+        return s.dumps({'id': self.id})
+
+    @staticmethod
+    def verify_auth_token(token):
+        s = Serializer(current_app.config['SECRET_KEY'])
+        try:
+            data = s.loads(token)
+        except SignatureExpired:
+            return None  # valid token, but expired
+        except BadSignature:
+            return None  # invalid token
+        user = User.query.get(data['id'])
+        return user
