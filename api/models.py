@@ -73,3 +73,22 @@ class BucketList(db.Model):
         return '<BucketList %r>' % self.name
 
 
+class Item(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100))
+    description = db.Column(db.Text)
+    status = db.Column(db.String(10))  # Pending || Done
+    date_created = db.Column(db.DateTime)
+    bucket_list_id = db.Column(db.Integer, db.ForeignKey('bucket_list.id'))
+
+    def __init__(self, title, description, date_created, bucket_list_id, status="Pending"):
+        self.title = title
+        self.description = description
+        self.bucket_list_id = bucket_list_id
+        self.status = status
+        if date_created is None:
+            date_created = datetime.utcnow()
+        self.date_created = date_created
+
+    def __repr__(self):
+        return '<Item %r>' % self.name
