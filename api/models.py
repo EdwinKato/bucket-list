@@ -49,3 +49,27 @@ class User(db.Model):
             return None  # invalid token
         user = User.query.get(data['id'])
         return user
+
+
+class BucketList(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100))
+    description = db.Column(db.Text)
+    status = db.Column(db.String(10))  # Unfinished || Finished
+    date_created = db.Column(db.DateTime)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    items = db.relationship('Item', backref='bucket_list', lazy='dynamic')
+
+    def __init__(self, title, description, date_created, user_id, status="Unfinished"):
+        self.title = title
+        self.description = description
+        self.user_id = user_id
+        self.status = status
+        if date_created is None:
+            date_created = datetime.utcnow()
+        self.date_created = date_created
+
+    def __repr__(self):
+        return '<BucketList %r>' % self.name
+
+
