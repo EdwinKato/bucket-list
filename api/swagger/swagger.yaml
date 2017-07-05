@@ -50,6 +50,138 @@ paths:
           description: Successful operation
         400:
           description: "Bad JSON formatting in the request"
+  /bucketlists:
+    post:
+      tags: [BucketList]
+      summary: Add a new bucket list
+      operationId: api.add_bucket_list
+      parameters:
+        - name: Bucket list
+          description: Title and description of the bucket list
+          in: body
+          schema:
+            $ref: '#/definitions/BucketList'
+      responses:
+        405:
+          description: Invalid input
+    get:
+      tags: [BucketList]
+      operationId: api.get_bucket_lists
+      summary: Get bucket lists
+      parameters:
+        - name: limit
+          description: Number of bucket lists to fetch
+          in: query
+          type: integer
+          minimum: 0
+          default: 10
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/BucketList'
+        404:
+          description: "There are no bucket lists in the system"
+  /bucketlists/{id}:
+    get:
+      tags: [BucketList]
+      operationId: api.get_bucket_list
+      summary: Get bucket list by id
+      parameters:
+        - $ref: '#/parameters/id'
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/BucketList'
+        404:
+          description: Bucket list does not exist
+    put:
+      tags: [BucketList]
+      operationId: api.put_bucket_list
+      summary: Update an existing bucket list
+      parameters:
+        - $ref: '#/parameters/id'
+        - name: bucketlist
+          in: body
+          schema:
+            $ref: '#/definitions/BucketList'
+      responses:
+        200:
+          description: Bucket list updated
+        201:
+          description: New bucketlist created
+    delete:
+      tags: [BucketList]
+      operationId: api.delete_bucket_list
+      summary: Remove a bucketlist
+      parameters:
+        - $ref: '#/parameters/id'
+      responses:
+        204:
+          description: Bucket list was deleted
+        404:
+          description: Bucket list does not exist
+  /bucketlists/{id}/items:
+    post:
+      tags: [BucketList]
+      operationId: api.create_item_in_bucket_list
+      summary: Create a new item in bucket list
+      parameters:
+        - $ref: '#/parameters/id'
+        - name: item
+          in: body
+          schema:
+            $ref: '#/definitions/Item'
+      responses:
+        405:
+          description: Invalid input
+    get:
+      tags: [BucketList]
+      operationId: api.get_items_in_bucket_list
+      summary: Get items in the given bucket list
+      parameters:
+        - $ref: '#/parameters/id'
+        - name: limit
+          description: Number of bucket list items to fetch
+          in: query
+          type: integer
+          minimum: 0
+          default: 10
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/BucketList"
+        404:
+            description: Bucket list items do not exist
+  /bucketlists/{id}/items/{item_id}:
+    put:
+      tags: [BucketList]
+      operationId: api.update_bucket_list_item
+      summary: Update an existing bucket list item
+      parameters:
+        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/item_id'
+      responses:
+        200:
+          description: Bucket list item has been updated
+    delete:
+      tags: [BucketList]
+      operationId: api.delete_bucket_list_item
+      summary: Remove a bucketlist
+      parameters:
+        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/item_id'
+      responses:
+        204:
+          description: Bucket list item has been deleted
+        404:
+          description: The bucket list item you want to delete does not exist!
 
 parameters:
   id:
