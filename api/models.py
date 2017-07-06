@@ -100,7 +100,7 @@ class Item(db.Model):
     date_created = db.Column(db.DateTime)
     bucket_list_id = db.Column(db.Integer, db.ForeignKey('bucket_list.id'))
 
-    def __init__(self, title, description, date_created, bucket_list_id, status="Pending"):
+    def __init__(self, title, description, bucket_list_id, status="Pending", date_created=None):
         self.title = title
         self.description = description
         self.bucket_list_id = bucket_list_id
@@ -111,3 +111,13 @@ class Item(db.Model):
 
     def __repr__(self):
         return '<Item %r>' % self.name
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'title': self.title,
+            'description': self.description,
+            'status': self.status,
+            'date_created': self.date_created,
+            'bucket_list_id': self.bucket_list_id
+        }
