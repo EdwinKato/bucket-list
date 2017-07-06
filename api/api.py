@@ -26,9 +26,6 @@ def register():
     username = data['username']
     password = data['password']
 
-    user = User(first_name, last_name, email, username)
-    user.hash_password(password)
-
     if not first_name.isalpha():
         response = jsonify({'message': 'First name must be string alphabet type'})
         response.status_code = 400
@@ -53,10 +50,13 @@ def register():
         response.status_code = 401
         return response
 
-    user.hash_password(data['password'])
+    user = User(first_name, last_name, email, username)
+    user.hash_password(password)
+    token = str(user.generate_auth_token())
     db.session.add(user)
     db.session.commit()
-    return jsonify({'message': 'User has been successfully created'})
+    return jsonify({'message': 'User has been successfully created',
+                    'token': token})
 
 
 def add_bucket_list():
