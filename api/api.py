@@ -96,8 +96,29 @@ def get_bucket_list(id):
     return response
 
 
-def put_bucket_list():
-    pass
+def put_bucket_list(id):
+    data = request.get_json()
+    if not data['user_id']:
+        response = jsonify({'message': 'Please provide user_id and try again'})
+        return response
+    bucket_list = BucketList.query.filter_by(id=id, user_id=data['user_id']).first()
+    if not bucket_list:
+        response = jsonify({'message': 'Bucket list not found'})
+        response.status_code = 404
+        return response
+
+    if data['title']:
+        bucket_list.title = data['title']
+    if data['description']:
+        bucket_list.description = data['description']
+    if data['status']:
+        bucket_list.status = data['status']
+    # db.session.add(bucket_list)
+    db.session.commit()
+
+    response = jsonify({'message': 'Bucket list has been updated successfully', 'bucket list': bucket_list.serialize()})
+    response.status_code = 200
+    return response
 
 
 def delete_bucket_list():
@@ -120,4 +141,4 @@ def delete_bucket_list_item():
     pass
 
 from api.models import User, BucketList, Item
-from api  import db
+from api import db
