@@ -31,5 +31,16 @@ def recreate_db():
     db.create_all()
     db.session.commit()
 
+@manager.command
+def create_db():
+    db.create_all()
+    db.session.commit()
+
+@manager.command
+def drop_db():
+    db.drop_all()
+    db.session.commit()
+
+
 if __name__ == "__main__":
     manager.run()
