@@ -72,10 +72,21 @@ def register():
 
 def add_bucket_list():
     data = request.get_json()
-    bucket_list = BucketList(data['title'], data['description'], data['user_id'])
+    user = User.query.filter_by(id=data['user_id']).first()
+    if not user:
+        response = jsonify({'message': 'Unknown user'})
+        response.status_code = 404
+        return response
+    bucket_list = BucketList(data['title'], data['description'], user)
+    if data['status']:
+        bucket_list.status = data['status']
+
     db.session.add(bucket_list)
     db.session.commit()
-    return jsonify({'message': 'Bucket list saved successfully'})
+    response = jsonify({'message': 'Bucket list saved successfully',
+                        'bucket_list': bucket_list.serialize()})
+    response.status_code = 200
+    return response
 
 
 def get_bucket_lists():
