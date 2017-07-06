@@ -87,7 +87,8 @@ class BucketList(db.Model):
             'title': self.title,
             'description': self.description,
             'status': self.status,
-            'date_created': self.date_created
+            'date_created': self.date_created,
+            'user_id': self.user.id
         }
 
 
@@ -119,5 +120,6 @@ class Item(db.Model):
             'title': self.title,
             'description': self.description,
             'status': self.status,
-            'date_created': self.date_created
+            'date_created': self.date_created,
+            'bucket_list_id': self.bucket_list.id
         }
