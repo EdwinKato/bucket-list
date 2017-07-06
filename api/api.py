@@ -1,6 +1,4 @@
-from connexion.resolver import RestyResolver
-from flask import request, abort, jsonify, g, url_for
-from flask_httpauth import HTTPAuth
+from flask import request, jsonify
 import re
 
 __all__ = ["login", "register", "add_bucket_list", "get_bucket_lists",
@@ -18,16 +16,6 @@ __all__ = ["login", "register", "add_bucket_list", "get_bucket_lists",
 EMAIL_REGEX = re.compile(r"[^@]+@[^@]+\.[^@]+")
 SUCCESS = "Your request was processed successfully"
 SUCCESSFUL_LOGIN = "The user has been successfully logged into the system"
-NOT_FOUND = "The requested resource(s) could not be found on the system"
-UN_AUTHORISED = "The user is not authorized to make the request, Please first login"
-
-# {
-#     status : "success",
-#     data : {
-#         "post" : { "id" : 1, "title" : "A blog post", "body" : "Some useful content" }
-#      },
-#     message: ""
-# }
 
 
 def login():
@@ -45,7 +33,7 @@ def login():
                             'error': 'Username or password is incorrect'})
         response.status_code = 404
         return response
-    token = str(user.generate_auth_token())
+    token = str(user.encode_auth_token(user.id))
     return jsonify({'status': 'success',
                     'message': SUCCESSFUL_LOGIN,
                     'token': token})
@@ -90,7 +78,7 @@ def register():
 
     user = User(first_name, last_name, email, username)
     user.hash_password(password)
-    token = str(user.generate_auth_token())
+    token = str(user.encode_auth_token(user.id))
     db.session.add(user)
     db.session.commit()
     response = jsonify({'status': 'success',
