@@ -8,6 +8,7 @@ from api.models import User
 class TestApi(unittest.TestCase):
 
     def setUp(self):
+
         pass
 
     @unittest.skip("")
