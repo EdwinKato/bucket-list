@@ -137,11 +137,22 @@ class TestApi(TestCase):
         self.assertIn("Series i have to watch", str(response.data))
         self.assertNotIn("Movies i have to watch", str(response.data))
 
-
-
-    @unittest.skip("")
     def test_delete_bucket_list(self):
-        pass
+        bucket_list_one = {
+            "description": "Movies i have to watch by the end of the week",
+            "status": "Pending",
+            "title": "Entertainment",
+            "user_id": 1
+        }
+        self.client.post('/api/v1/bucketlists',
+                         data=json.dumps(bucket_list_one),
+                         content_type='application/json')
+        count = len(BucketList.query.all())
+        self.client.delete('/api/v1/bucketlists/1')
+        new_count = len(BucketList.query.all())
+        self.assertEqual(new_count - count, -1)
+
+
 
     @unittest.skip("")
     def test_create_item_in_bucket_list(self):
