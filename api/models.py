@@ -14,7 +14,6 @@ class User(db.Model):
     email = db.Column(db.String(64), unique=True)
     username = db.Column(db.String(80), unique=True)
     password_hash = db.Column(db.String(128))
-    bucket_lists = db.relationship('BucketList', backref='user', lazy='dynamic')
 
     def __init__(self, first_name, last_name, email, username):
         self.first_name = first_name
@@ -68,13 +67,12 @@ class BucketList(db.Model):
     date_created = db.Column(db.DateTime)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship('User',
-                                  backref=db.backref('bucket_lists', lazy='dynamic'))
-
+                           backref=db.backref('bucket_lists', lazy='dynamic'))
 
     def __init__(self, title, description, user, date_created=None, status="Unfinished"):
         self.title = title
         self.description = description
-        self.user_id = user
+        self.user = user
         self.status = status
         if date_created is None:
             date_created = datetime.utcnow()
@@ -89,8 +87,7 @@ class BucketList(db.Model):
             'title': self.title,
             'description': self.description,
             'status': self.status,
-            'date_created': self.date_created,
-            'user_id': self.user_id
+            'date_created': self.date_created
         }
 
 
@@ -122,6 +119,5 @@ class Item(db.Model):
             'title': self.title,
             'description': self.description,
             'status': self.status,
-            'date_created': self.date_created,
-            'bucket_list_id': self.bucket_list_id
+            'date_created': self.date_created
         }
