@@ -15,7 +15,7 @@ class Config(object):
     if os.environ.get('SECRET_KEY'):
         SECRET_KEY = os.environ.get('SECRET_KEY')
     else:
-        SECRET_KEY = 'BUCKET_LIST_SECRET_KEY'
+        SECRET_KEY = 'SO{\xfd~X\xdeZg1`\xe6\xa6\xee\xa7\x8e\xa1Y&\xbdo#\xde\xb7'
         print('SECRET KEY ENV VAR NOT SET! SHOULD NOT SEE IN PRODUCTION')
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
 
