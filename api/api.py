@@ -133,8 +133,23 @@ def delete_bucket_list(id):
     return response
 
 
-def create_item_in_bucket_list():
-    pass
+def create_item_in_bucket_list(id):
+    bucket_list = BucketList.query.filter_by(id=id).first()
+    if not bucket_list:
+        response = jsonify({'message': 'Bucket list not found'})
+        response.status_code = 404
+        return response
+
+    data = request.get_json()
+    title = data['title']
+    description = data['description']
+    item = Item(title, description, bucket_list)
+    db.session.add(item)
+    db.session.commit()
+    response = jsonify({'message': 'Item has been successfully added to the bucket list',
+                        'item': item.serialize()})
+    response.status_code = 404
+    return response
 
 
 def get_items_in_bucket_list():
