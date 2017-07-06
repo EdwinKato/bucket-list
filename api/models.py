@@ -50,6 +50,15 @@ class User(db.Model):
         user = User.query.get(data['id'])
         return user
 
+    def serialize(self):
+        return {
+            'id': self.id,
+            'first_name': self.first_name,
+            'last_name': self.last_name,
+            'email': self.email,
+            'username': self.username
+        }
+
 
 class BucketList(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -60,7 +69,7 @@ class BucketList(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     items = db.relationship('Item', backref='bucket_list', lazy='dynamic')
 
-    def __init__(self, title, description, date_created, user_id, status="Unfinished"):
+    def __init__(self, title, description, user_id, date_created=None, status="Unfinished"):
         self.title = title
         self.description = description
         self.user_id = user_id
@@ -71,6 +80,16 @@ class BucketList(db.Model):
 
     def __repr__(self):
         return '<BucketList %r>' % self.name
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'title': self.title,
+            'description': self.description,
+            'status': self.status,
+            'date_created': self.date_created,
+            'user_id': self.user_id
+        }
 
 
 class Item(db.Model):
