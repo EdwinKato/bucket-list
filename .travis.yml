@@ -6,6 +6,6 @@ install:
   - "pip install -r requirements.txt"
 # command to run tests
 script:
-  - "python -m unittest api/tests/test_api.py"
+  - "python -m unittest discover -s api/tests/"
   - "coverage run -m unittest discover -s api/tests/"
 after_success: coveralls
