@@ -1,6 +1,5 @@
 import unittest
 from flask_testing import TestCase
-from flask import current_app, request, abort, jsonify, g, url_for
 
 from api.api import *
 from api.models import User, BucketList, Item
@@ -58,8 +57,8 @@ class TestApi(TestCase):
 
         count = len(User.query.all())
         response = self.client.post('/api/v1/auth/register',
-                                         data=json.dumps(new_test_user),
-                                         content_type='application/json')
+                                    data=json.dumps(new_test_user),
+                                    content_type='application/json')
         new_count = len(User.query.all())
         self.assertEqual(new_count - count, 1)
         self.assertEqual(response.status_code, 200)
@@ -73,8 +72,8 @@ class TestApi(TestCase):
         }
         count = len(BucketList.query.all())
         response = self.client.post('/api/v1/bucketlists',
-                                         data=json.dumps(bucket_list),
-                                         content_type='application/json')
+                                    data=json.dumps(bucket_list),
+                                    content_type='application/json')
         new_count = len(BucketList.query.all())
         self.assertEqual(new_count - count, 1)
         self.assertEqual(response.status_code, 200)
@@ -132,8 +131,8 @@ class TestApi(TestCase):
             "user_id": 1
         }
         response = self.client.put('api/v1/bucketlists/1',
-                        data=json.dumps(bucket_list_one_modified),
-                        content_type='application/json')
+                                   data=json.dumps(bucket_list_one_modified),
+                                   content_type='application/json')
         self.assertIn("Series i have to watch", str(response.data))
         self.assertNotIn("Movies i have to watch", str(response.data))
 
