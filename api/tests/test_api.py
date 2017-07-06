@@ -34,6 +34,22 @@ class TestApi(TestCase):
         db.session.remove()
         db.drop_all()
 
+    def test_encode_auth_token(self):
+
+        user = User("Edwin", "Kato", "edwin5@andela.com", "EdwinKato5")
+        db.session.add(user)
+        db.session.commit()
+        auth_token = user.encode_auth_token(user.id)
+        self.assertTrue(isinstance(auth_token, bytes))
+
+    def test_decode_auth_token(self):
+        user = User("Edwin", "Kato", "edwin6@andela.com", "EdwinKato6")
+        db.session.add(user)
+        db.session.commit()
+        auth_token = user.encode_auth_token(user.id)
+        self.assertTrue(isinstance(auth_token, bytes))
+        self.assertTrue(User.decode_auth_token(auth_token) == 2)
+
     @unittest.skip("")
     def test_login(self):
         login_credentials = {
