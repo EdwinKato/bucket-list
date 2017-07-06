@@ -163,8 +163,16 @@ def create_item_in_bucket_list(id):
     return response
 
 
-def get_items_in_bucket_list():
-    pass
+def get_items_in_bucket_list(id):
+    bucket_list = BucketList.query.filter_by(id=id).first()
+    if not bucket_list:
+        response = jsonify({'message': 'Bucket list not found'})
+        response.status_code = 404
+        return response
+    response = jsonify({'message': 'Operation successful',
+                        'items': [item.serialize() for item in bucket_list.items]})
+    response.status_code = 200
+    return response
 
 
 def update_bucket_list_item():
