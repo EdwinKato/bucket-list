@@ -12,7 +12,10 @@ EMAIL_REGEX = re.compile(r"[^@]+@[^@]+\.[^@]+")
 
 
 def login(username, password):
-    pass
+    if not username and not password:
+        response = jsonify({'error': 'Username and password field cannot be blank'})
+        response.status_code = 400
+        return response
 
 
 def register():
@@ -72,7 +75,14 @@ def get_bucket_lists():
 
 
 def get_bucket_list(id):
-    pass
+    bucket_list = BucketList.query.filter_by(id=id).first()
+    if bucket_list:
+        response = jsonify(bucket_list.serialize())
+        response.status_code = 200
+        return response
+    response = jsonify({'message': 'Bucket list not found'})
+    response.status_code = 404
+    return response
 
 
 def put_bucket_list():
