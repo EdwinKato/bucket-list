@@ -57,7 +57,11 @@ def register():
 
 
 def add_bucket_list():
-    pass
+    data = request.get_json()
+    bucket_list = BucketList(data['title'], data['description'], data['user_id'])
+    db.session.add(bucket_list)
+    db.session.commit()
+    return jsonify({'message': 'Bucket list saved successfully'})
 
 
 def get_bucket_lists():
