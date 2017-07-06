@@ -5,7 +5,7 @@ info:
   description: The api specification document to the online bucket list management system
   contact:
     email: edwin.kato@andela.com
-basePath: "/v1"
+basePath: "/api/v1"
 consumes:
   - application/json
 produces:
@@ -62,6 +62,8 @@ paths:
           schema:
             $ref: '#/definitions/BucketList'
       responses:
+        200:
+          description: Bucket list saved successfully
         405:
           description: Invalid input
     get:
@@ -297,9 +299,6 @@ definitions:
         description: id of the user to whom the bucket list belongs
         example: 1
         readOnly: true
-      tags:
-        type: object
-        description: Custom tags
       date_created:
         type: string
         format: date-time
