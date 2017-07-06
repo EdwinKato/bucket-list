@@ -1,5 +1,5 @@
 from flask import current_app
-from passlib.apps import custom_app_context as pwd_context
+from passlib.context import CryptContext
 from itsdangerous import (TimedJSONWebSignatureSerializer
                           as Serializer, BadSignature, SignatureExpired)
 from datetime import datetime
@@ -14,6 +14,7 @@ class User(db.Model):
     email = db.Column(db.String(64), unique=True)
     username = db.Column(db.String(80), unique=True)
     password_hash = db.Column(db.String(128))
+    crypt_context = CryptContext(schemes=["sha256_crypt", "md5_crypt", "des_crypt"])
 
     def __init__(self, first_name, last_name, email, username):
         self.first_name = first_name
@@ -28,10 +29,10 @@ class User(db.Model):
         return '%s %s' % (self.first_name, self.last_name)
 
     def hash_password(self, password):
-        self.password_hash = pwd_context.encrypt(password)
+        self.password_hash = self.crypt_context.hash(password)
 
     def verify_password(self, password):
-        return pwd_context.verify(password, self.password_hash)
+        return self.crypt_context.verify(password, self.password_hash)
 
     def generate_auth_token(self, expiration=7200):
         s = Serializer(current_app.config['SECRET_KEY'], expires_in=expiration)
