@@ -67,11 +67,14 @@ class BucketList(db.Model):
     status = db.Column(db.String(10))  # Unfinished || Finished
     date_created = db.Column(db.DateTime)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship('User',
+                                  backref=db.backref('bucket_lists', lazy='dynamic'))
 
-    def __init__(self, title, description, user_id, date_created=None, status="Unfinished"):
+
+    def __init__(self, title, description, user, date_created=None, status="Unfinished"):
         self.title = title
         self.description = description
-        self.user_id = user_id
+        self.user_id = user
         self.status = status
         if date_created is None:
             date_created = datetime.utcnow()
