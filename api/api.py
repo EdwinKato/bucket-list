@@ -113,7 +113,6 @@ def put_bucket_list(id):
         bucket_list.description = data['description']
     if data['status']:
         bucket_list.status = data['status']
-    # db.session.add(bucket_list)
     db.session.commit()
 
     response = jsonify({'message': 'Bucket list has been updated successfully', 'bucket list': bucket_list.serialize()})
@@ -121,8 +120,17 @@ def put_bucket_list(id):
     return response
 
 
-def delete_bucket_list():
-    pass
+def delete_bucket_list(id):
+    bucket_list = BucketList.query.filter_by(id=id).first()
+    if not bucket_list:
+        response = jsonify({'message': 'Bucket list not found'})
+        response.status_code = 404
+        return response
+    db.session.delete(bucket_list)
+    db.session.commit()
+    response = jsonify({'message': 'Bucket list has been successfully deleted'})
+    response.status_code = 200
+    return response
 
 
 def create_item_in_bucket_list():
