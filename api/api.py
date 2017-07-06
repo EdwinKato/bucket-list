@@ -175,8 +175,32 @@ def get_items_in_bucket_list(id):
     return response
 
 
-def update_bucket_list_item():
-    pass
+def update_bucket_list_item(id, item_id):
+    bucket_list = BucketList.query.filter_by(id=id).first()
+    if not bucket_list:
+        response = jsonify({'message': 'Bucket list not found'})
+        response.status_code = 404
+        return response
+
+    list_item = [item for item in bucket_list.items if item.id == item_id]
+    if not list_item:
+        response = jsonify({'message': 'Bucket list item not found'})
+        response.status_code = 404
+        return response
+    item = list_item[0]
+    data = request.get_json()
+    if data['title']:
+        item.title = data['title']
+    if data['description']:
+        item.description = data['description']
+    if data['status']:
+        item.status = data['status']
+    db.session.commit()
+
+    response = jsonify({'message': 'Bucket list item has been updated successfully',
+                        'item': item.serialize()})
+    response.status_code = 200
+    return response
 
 
 def delete_bucket_list_item():
