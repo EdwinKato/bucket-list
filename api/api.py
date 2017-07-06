@@ -65,7 +65,10 @@ def add_bucket_list():
 
 
 def get_bucket_lists():
-    pass
+    bucket_lists = BucketList.query.all()
+    if bucket_lists:
+        return jsonify(bucket_lists=[bucket_list.serialize() for bucket_list in bucket_lists])
+    return jsonify({'message': 'There are no bucket lists for the user.'})
 
 
 def get_bucket_list(id):
