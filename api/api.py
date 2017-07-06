@@ -11,11 +11,22 @@ __all__ = ["login", "register", "add_bucket_list", "get_bucket_lists",
 EMAIL_REGEX = re.compile(r"[^@]+@[^@]+\.[^@]+")
 
 
-def login(username, password):
+def login():
+    data = request.get_json()
+    username = data['username']
+    password = data['password']
     if not username and not password:
-        response = jsonify({'error': 'Username and password field cannot be blank'})
+        response = jsonify({'error': 'Username or password should not be left blank'})
         response.status_code = 400
         return response
+    user = User.query.filter_by(username=username).first()
+    if not user or not user.verify_password(password):
+        response = jsonify({'error': 'Username or password is incorrect'})
+        response.status_code = 404
+        return response
+    token = str(user.generate_auth_token())
+    return jsonify({'message': 'User has been successfully logged in',
+                    'token': token})
 
 
 def register():
