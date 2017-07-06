@@ -152,11 +152,26 @@ class TestApi(TestCase):
         new_count = len(BucketList.query.all())
         self.assertEqual(new_count - count, -1)
 
-
-
-    @unittest.skip("")
     def test_create_item_in_bucket_list(self):
-        pass
+        bucket_list_one = {
+            "description": "Movies i have to watch by the end of the week",
+            "status": "Pending",
+            "title": "Entertainment",
+            "user_id": 1
+        }
+        self.client.post('/api/v1/bucketlists',
+                         data=json.dumps(bucket_list_one),
+                         content_type='application/json')
+        item = {
+            "description": "Horror movies",
+            "status": "Pending",
+            "title": "Wrong turn 6"
+        }
+        response = self.client.post('/api/v1/bucketlists/1/items',
+                                    data=json.dumps(item),
+                                    content_type='application/json')
+        self.assertIn("Wrong turn 6", str(response.data))
+
 
     @unittest.skip("")
     def test_get_items_in_bucket_list(self):
