@@ -16,13 +16,6 @@ class TestApi(TestCase):
         return create_app("testing")
 
     def setUp(self):
-        # self.test_user = {
-        #     "email": "edwin.kato@andela.com",
-        #     "first_name": "Edwin",
-        #     "last_name": "Kato",
-        #     "password": "qwerty@123",
-        #     "username": "EdwinKato"
-        # }
         db.create_all()
 
         self.test_user = {
@@ -36,11 +29,6 @@ class TestApi(TestCase):
         self.client.post('/api/v1/auth/register',
                          data=json.dumps(self.test_user),
                          content_type='application/json')
-
-        # create test user
-        # self.response = self.client.post('/api/v1/auth/register',
-        #                                  data=json.dumps(self.test_user),
-        #                                  content_type='application/json')
 
     def tearDown(self):
 
@@ -105,22 +93,51 @@ class TestApi(TestCase):
             "user_id": 1
         }
         self.client.post('/api/v1/bucketlists',
-                        data=json.dumps(bucket_list_one),
+                         data=json.dumps(bucket_list_one),
                          content_type='application/json')
         self.client.post('/api/v1/bucketlists',
-                        data=json.dumps(bucket_list_two),
+                         data=json.dumps(bucket_list_two),
                          content_type='application/json')
         response = self.client.get('/api/v1/bucketlists')
         self.assertIn("Movies i have to watch", str(response.data))
         self.assertIn("Places i have to travel to", str(response.data))
 
-    @unittest.skip("")
     def test_get_bucket_list(self):
-        pass
+        bucket_list_one = {
+            "description": "Movies i have to watch by the end of the week",
+            "status": "Pending",
+            "title": "Entertainment",
+            "user_id": 1
+        }
+        self.client.post('/api/v1/bucketlists',
+                         data=json.dumps(bucket_list_one),
+                         content_type='application/json')
+        response = self.client.get('/api/v1/bucketlists/1')
+        self.assertIn("Movies i have to watch", str(response.data))
 
-    @unittest.skip("")
     def test_put_bucket_list(self):
-        pass
+        bucket_list_one = {
+            "description": "Movies i have to watch by the end of the week",
+            "status": "Pending",
+            "title": "Entertainment",
+            "user_id": 1
+        }
+        self.client.post('/api/v1/bucketlists',
+                         data=json.dumps(bucket_list_one),
+                         content_type='application/json')
+        bucket_list_one_modified = {
+            "description": "Series i have to watch by the end of the week",
+            "status": "Pending",
+            "title": "Entertainment",
+            "user_id": 1
+        }
+        response = self.client.put('api/v1/bucketlists/1',
+                        data=json.dumps(bucket_list_one_modified),
+                        content_type='application/json')
+        self.assertIn("Series i have to watch", str(response.data))
+        self.assertNotIn("Movies i have to watch", str(response.data))
+
+
 
     @unittest.skip("")
     def test_delete_bucket_list(self):
