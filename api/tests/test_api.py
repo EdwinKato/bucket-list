@@ -63,6 +63,45 @@ class TestApi(TestCase):
         self.assertEqual(new_count - count, 1)
         self.assertEqual(response.status_code, 200)
 
+    def test_register_first_name_input(self):
+        new_test_user_first_name = {
+            "email": "john.seremba@andela.com",
+            "first_name": "654",
+            "last_name": "Seremba",
+            "password": "qwerty@123",
+            "username": "John"
+        }
+        response = self.client.post('/api/v1/auth/register',
+                                    data=json.dumps(new_test_user_first_name),
+                                    content_type='application/json')
+        self.assertEqual(response.status_code, 400)
+
+    def test_register_last_name_input(self):
+        new_test_user_last_name = {
+            "email": "john.seremba@andela.com",
+            "first_name": "John",
+            "last_name": "788",
+            "password": "qwerty@123",
+            "username": "Seremba"
+        }
+        response = self.client.post('/api/v1/auth/register',
+                                    data=json.dumps(new_test_user_last_name),
+                                    content_type='application/json')
+        self.assertEqual(response.status_code, 400)
+
+    def test_register_email_input(self):
+        new_test_user_last_name = {
+            "email": "johnseremba",
+            "first_name": "John",
+            "last_name": "788",
+            "password": "qwerty@123",
+            "username": "Seremba"
+        }
+        response = self.client.post('/api/v1/auth/register',
+                                    data=json.dumps(new_test_user_last_name),
+                                    content_type='application/json')
+        self.assertEqual(response.status_code, 400)
+
     def test_add_bucket_list(self):
         bucket_list = {
             "description": "Movies i have to watch by the end of the week",
