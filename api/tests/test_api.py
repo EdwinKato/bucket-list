@@ -172,10 +172,35 @@ class TestApi(TestCase):
                                     content_type='application/json')
         self.assertIn("Wrong turn 6", str(response.data))
 
-
-    @unittest.skip("")
     def test_get_items_in_bucket_list(self):
-        pass
+        bucket_list_one = {
+            "description": "Movies i have to watch by the end of the week",
+            "status": "Pending",
+            "title": "Entertainment",
+            "user_id": 1
+        }
+        self.client.post('/api/v1/bucketlists',
+                         data=json.dumps(bucket_list_one),
+                         content_type='application/json')
+        item_one = {
+            "description": "Horror movies",
+            "status": "Pending",
+            "title": "Wrong turn 6"
+        }
+        self.client.post('/api/v1/bucketlists/1/items',
+                         data=json.dumps(item_one),
+                         content_type='application/json')
+        item_two = {
+            "description": "Comedies",
+            "status": "Done",
+            "title": "How i met your mother"
+        }
+        self.client.post('/api/v1/bucketlists/1/items',
+                         data=json.dumps(item_two),
+                         content_type='application/json')
+        response = self.client.get('/api/v1/bucketlists/1/items')
+        self.assertIn('Wrong turn 6', str(response.data))
+        self.assertIn('How i met your mother', str(response.data))
 
     @unittest.skip("")
     def test_update_bucket_list_item(self):
