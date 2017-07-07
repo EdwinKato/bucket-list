@@ -33,7 +33,7 @@ def login():
     if not user or not user.verify_password(password):
         response = jsonify({'status': 'failed',
                             'error': 'Username or password is incorrect'})
-        response.status_code = 404
+        response.status_code = 400
         return response
     auth_token = user.encode_auth_token(user.id)
     return jsonify({'status': 'success',
