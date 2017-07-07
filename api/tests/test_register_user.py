@@ -49,6 +49,19 @@ class TestRegisterUser(BaseTestCase):
                                     content_type='application/json')
         self.assertEqual(response.status_code, 400)
 
+    def test_register_username_input(self):
+        new_test_user_last_name = {
+            "email": "john.seremba@andela.com",
+            "first_name": "John",
+            "last_name": "Seremab",
+            "password": "qwerty@123",
+            "username": "Seremba7"
+        }
+        response = self.client.post('/api/v1/auth/register',
+                                    data=json.dumps(new_test_user_last_name),
+                                    content_type='application/json')
+        self.assertEqual(response.status_code, 400)
+
     def test_register_email_input(self):
         new_test_user_last_name = {
             "email": "johnseremba",
