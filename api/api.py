@@ -23,7 +23,7 @@ def login():
     data = request.get_json()
     username = data['username']
     password = data['password']
-    if not username and not password:
+    if not username or not password:
         response = jsonify({'status': 'failed',
                             'message': 'Username or password should'
                                        ' not be left blank'})
@@ -51,14 +51,21 @@ def register():
 
     if not first_name.isalpha():
         response = jsonify({'status': 'failed',
-                            'message': 'First name must be string'
+                            'message': 'First name must be string '
                                        'alphabet type'})
         response.status_code = 400
         return response
 
     if not last_name.isalpha():
         response = jsonify({'status': 'failed',
-                            'message': 'Last name must be string'
+                            'message': 'Last name must be string '
+                                       'alphabet type'})
+        response.status_code = 400
+        return response
+
+    if not username.isalpha():
+        response = jsonify({'status': 'failed',
+                            'message': 'username must be string '
                                        'alphabet type'})
         response.status_code = 400
         return response
@@ -66,7 +73,7 @@ def register():
     if not username or not password:
         response = jsonify({'status': 'failed',
                             'error': 'Username or password should'
-                                     'not be left blank'})
+                                     ' not be left blank'})
         response.status_code = 400
         return response
 
