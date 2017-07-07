@@ -6,9 +6,9 @@ from api.test import BaseTestCase
 
 class TestLogin(BaseTestCase):
 
-    @unittest.skip("")
+
     def test_login(self):
-        """ Test for login of registered-user login """
+        """ Test for login of registered-user """
         with self.client:
             # user registration
             credentials = {
@@ -18,19 +18,12 @@ class TestLogin(BaseTestCase):
             response = self.client.post('/api/v1/auth/login',
                                         data=json.dumps(credentials),
                                         content_type='application/json')
-
-            print(response.data)
             response_data = json.loads(response.data.decode())
             self.assertTrue(response_data['status'] == 'success')
-            self.assertTrue(
-                response_data['message'] == 'The user has been'
-                                            'successfully logged'
-                                            'into the system')
             self.assertTrue(response_data['token'])
             self.assertTrue(response.content_type == 'application/json')
             self.assertEqual(response.status_code, 200)
 
-    @unittest.skip("")
     def test_non_registered_user_login(self):
         """ Test for login of non-registered user """
         with self.client:
@@ -38,13 +31,13 @@ class TestLogin(BaseTestCase):
                 '/api/v1/auth/login',
                 data=json.dumps({
                     "password": "qwerty@123",
-                    "username": "EdwinKato"
+                    "username": "EdwinKyato"
                 }),
                 content_type='application/json'
             )
             print(response.data)
             data = json.loads(response.data.decode())
-            print(response.data)
-            self.assertTrue(data['status'] == 'fail')
+            print(response.status_code)
+            self.assertTrue(data['status'] == 'failed')
             self.assertTrue(response.content_type == 'application/json')
-            self.assertEqual(response.status_code, 404)
+            self.assertEqual(response.status_code, 400)
