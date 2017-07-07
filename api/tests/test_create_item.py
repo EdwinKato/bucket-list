@@ -13,6 +13,9 @@ class TestCreateItem(BaseTestCase):
             "user_id": 1
         }
         self.client.post('/api/v1/bucketlists',
+                         headers={
+                            'Authorization': 'JWT ' + self.token
+                                },
                          data=json.dumps(bucket_list_one),
                          content_type='application/json')
         item = {
@@ -21,6 +24,9 @@ class TestCreateItem(BaseTestCase):
             "title": "Wrong turn 6"
         }
         response = self.client.post('/api/v1/bucketlists/1/items',
+                                    headers={
+                                        'Authorization': 'JWT ' + self.token
+                                    },
                                     data=json.dumps(item),
                                     content_type='application/json')
         self.assertIn("Wrong turn 6", str(response.data))

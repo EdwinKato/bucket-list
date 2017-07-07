@@ -19,12 +19,24 @@ class TestGetBucketList(BaseTestCase):
             "user_id": 1
         }
         self.client.post('/api/v1/bucketlists',
-                         data=json.dumps(bucket_list_one),
-                         content_type='application/json')
+                              data=json.dumps(bucket_list_one),
+                              headers={
+                                  'Authorization': 'JWT ' + self.token
+                              },
+                              content_type='application/json')
         self.client.post('/api/v1/bucketlists',
-                         data=json.dumps(bucket_list_two),
-                         content_type='application/json')
-        response = self.client.get('/api/v1/bucketlists')
+                              data=json.dumps(bucket_list_two),
+                              headers={
+                                  'Authorization': 'JWT ' + self.token
+                              },
+                              content_type='application/json')
+        response = self.client.get(
+            '/api/v1/bucketlists',
+            headers=dict(
+                Authorization='Bearer ' + self.token
+            )
+        )
+        print(dict(Authorization='JWT ' + self.token))
         self.assertIn("Movies i have to watch", str(response.data))
         self.assertIn("Places i have to travel to", str(response.data))
 
@@ -36,7 +48,16 @@ class TestGetBucketList(BaseTestCase):
             "user_id": 1
         }
         self.client.post('/api/v1/bucketlists',
-                         data=json.dumps(bucket_list_one),
-                         content_type='application/json')
-        response = self.client.get('/api/v1/bucketlists/1')
+                              data=json.dumps(bucket_list_one),
+                              headers={
+                                  'Authorization': 'JWT ' + self.token
+                              },
+                              content_type='application/json')
+
+        response = self.client.get(
+            '/api/v1/bucketlists/1',
+            headers=dict(
+                Authorization='Bearer ' + self.token
+            )
+        )
         self.assertIn("Movies i have to watch", str(response.data))

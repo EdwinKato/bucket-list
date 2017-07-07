@@ -13,6 +13,9 @@ class TestUpdateItem(BaseTestCase):
             "user_id": 1
         }
         self.client.post('/api/v1/bucketlists',
+                         headers={
+                             'Authorization': 'JWT ' + self.token
+                         },
                          data=json.dumps(bucket_list_one),
                          content_type='application/json')
         item_one = {
@@ -21,15 +24,21 @@ class TestUpdateItem(BaseTestCase):
             "title": "Wrong turn 6"
         }
         self.client.post('/api/v1/bucketlists/1/items',
+                         headers={
+                             'Authorization': 'JWT ' + self.token
+                         },
                          data=json.dumps(item_one),
                          content_type='application/json')
-        item_one_modifoied = {
+        item_one_modified = {
             "description": "Horror movies",
             "status": "Pending",
             "title": "The walking dead"
         }
         response = self.client.put('/api/v1/bucketlists/1/items/1',
-                                   data=json.dumps(item_one_modifoied),
+                                   headers={
+                                       'Authorization': 'JWT ' + self.token
+                                   },
+                                   data=json.dumps(item_one_modified),
                                    content_type='application/json')
         self.assertNotIn('Wrong turn 6', str(response.data))
         self.assertIn('The walking dead', str(response.data))

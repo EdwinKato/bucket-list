@@ -13,6 +13,9 @@ class TestGetItems(BaseTestCase):
             "user_id": 1
         }
         self.client.post('/api/v1/bucketlists',
+                         headers={
+                             'Authorization': 'JWT ' + self.token
+                         },
                          data=json.dumps(bucket_list_one),
                          content_type='application/json')
         item_one = {
@@ -21,6 +24,9 @@ class TestGetItems(BaseTestCase):
             "title": "Wrong turn 6"
         }
         self.client.post('/api/v1/bucketlists/1/items',
+                         headers={
+                             'Authorization': 'JWT ' + self.token
+                         },
                          data=json.dumps(item_one),
                          content_type='application/json')
         item_two = {
@@ -29,8 +35,14 @@ class TestGetItems(BaseTestCase):
             "title": "How i met your mother"
         }
         self.client.post('/api/v1/bucketlists/1/items',
+                         headers={
+                             'Authorization': 'JWT ' + self.token
+                         },
                          data=json.dumps(item_two),
                          content_type='application/json')
-        response = self.client.get('/api/v1/bucketlists/1/items')
+        response = self.client.get('/api/v1/bucketlists/1/items',
+                                   headers={
+                                       'Authorization': 'JWT ' + self.token
+                                   },)
         self.assertIn('Wrong turn 6', str(response.data))
         self.assertIn('How i met your mother', str(response.data))

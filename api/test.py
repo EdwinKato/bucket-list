@@ -24,9 +24,11 @@ class BaseTestCase(TestCase):
             "username": "EdwinKato"
         }
 
-        self.client.post('/api/v1/auth/register',
+        self.response = self.client.post('/api/v1/auth/register',
                          data=json.dumps(self.test_user),
                          content_type='application/json')
+        self.data = json.loads(self.response.data.decode())
+        self.token = self.data['token']
 
     def tearDown(self):
         super(BaseTestCase, self).tearDown()

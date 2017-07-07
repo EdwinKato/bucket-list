@@ -14,6 +14,9 @@ class TestDeleteBucketList(BaseTestCase):
             "user_id": 1
         }
         self.client.post('/api/v1/bucketlists',
+                         headers={
+                             'Authorization': 'JWT ' + self.token
+                         },
                          data=json.dumps(bucket_list_one),
                          content_type='application/json')
         item_one = {
@@ -22,10 +25,16 @@ class TestDeleteBucketList(BaseTestCase):
             "title": "Wrong turn 6"
         }
         self.client.post('/api/v1/bucketlists/1/items',
+                         headers={
+                             'Authorization': 'JWT ' + self.token
+                         },
                          data=json.dumps(item_one),
                          content_type='application/json')
         count = len(Item.query.all())
-        response = self.client.delete('/api/v1/bucketlists/1/items/1')
+        response = self.client.delete('/api/v1/bucketlists/1/items/1',
+                                      headers={
+                                          'Authorization': 'JWT ' + self.token
+                                      },)
         new_count = len(Item.query.all())
         self.assertEqual(new_count - count, -1)
         self.assertEqual(response.status_code, 200)
