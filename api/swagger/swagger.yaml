@@ -1,0 +1,344 @@
+swagger: '2.0'
+info:
+  title: Bucket list API
+  version: "0.1.0"
+  description: The api specification document to the online bucket list management system
+  contact:
+    email: edwin.kato@andela.com
+basePath: "/api/v1"
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /auth/login/:
+    post:
+      tags: [User]
+      summary: Logs a user into the system and returns an access token
+      operationId: api.login
+      parameters:
+        - name: body
+          in: body
+          required: true
+          description: The login credentials
+          schema:
+            $ref: '#/definitions/Login'
+      responses:
+        200:
+          description: User has been successfully logged in
+          schema:
+            $ref: '#/definitions/User'
+        405:
+          description: Invalid input
+  /auth/register:
+    post:
+      tags: [User]
+      summary: Add a new user to the system
+      operationId: api.register
+      parameters:
+        - name: User
+          description: Details of user to be added to the system
+          in: body
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        200:
+          description: Successful operation
+        400:
+          description: "Bad JSON formatting in the request"
+  /bucketlists:
+    post:
+      tags: [BucketList]
+      summary: Add a new bucket list
+      operationId: api.add_bucket_list
+      parameters:
+        - name: Bucket list
+          description: Title and description of the bucket list
+          in: body
+          schema:
+            $ref: '#/definitions/BucketList'
+      responses:
+        200:
+          description: Bucket list saved successfully
+        405:
+          description: Invalid input
+    get:
+      tags: [BucketList]
+      operationId: api.get_bucket_lists
+      summary: Get bucket lists
+      parameters:
+        - name: limit
+          description: Number of bucket lists to fetch
+          in: query
+          type: integer
+          minimum: 0
+          default: 10
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/BucketList'
+        404:
+          description: "There are no bucket lists in the system"
+  /bucketlists/{id}:
+    get:
+      tags: [BucketList]
+      operationId: api.get_bucket_list
+      summary: Get bucket list by id
+      parameters:
+        - $ref: '#/parameters/id'
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/BucketList'
+        404:
+          description: Bucket list does not exist
+    put:
+      tags: [BucketList]
+      operationId: api.put_bucket_list
+      summary: Update an existing bucket list
+      parameters:
+        - $ref: '#/parameters/id'
+        - name: bucketlist
+          in: body
+          schema:
+            $ref: '#/definitions/BucketList'
+      responses:
+        200:
+          description: Bucket list updated
+        201:
+          description: New bucketlist created
+    delete:
+      tags: [BucketList]
+      operationId: api.delete_bucket_list
+      summary: Remove a bucketlist
+      parameters:
+        - $ref: '#/parameters/id'
+      responses:
+        204:
+          description: Bucket list was deleted
+        404:
+          description: Bucket list does not exist
+  /bucketlists/{id}/items:
+    post:
+      tags: [BucketList]
+      operationId: api.create_item_in_bucket_list
+      summary: Create a new item in bucket list
+      parameters:
+        - $ref: '#/parameters/id'
+        - name: item
+          in: body
+          schema:
+            $ref: '#/definitions/Item'
+      responses:
+        405:
+          description: Invalid input
+    get:
+      tags: [BucketList]
+      operationId: api.get_items_in_bucket_list
+      summary: Get items in the given bucket list
+      parameters:
+        - $ref: '#/parameters/id'
+        - name: limit
+          description: Number of bucket list items to fetch
+          in: query
+          type: integer
+          minimum: 0
+          default: 10
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/BucketList"
+        404:
+            description: Bucket list items do not exist
+  /bucketlists/{id}/items/{item_id}:
+    put:
+      tags: [BucketList]
+      operationId: api.update_bucket_list_item
+      summary: Update an existing bucket list item
+      parameters:
+        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/item_id'
+        - name: item
+          in: body
+          schema:
+            $ref: '#/definitions/Item'
+      responses:
+        200:
+          description: Bucket list item has been updated
+    delete:
+      tags: [BucketList]
+      operationId: api.delete_bucket_list_item
+      summary: Remove a bucketlist
+      parameters:
+        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/item_id'
+      responses:
+        204:
+          description: Bucket list item has been deleted
+        404:
+          description: The bucket list item you want to delete does not exist!
+
+parameters:
+  id:
+    name: id
+    description: Bucket list's Unique identifier
+    in: path
+    type: integer
+    required: true
+  item_id:
+    name: item_id
+    description: Item's unique identifier
+    in: path
+    type: integer
+    required: true
+  username:
+    name: username
+    description: User's username
+    in: path
+    type: string
+    required: true
+  password:
+    name: password
+    description: User's password
+    in: path
+    type: string
+    required: true
+
+definitions:
+  User:
+    type: object
+    required:
+      - first_name
+      - last_name
+      - email
+      - username
+      - password
+    properties:
+      id:
+        type: integer
+        description: Unique identifier
+        example: 1
+        readOnly: true
+      first_name:
+        type: string
+        description: First name of the user
+        example: "Edwin"
+        minLength: 2
+        maxLength: 30
+      last_name:
+        type: string
+        description: Last name of the user
+        example: "Kato"
+        minLength: 2
+        maxLength: 30
+      email:
+        type: string
+        description: Email of the user
+        example: "edwin.kato@andela.com"
+        minLength: 1
+      username:
+        type: string
+        description: Username of the user
+        example: "EdwinKato"
+        minLength: 1
+        maxLength: 12
+      password:
+        type: string
+        description: Password of the user
+        example: "qwerty@123"
+        minLength: 6
+  Login:
+    type: object
+    required:
+      - username
+      - password
+    properties:
+      username:
+        type: string
+        minLength: 1
+        maxLength: 12
+      password:
+        type: string
+        minLength: 6
+  BucketList:
+    type: object
+    required:
+      - title
+      - description
+      - status
+    properties:
+      id:
+        type: integer
+        description: Unique identifier
+        example: 1
+        readOnly: true
+      title:
+        type: string
+        description: Bucket list title
+        example: "Leisure"
+        minLength: 1
+        maxLength: 100
+      description:
+        type: string
+        description: Description of bucket list
+        example: "Leisure activities i have to do before i die"
+        minLength: 1
+      status:
+        type: string
+        description: Status of bucket list item
+        example: "Done"
+        minLength: 1
+        maxLength: 12
+      date_created:
+        type: string
+        format: date-time
+        description: Creation time
+        example: "2017-07-07T15:49:51.230+02:00"
+        readOnly: true
+  Item:
+    type: object
+    required:
+      - title
+      - description
+      - status
+    properties:
+      id:
+        type: integer
+        description: Unique identifier
+        example: 1
+        readOnly: true
+      title:
+        type: string
+        description: Bucket list item title
+        example: "Sky diving"
+        minLength: 1
+        maxLength: 100
+      description:
+        type: string
+        description: Description of bucket list item
+        example: "Jump down from an airplane while it is flying and parachuting myself to the ground"
+        minLength: 1
+      status:
+        type: string
+        description: Status of bucket list item
+        example: "Done"
+        minLength: 1
+        maxLength: 12
+      id:
+        type: integer
+        description: id of the bucket lis to which the item belongs
+        example: 1
+        readOnly: true
+      date_created:
+        type: string
+        format: date-time
+        description: Creation time
+        example: "2017-07-07T15:49:51.230+02:00"
+        readOnly: true
