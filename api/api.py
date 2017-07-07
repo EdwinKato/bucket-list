@@ -79,9 +79,9 @@ def register():
 
     user = User(first_name, last_name, email, username)
     user.hash_password(password)
-    auth_token = user.encode_auth_token(user.id)
     db.session.add(user)
     db.session.commit()
+    auth_token = user.encode_auth_token(user.id)
     response = jsonify({'status': 'success',
                         'message': 'User has been successfully created',
                         'data': {

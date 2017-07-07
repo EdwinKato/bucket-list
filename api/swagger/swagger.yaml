@@ -255,7 +255,10 @@ definitions:
         example: "qwerty@123"
         minLength: 6
   Login:
-    required: [username, password]
+    type: object
+    required:
+      - username
+      - password
     properties:
       username:
         type: string
@@ -270,7 +273,6 @@ definitions:
       - title
       - description
       - status
-      - user_id
     properties:
       id:
         type: integer
@@ -294,11 +296,6 @@ definitions:
         example: "Done"
         minLength: 1
         maxLength: 12
-      user_id:
-        type: integer
-        description: id of the user to whom the bucket list belongs
-        example: 1
-        readOnly: true
       date_created:
         type: string
         format: date-time
@@ -339,9 +336,6 @@ definitions:
         description: id of the bucket lis to which the item belongs
         example: 1
         readOnly: true
-      tags:
-        type: object
-        description: Custom tags
       date_created:
         type: string
         format: date-time
