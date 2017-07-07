@@ -11,7 +11,7 @@ consumes:
 produces:
   - application/json
 paths:
-  /auth/login/:
+  /auth/login:
     post:
       tags: [User]
       summary: Logs a user into the system and returns an access token
