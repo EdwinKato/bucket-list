@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/EdwinKato/bucket-list.svg?branch=master)](https://travis-ci.org/EdwinKato/bucket-list)
+[![Coverage Status](https://coveralls.io/repos/github/EdwinKato/bucket-list/badge.svg?branch=master)](https://coveralls.io/github/EdwinKato/bucket-list?branch=master)
+
 # bucket-list
 
 A simple python application to manage the list of items on an individual's bucket-list. 
