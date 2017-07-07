@@ -1,7 +1,5 @@
 from flask import current_app
 from passlib.context import CryptContext
-from itsdangerous import (TimedJSONWebSignatureSerializer
-                          as Serializer, BadSignature, SignatureExpired)
 from datetime import datetime, timedelta
 import jwt
 
@@ -15,7 +13,11 @@ class User(db.Model):
     email = db.Column(db.String(64), unique=True)
     username = db.Column(db.String(80), unique=True)
     password_hash = db.Column(db.String(128))
-    crypt_context = CryptContext(schemes=["sha256_crypt", "md5_crypt", "des_crypt"])
+    crypt_context = CryptContext(
+        schemes=[
+            "sha256_crypt",
+            "md5_crypt",
+            "des_crypt"])
 
     def __init__(self, first_name, last_name, email, username):
         self.first_name = first_name
@@ -63,7 +65,10 @@ class User(db.Model):
         :return: integer|string
         """
         try:
-            payload = jwt.decode(auth_token, current_app.config.get('SECRET_KEY'), algorithms=['HS256'])
+            payload = jwt.decode(
+                auth_token,
+                current_app.config.get('SECRET_KEY'),
+                algorithms=['HS256'])
             return payload['sub']
         except jwt.ExpiredSignatureError:
             return 'Signature expired. Please log in again.'
@@ -90,7 +95,13 @@ class BucketList(db.Model):
     user = db.relationship('User',
                            backref=db.backref('bucket_lists', lazy='dynamic'))
 
-    def __init__(self, title, description, user, date_created=None, status="Unfinished"):
+    def __init__(
+            self,
+            title,
+            description,
+            user,
+            date_created=None,
+            status="Unfinished"):
         self.title = title
         self.description = description
         self.user = user
@@ -123,7 +134,13 @@ class Item(db.Model):
     bucket_list = db.relationship('BucketList',
                                   backref=db.backref('items', lazy='dynamic'))
 
-    def __init__(self, title, description, bucket_list, status="Pending", date_created=None):
+    def __init__(
+            self,
+            title,
+            description,
+            bucket_list,
+            status="Pending",
+            date_created=None):
         self.title = title
         self.description = description
         self.bucket_list = bucket_list

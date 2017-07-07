@@ -23,5 +23,3 @@ class TestAddBucketList(BaseTestCase):
         new_count = len(BucketList.query.all())
         self.assertEqual(new_count - count, 1)
         self.assertEqual(response.status_code, 201)
-
-

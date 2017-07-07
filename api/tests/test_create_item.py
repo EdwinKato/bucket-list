@@ -14,8 +14,8 @@ class TestCreateItem(BaseTestCase):
         }
         self.client.post('/api/v1/bucketlists',
                          headers={
-                            'Authorization': 'JWT ' + self.token
-                                },
+                             'Authorization': 'JWT ' + self.token
+                         },
                          data=json.dumps(bucket_list_one),
                          content_type='application/json')
         item = {

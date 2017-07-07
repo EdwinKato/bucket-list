@@ -2,7 +2,7 @@ from flask import request, jsonify
 import re
 
 __all__ = ["login", "register", "add_bucket_list", "get_bucket_lists",
-           "get_bucket_list","put_bucket_list","delete_bucket_list",
+           "get_bucket_list", "put_bucket_list", "delete_bucket_list",
            "create_item_in_bucket_list", "get_items_in_bucket_list",
            "update_bucket_list_item", "delete_bucket_list_item"]
 
@@ -25,7 +25,8 @@ def login():
     password = data['password']
     if not username and not password:
         response = jsonify({'status': 'failed',
-                            'message': 'Username or password should not be left blank'})
+                            'message': 'Username or password should'
+                                       ' not be left blank'})
         response.status_code = 400
         return response
     user = User.query.filter_by(username=username).first()
@@ -50,30 +51,35 @@ def register():
 
     if not first_name.isalpha():
         response = jsonify({'status': 'failed',
-                            'message': 'First name must be string alphabet type'})
+                            'message': 'First name must be string'
+                                       'alphabet type'})
         response.status_code = 400
         return response
 
     if not last_name.isalpha():
         response = jsonify({'status': 'failed',
-                            'message': 'Last name must be string alphabet type'})
+                            'message': 'Last name must be string'
+                                       'alphabet type'})
         response.status_code = 400
         return response
 
     if not username or not password:
         response = jsonify({'status': 'failed',
-                            'error': 'Username or password should not be left blank'})
+                            'error': 'Username or password should'
+                                     'not be left blank'})
         response.status_code = 400
         return response
 
     if not EMAIL_REGEX.match(email):
         response = jsonify({'status': 'failed',
-                            'message': 'Please specify valid email address'})
+                            'message': 'Please specify valid email'
+                                       'address'})
         return response
 
     if len(password) < 6:
         response = jsonify({'status': 'failed',
-                            'error': 'Password is too short, it must be more than 6 characters'})
+                            'error': 'Password is too short,'
+                            'it must be more than 6 characters'})
         response.status_code = 400
         return response
 
@@ -117,7 +123,7 @@ def add_bucket_list():
             response = jsonify({'status': 'success',
                                 'message': SUCCESS,
                                 'data': {
-                                  'bucket_list': bucket_list.serialize()
+                                    'bucket_list': bucket_list.serialize()
                                 }})
             response.status_code = 201
             return response
@@ -151,12 +157,15 @@ def get_bucket_lists():
                 response = jsonify({'status': 'success',
                                     'message': SUCCESS,
                                     'data': {
-                                        'bucket_lists': [bucket_list.serialize() for bucket_list in bucket_lists]
-                                    }})
+                                        'bucket_lists':
+                                            [bucket_list.serialize()
+                                             for bucket_list in
+                                             bucket_lists]}})
                 response.status_code = 200
                 return response
             response = jsonify({'status': 'success',
-                                'message': 'There are no bucket lists for the user.'})
+                                'message': 'There are no bucket lists'
+                                           'for the user.'})
             response.status_code = 404
             return response
 
@@ -186,7 +195,8 @@ def get_bucket_list(id):
         decoded_token = User.decode_auth_token(auth_token)
         if not isinstance(decoded_token, str):
             user = User.query.filter_by(id=decoded_token).first()
-            bucket_list = BucketList.query.filter_by(id=id, user_id=user.id).first()
+            bucket_list = BucketList.query.filter_by(
+                id=id, user_id=user.id).first()
             if bucket_list:
                 response = jsonify({'status': 'success',
                                     'data': bucket_list.serialize(),
@@ -224,7 +234,8 @@ def put_bucket_list(id):
         if not isinstance(decoded_token, str):
             user = User.query.filter_by(id=decoded_token).first()
             data = request.get_json()
-            bucket_list = BucketList.query.filter_by(id=id, user_id=user.id).first()
+            bucket_list = BucketList.query.filter_by(
+                id=id, user_id=user.id).first()
             if not bucket_list:
                 response = jsonify({'status': 'failed',
                                     'message': 'Bucket list not found'})
@@ -240,9 +251,11 @@ def put_bucket_list(id):
             db.session.commit()
 
             response = jsonify({'status': 'success',
-                                'message': 'Bucket list has been updated successfully',
-                                'data': {'bucket list': bucket_list.serialize()}
-                                })
+                                'message': 'Bucket list has been'
+                                'updated successfully',
+                                'data': {
+                                    'bucket list': bucket_list.serialize()
+                                }})
             response.status_code = 200
             return response
 
@@ -272,7 +285,8 @@ def delete_bucket_list(id):
         decoded_token = User.decode_auth_token(auth_token)
         if not isinstance(decoded_token, str):
             user = User.query.filter_by(id=decoded_token).first()
-            bucket_list = BucketList.query.filter_by(id=id, user_id=user.id).first()
+            bucket_list = BucketList.query.filter_by(
+                id=id, user_id=user.id).first()
             if not bucket_list:
                 response = jsonify({'status': 'failed',
                                     'message': 'Bucket list not found'})
@@ -308,7 +322,8 @@ def create_item_in_bucket_list(id):
         decoded_token = User.decode_auth_token(auth_token)
         if not isinstance(decoded_token, str):
             user = User.query.filter_by(id=decoded_token).first()
-            bucket_list = BucketList.query.filter_by(id=id, user_id=user.id).first()
+            bucket_list = BucketList.query.filter_by(
+                id=id, user_id=user.id).first()
             if not bucket_list:
                 response = jsonify({'status': 'failed',
                                     'message': 'Bucket list not found'})
@@ -351,16 +366,17 @@ def get_items_in_bucket_list(id):
         decoded_token = User.decode_auth_token(auth_token)
         if not isinstance(decoded_token, str):
             user = User.query.filter_by(id=decoded_token).first()
-            bucket_list = BucketList.query.filter_by(id=id, user_id=user.id).first()
+            bucket_list = BucketList.query.filter_by(
+                id=id, user_id=user.id).first()
             if not bucket_list:
                 response = jsonify({'status': 'failed',
                                     'message': 'Bucket list not found'})
                 response.status_code = 404
                 return response
-            response = jsonify({'status': 'success',
-                                'message': SUCCESS,
-                                'data': {'items': [item.serialize() for item in bucket_list.items]}
-                                })
+            response = jsonify({'status': 'success', 'message': SUCCESS, 'data': {
+                               'items':
+                                   [item.serialize()
+                                    for item in bucket_list.items]}})
             response.status_code = 200
             return response
 
@@ -391,14 +407,16 @@ def update_bucket_list_item(id, item_id):
         decoded_token = User.decode_auth_token(auth_token)
         if not isinstance(decoded_token, str):
             user = User.query.filter_by(id=decoded_token).first()
-            bucket_list = BucketList.query.filter_by(id=id, user_id=user.id).first()
+            bucket_list = BucketList.query.filter_by(
+                id=id, user_id=user.id).first()
             if not bucket_list:
                 response = jsonify({'status': 'failed',
                                     'message': 'Bucket list not found'})
                 response.status_code = 404
                 return response
 
-            list_item = [item for item in bucket_list.items if item.id == item_id]
+            list_item = [
+                item for item in bucket_list.items if item.id == item_id]
             if not list_item:
                 response = jsonify({'status': 'failed',
                                     'message': 'Bucket list item not found'})
@@ -444,14 +462,16 @@ def delete_bucket_list_item(id, item_id):
         decoded_token = User.decode_auth_token(auth_token)
         if not isinstance(decoded_token, str):
             user = User.query.filter_by(id=decoded_token).first()
-            bucket_list = BucketList.query.filter_by(id=id, user_id=user.id).first()
+            bucket_list = BucketList.query.filter_by(
+                id=id, user_id=user.id).first()
             if not bucket_list:
                 response = jsonify({'status': 'failed',
                                     'message': 'Bucket list not found'})
                 response.status_code = 404
                 return response
 
-            list_item = [item for item in bucket_list.items if item.id == item_id]
+            list_item = [
+                item for item in bucket_list.items if item.id == item_id]
             if not list_item:
                 response = jsonify({'status': 'failed',
                                     'message': 'Bucket list item not found'})
@@ -461,7 +481,8 @@ def delete_bucket_list_item(id, item_id):
             db.session.delete(item)
             db.session.commit()
             response = jsonify({'status': 'success',
-                                'message': 'Bucket list item has been successfully deleted',
+                                'message': 'Bucket list item has'
+                                           'been successfully deleted',
                                 'item': item.serialize()})
             response.status_code = 200
             return response
@@ -480,6 +501,7 @@ def delete_bucket_list_item(id, item_id):
         })
         response.status_code = 401
         return response
+
 
 from api.models import User, BucketList, Item
 from api import db

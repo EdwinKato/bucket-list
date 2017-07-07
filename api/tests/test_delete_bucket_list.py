@@ -13,7 +13,7 @@ class TestDeleteBucketList(BaseTestCase):
             "title": "Entertainment",
             "user_id": 1
         }
-        rr = self.client.post('/api/v1/bucketlists',
+        self.client.post('/api/v1/bucketlists',
                          headers={
                              'Authorization': 'JWT ' + self.token
                          },

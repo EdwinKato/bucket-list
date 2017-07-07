@@ -61,4 +61,3 @@ class TestRegisterUser(BaseTestCase):
                                     data=json.dumps(new_test_user_last_name),
                                     content_type='application/json')
         self.assertEqual(response.status_code, 400)
-

@@ -12,9 +12,9 @@ class TestLogin(BaseTestCase):
         with self.client:
             # user registration
             credentials = {
-                    'username': 'EdwinKato',
-                    'password': 'qwerty@123'
-                }
+                'username': 'EdwinKato',
+                'password': 'qwerty@123'
+            }
             response = self.client.post('/api/v1/auth/login',
                                         data=json.dumps(credentials),
                                         content_type='application/json')
@@ -23,8 +23,9 @@ class TestLogin(BaseTestCase):
             response_data = json.loads(response.data.decode())
             self.assertTrue(response_data['status'] == 'success')
             self.assertTrue(
-                response_data['message'] == 'The user has been successfully logged into the system'
-            )
+                response_data['message'] == 'The user has been'
+                                            'successfully logged'
+                                            'into the system')
             self.assertTrue(response_data['token'])
             self.assertTrue(response.content_type == 'application/json')
             self.assertEqual(response.status_code, 200)
@@ -47,5 +48,3 @@ class TestLogin(BaseTestCase):
             self.assertTrue(data['status'] == 'fail')
             self.assertTrue(response.content_type == 'application/json')
             self.assertEqual(response.status_code, 404)
-
-

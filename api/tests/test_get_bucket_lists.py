@@ -19,17 +19,17 @@ class TestGetBucketList(BaseTestCase):
             "user_id": 1
         }
         self.client.post('/api/v1/bucketlists',
-                              data=json.dumps(bucket_list_one),
-                              headers={
-                                  'Authorization': 'JWT ' + self.token
-                              },
-                              content_type='application/json')
+                         data=json.dumps(bucket_list_one),
+                         headers={
+                             'Authorization': 'JWT ' + self.token
+                         },
+                         content_type='application/json')
         self.client.post('/api/v1/bucketlists',
-                              data=json.dumps(bucket_list_two),
-                              headers={
-                                  'Authorization': 'JWT ' + self.token
-                              },
-                              content_type='application/json')
+                         data=json.dumps(bucket_list_two),
+                         headers={
+                             'Authorization': 'JWT ' + self.token
+                         },
+                         content_type='application/json')
         response = self.client.get(
             '/api/v1/bucketlists',
             headers=dict(
@@ -48,11 +48,11 @@ class TestGetBucketList(BaseTestCase):
             "user_id": 1
         }
         self.client.post('/api/v1/bucketlists',
-                              data=json.dumps(bucket_list_one),
-                              headers={
-                                  'Authorization': 'JWT ' + self.token
-                              },
-                              content_type='application/json')
+                         data=json.dumps(bucket_list_one),
+                         headers={
+                             'Authorization': 'JWT ' + self.token
+                         },
+                         content_type='application/json')
 
         response = self.client.get(
             '/api/v1/bucketlists/1',

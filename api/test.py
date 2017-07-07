@@ -25,8 +25,8 @@ class BaseTestCase(TestCase):
         }
 
         self.response = self.client.post('/api/v1/auth/register',
-                         data=json.dumps(self.test_user),
-                         content_type='application/json')
+                                         data=json.dumps(self.test_user),
+                                         content_type='application/json')
         self.data = json.loads(self.response.data.decode())
         self.token = self.data['token']
 
