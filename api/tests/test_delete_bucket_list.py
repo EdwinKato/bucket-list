@@ -27,3 +27,13 @@ class TestDeleteBucketList(BaseTestCase):
                            },)
         new_count = len(BucketList.query.all())
         self.assertEqual(new_count - count, -1)
+
+        response = self.client.get(
+            '/api/v1/bucketlists/1',
+            headers=dict(
+                Authorization='Bearer ' + self.token
+            )
+        )
+        
+        self.assertIn("Bucket list not found", str(response.data))
+        self.assertEqual(response.status_code, 404)
