@@ -34,6 +34,6 @@ class TestDeleteBucketList(BaseTestCase):
                 Authorization='Bearer ' + self.token
             )
         )
-        
+
         self.assertIn("Bucket list not found", str(response.data))
         self.assertEqual(response.status_code, 404)

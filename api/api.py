@@ -301,10 +301,7 @@ def delete_bucket_list(id):
                 return response
             db.session.delete(bucket_list)
             db.session.commit()
-            response = jsonify({'status': 'success',
-                                'message': SUCCESS})
-            response.status_code = 200
-            return response
+            return '', 204
         response = jsonify({
             'status': 'failed',
             'message': decoded_token
@@ -480,21 +477,11 @@ def delete_bucket_list_item(id, item_id):
             list_item = [
                 item for item in bucket_list.items if item.id == item_id]
             if not list_item:
-                response = jsonify({'status': 'failed',
-                                    'message': 'Bucket list item not found'})
-                response.status_code = 404
-                return response
+                return '', 204
             item = list_item[0]
             db.session.delete(item)
             db.session.commit()
-            response = jsonify({'status': 'success',
-                                'message': 'Bucket list item has'
-                                           'been successfully deleted',
-                                'item': item.serialize()})
-            response.status_code = 200
-            return response
-
-            # end
+            return '', 204
 
         response = jsonify({
             'status': 'failed',

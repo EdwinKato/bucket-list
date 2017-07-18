@@ -37,4 +37,4 @@ class TestDeleteBucketList(BaseTestCase):
                                       },)
         new_count = len(Item.query.all())
         self.assertEqual(new_count - count, -1)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 204)
