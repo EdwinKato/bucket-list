@@ -1,5 +1,4 @@
 from flask import request, jsonify
-from sqlalchemy import or_
 import re
 
 __all__ = ["login", "register", "add_bucket_list", "get_bucket_lists",
@@ -18,6 +17,8 @@ __all__ = ["login", "register", "add_bucket_list", "get_bucket_lists",
 EMAIL_REGEX = re.compile(r"[^@]+@[^@]+\.[^@]+")
 SUCCESS = "Your request was processed successfully"
 SUCCESSFUL_LOGIN = "The user has been successfully logged into the system"
+
+SITE_URL = "http://127.0.0.1:5000/api/v1/"
 
 
 def login():
@@ -169,6 +170,12 @@ def add_bucket_list():
 
 
 def get_bucket_lists():
+    start = int(request.args.get('start'))\
+        if request.args.get('start')\
+        else 1
+    limit = int(request.args.get('limit'))\
+        if request.args.get('limit')\
+        else 20
     auth_header = request.headers.get('Authorization')
     if auth_header:
         auth_token = auth_header.split(" ")[1]
@@ -180,13 +187,7 @@ def get_bucket_lists():
             user = User.query.filter_by(id=decoded_token).first()
             bucket_lists = user.bucket_lists
             if bucket_lists:
-                response = jsonify({'status': 'success',
-                                    'message': SUCCESS,
-                                    'data': {
-                                        'bucket_lists':
-                                            [bucket_list.serialize()
-                                             for bucket_list in
-                                             bucket_lists]}})
+                response = jsonify(get_paginated_list(bucket_lists, "bucketlists", start, limit, "bucket_lists"))
                 response.status_code = 200
                 return response
             response = jsonify({'status': 'success',
@@ -247,7 +248,6 @@ def get_bucket_list(id):
 
 
 def put_bucket_list(id):
-
     auth_header = request.headers.get('Authorization')
     if auth_header:
         auth_token = auth_header.split(" ")[1]
@@ -376,6 +376,12 @@ def create_item_in_bucket_list(id):
 
 
 def get_items_in_bucket_list(id):
+    start = int(request.args.get('start'))\
+        if request.args.get('start')\
+        else 1
+    limit = int(request.args.get('limit'))\
+        if request.args.get('limit')\
+        else 20
     auth_header = request.headers.get('Authorization')
     if auth_header:
         auth_token = auth_header.split(" ")[1]
@@ -392,14 +398,10 @@ def get_items_in_bucket_list(id):
                                     'message': 'Bucket list not found'})
                 response.status_code = 404
                 return response
-            response = jsonify({'status': 'success', 'message': SUCCESS, 'data': {
-                               'items':
-                                   [item.serialize()
-                                    for item in bucket_list.items]}})
+            path = "bucketlists/" + str(id)
+            response = jsonify(get_paginated_list(bucket_list.items, path, start, limit, "items"))
             response.status_code = 200
             return response
-
-            # end
 
         response = jsonify({
             'status': 'failed',
@@ -509,6 +511,39 @@ def delete_bucket_list_item(id, item_id):
             'message': 'Provide a valid auth token.'
         })
         response.status_code = 401
+        return response
+
+
+def get_paginated_list(list_items, path, start, limit, data_name):
+        count = list_items.count()
+        response = {
+            'start': start,
+            'limit': limit,
+            'count': count,
+            'status': 'success',
+            'message': SUCCESS,
+        }
+
+        # make previous url
+        if start == 1:
+            response['previous'] = ''
+        else:
+            start_copy = max(1, start - limit)
+            limit_copy = start - 1
+            response['previous'] = SITE_URL + path + '?start=%d&limit=%d' % (start_copy, limit_copy)
+
+        # make next url
+        if start + limit > count:
+            response['next'] = ''
+        else:
+            start_copy = start + limit
+            response['next'] = SITE_URL + path + '?start=%d&limit=%d' % (start_copy, limit)
+
+        # Construct result according to bounds
+        page = list_items[(start - 1):(start - 1 + limit)]
+        response['data'] = {
+            data_name: [data.serialize() for data in page]
+        }
         return response
 
 

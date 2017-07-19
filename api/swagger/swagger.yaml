@@ -67,12 +67,18 @@ paths:
       operationId: api.get_bucket_lists
       summary: Get bucket lists
       parameters:
-        - name: limit
-          description: Number of bucket lists to fetch
+        - name: start
+          description: The position from which we want the data to be returned
           in: query
           type: integer
           minimum: 0
-          default: 10
+          default: 1
+        - name: limit
+          description: The maximum number of items to return from that start
+          in: query
+          type: integer
+          minimum: 0
+          default: 20
       responses:
         200:
           description: Your request was processed successfully
@@ -156,12 +162,18 @@ paths:
       summary: Get items in the given bucket list
       parameters:
         - $ref: '#/parameters/id'
-        - name: limit
-          description: Number of bucket list items to fetch
+        - name: start
+          description: The position from which we want the data to be returned
           in: query
           type: integer
           minimum: 0
-          default: 10
+          default: 1
+        - name: limit
+          description: The maximum number of items to return from that start
+          in: query
+          type: integer
+          minimum: 0
+          default: 20
       responses:
         200:
           description: Bucket list has been successfully updated
