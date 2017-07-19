@@ -28,3 +28,8 @@ jobs:
           destination: tr1
       - store_test_results:
           path: test-reports/
+  deployment:
+  staging:
+    branch: master
+    heroku:
+      appname: yobucketlist
