@@ -560,6 +560,5 @@ def get_paginated_list(list_items, path, start, limit, data_name):
         }
         return response
 
-
 from api.models import User, BucketList, Item
 from api import db

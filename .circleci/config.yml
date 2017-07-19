@@ -15,6 +15,9 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             pip install -r requirements.txt
+      - run:
+          name: setup Heroku
+          command: bash .circleci/setup-heroku.sh
       - save_cache:
           key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
           paths:
@@ -23,13 +26,13 @@ jobs:
           command: |
             . venv/bin/activate
             python manage.py test
-      - store_artifacts:
-          path: test-reports/
-          destination: tr1
-      - store_test_results:
-          path: test-reports/
-  deployment:
-  staging:
-    branch: master
-    heroku:
-      appname: yobucketlist
+      - add_ssh_keys:
+          fingerprints:
+            - "SHA256:LBr/k/H7lc7MhjhGwylznCCz6pQ8JYGwPGhXdLcyA+4"
+      - deploy:
+          name: Deploy Master to Heroku
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              git push heroku master
+              heroku restart
+            fi
