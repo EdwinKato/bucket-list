@@ -28,8 +28,10 @@ jobs:
           destination: tr1
       - store_test_results:
           path: test-reports/
-  deployment:
-  staging:
-    branch: master
-    heroku:
-      appname: yobucketlist
+      - deploy:
+          name: Deploy Master to Heroku
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              git push heroku master
+              heroku restart
+            fi
