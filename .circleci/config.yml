@@ -26,12 +26,6 @@ jobs:
           command: |
             . venv/bin/activate
             python manage.py test
-            coverage run -m unittest discover -s api/tests/
-      - store_artifacts:
-          path: test-reports/
-          destination: tr1
-      - store_test_results:
-          path: test-reports/
       - add_ssh_keys:
           fingerprints:
             - "SHA256:LBr/k/H7lc7MhjhGwylznCCz6pQ8JYGwPGhXdLcyA+4"
