@@ -1,4 +1,4 @@
-  #!/bin/bash
+  #!/bin/sh
     git remote add heroku https://git.heroku.com/yobucketlist.git
     wget https://cli-assets.heroku.com/branches/stable/heroku-linux-amd64.tar.gz
     mkdir -p /usr/local/lib /usr/local/bin
