@@ -1,5 +1,8 @@
 from flask import request, jsonify
+from flask import current_app
 import re
+
+from sqlalchemy import or_
 
 __all__ = ["login", "register", "add_bucket_list", "get_bucket_lists",
            "get_bucket_list", "put_bucket_list", "delete_bucket_list",
@@ -17,8 +20,6 @@ __all__ = ["login", "register", "add_bucket_list", "get_bucket_lists",
 EMAIL_REGEX = re.compile(r"[^@]+@[^@]+\.[^@]+")
 SUCCESS = "Your request was processed successfully"
 SUCCESSFUL_LOGIN = "The user has been successfully logged into the system"
-
-SITE_URL = "http://127.0.0.1:5000/api/v1/"
 
 
 def login():
@@ -176,6 +177,7 @@ def get_bucket_lists():
     limit = int(request.args.get('limit'))\
         if request.args.get('limit')\
         else 20
+    search_by = request.args.get('q')
     auth_header = request.headers.get('Authorization')
     if auth_header:
         auth_token = auth_header.split(" ")[1]
@@ -187,6 +189,10 @@ def get_bucket_lists():
             user = User.query.filter_by(id=decoded_token).first()
             bucket_lists = user.bucket_lists
             if bucket_lists:
+                if search_by:
+                    bucket_lists = \
+                        bucket_lists.filter(or_(BucketList.title.like(search_by),
+                                                BucketList.description.like(search_by)))
                 response = jsonify(get_paginated_list(bucket_lists, "bucketlists", start, limit, "bucket_lists"))
                 response.status_code = 200
                 return response
@@ -382,6 +388,7 @@ def get_items_in_bucket_list(id):
     limit = int(request.args.get('limit'))\
         if request.args.get('limit')\
         else 20
+    search_by = request.args.get('q')
     auth_header = request.headers.get('Authorization')
     if auth_header:
         auth_token = auth_header.split(" ")[1]
@@ -398,8 +405,15 @@ def get_items_in_bucket_list(id):
                                     'message': 'Bucket list not found'})
                 response.status_code = 404
                 return response
+
+            items = bucket_list.items
+            if search_by:
+                items = \
+                    items.filter(or_(Item.title.like(search_by),
+                                     Item.description.like(search_by)))
+
             path = "bucketlists/" + str(id)
-            response = jsonify(get_paginated_list(bucket_list.items, path, start, limit, "items"))
+            response = jsonify(get_paginated_list(items, path, start, limit, "items"))
             response.status_code = 200
             return response
 
@@ -530,14 +544,14 @@ def get_paginated_list(list_items, path, start, limit, data_name):
         else:
             start_copy = max(1, start - limit)
             limit_copy = start - 1
-            response['previous'] = SITE_URL + path + '?start=%d&limit=%d' % (start_copy, limit_copy)
+            response['previous'] = current_app.config.get('SITE_URL') + path + '?start=%d&limit=%d' % (start_copy, limit_copy)
 
         # make next url
         if start + limit > count:
             response['next'] = ''
         else:
             start_copy = start + limit
-            response['next'] = SITE_URL + path + '?start=%d&limit=%d' % (start_copy, limit)
+            response['next'] = current_app.config.get('SITE_URL') + path + '?start=%d&limit=%d' % (start_copy, limit)
 
         # Construct result according to bounds
         page = list_items[(start - 1):(start - 1 + limit)]

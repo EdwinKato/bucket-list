@@ -79,6 +79,11 @@ paths:
           type: integer
           minimum: 0
           default: 20
+        - name: q
+          description: Search by value
+          in: query
+          type: string
+          minLength: 1
       responses:
         200:
           description: Your request was processed successfully
@@ -174,6 +179,11 @@ paths:
           type: integer
           minimum: 0
           default: 20
+        - name: q
+          description: Search by value
+          in: query
+          type: string
+          minLength: 1
       responses:
         200:
           description: Bucket list has been successfully updated
