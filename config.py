@@ -12,6 +12,7 @@ if os.path.exists('config.env'):
 
 class Config(object):
     APP_NAME = 'bucket-list'
+    SITE_URL = "http://127.0.0.1:5000/api/v1/"
     if os.environ.get('SECRET_KEY'):
         SECRET_KEY = os.environ.get('SECRET_KEY')
     else:
