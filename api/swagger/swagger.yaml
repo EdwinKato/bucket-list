@@ -20,16 +20,16 @@ paths:
         - name: body
           in: body
           required: true
-          description: The login credentials
+          description: Login credentials
           schema:
             $ref: '#/definitions/Login'
       responses:
         200:
-          description: User has been successfully logged in
+          description: The user has been successfully logged into the system
           schema:
             $ref: '#/definitions/User'
-        405:
-          description: Invalid input
+        400:
+          description: Bad request
   /auth/register:
     post:
       tags: [User]
@@ -43,9 +43,9 @@ paths:
             $ref: '#/definitions/User'
       responses:
         200:
-          description: Successful operation
+          description: User has been successfully created
         400:
-          description: "Bad JSON formatting in the request"
+          description: "Bad request"
   /bucketlists:
     post:
       tags: [BucketList]
@@ -58,10 +58,10 @@ paths:
           schema:
             $ref: '#/definitions/BucketList'
       responses:
-        200:
-          description: Bucket list saved successfully
-        405:
-          description: Invalid input
+        201:
+          description: Your request was processed successfully
+        401:
+          description: Please provide a valid auth token
     get:
       tags: [BucketList]
       operationId: api.get_bucket_lists
@@ -75,13 +75,15 @@ paths:
           default: 10
       responses:
         200:
-          description: Successful operation
+          description: Your request was processed successfully
           schema:
             type: array
             items:
               $ref: '#/definitions/BucketList'
         404:
-          description: "There are no bucket lists in the system"
+          description: "There are no bucket lists for the user"
+        401:
+          description: Please provide a valid auth token
   /bucketlists/{id}:
     get:
       tags: [BucketList]
@@ -91,13 +93,15 @@ paths:
         - $ref: '#/parameters/id'
       responses:
         200:
-          description: Successful operation
+          description: Your request was processed successfully
           schema:
             type: array
             items:
               $ref: '#/definitions/BucketList'
         404:
-          description: Bucket list does not exist
+          description: "There are no bucket lists for the user"
+        401:
+          description: Please provide a valid auth token
     put:
       tags: [BucketList]
       operationId: api.put_bucket_list
@@ -110,9 +114,11 @@ paths:
             $ref: '#/definitions/BucketList'
       responses:
         200:
-          description: Bucket list updated
-        201:
-          description: New bucketlist created
+          description: Bucket list has been successfully updated
+        401:
+          description: Please provide a valid auth token
+        404:
+          description: Bucket list not found
     delete:
       tags: [BucketList]
       operationId: api.delete_bucket_list
@@ -121,9 +127,11 @@ paths:
         - $ref: '#/parameters/id'
       responses:
         204:
-          description: Bucket list was deleted
+          description: No Content
         404:
-          description: Bucket list does not exist
+          description: Bucket list not found
+        401:
+          description: Please provide a valid auth token
   /bucketlists/{id}/items:
     post:
       tags: [BucketList]
@@ -136,8 +144,12 @@ paths:
           schema:
             $ref: '#/definitions/Item'
       responses:
-        405:
-          description: Invalid input
+        201:
+          description: Your request was processed successfully
+        404:
+          description: Bucket list not found
+        401:
+          description: Please provide a valid auth token
     get:
       tags: [BucketList]
       operationId: api.get_items_in_bucket_list
@@ -152,11 +164,13 @@ paths:
           default: 10
       responses:
         200:
-          description: Successful operation
+          description: Bucket list has been successfully updated
           schema:
             $ref: "#/definitions/BucketList"
         404:
-            description: Bucket list items do not exist
+          description: Bucket list not found
+        401:
+          description: Please provide a valid auth token
   /bucketlists/{id}/items/{item_id}:
     put:
       tags: [BucketList]
@@ -171,7 +185,11 @@ paths:
             $ref: '#/definitions/Item'
       responses:
         200:
-          description: Bucket list item has been updated
+          description: Bucket list has been successfully updated
+        404:
+          description: Bucket list not found
+        401:
+          description: Please provide a valid auth token
     delete:
       tags: [BucketList]
       operationId: api.delete_bucket_list_item
@@ -181,9 +199,11 @@ paths:
         - $ref: '#/parameters/item_id'
       responses:
         204:
-          description: Bucket list item has been deleted
+          description: No Content
         404:
-          description: The bucket list item you want to delete does not exist!
+          description: Bucket list not found
+        401:
+          description: Please provide a valid auth token
 
 parameters:
   id:

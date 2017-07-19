@@ -37,9 +37,11 @@ def login():
         response.status_code = 400
         return response
     auth_token = user.encode_auth_token(user.id)
-    return jsonify({'status': 'success',
-                    'message': SUCCESSFUL_LOGIN,
-                    'token': auth_token.decode()})
+    response = jsonify({'status': 'success',
+                        'message': SUCCESSFUL_LOGIN,
+                        'token': auth_token.decode()})
+    response.status_code = 200
+    return response
 
 
 def register():
@@ -135,7 +137,7 @@ def add_bucket_list():
             if not user:
                 response = jsonify({'status': 'failed',
                                     'message': 'Unknown user'})
-                response.status_code = 404
+                response.status_code = 401
                 return response
             bucket_list = BucketList(data['title'], data['description'], user)
             if data['status']:
@@ -155,11 +157,12 @@ def add_bucket_list():
             'status': 'failed',
             'message': decoded_token
         })
+        response.status_code = 401
         return response
     else:
         response = jsonify({
             'status': 'failed',
-            'message': 'Provide a valid auth token.'
+            'message': 'Please provide a valid auth token.'
         })
         response.status_code = 401
         return response
@@ -191,8 +194,6 @@ def get_bucket_lists():
                                            'for the user.'})
             response.status_code = 404
             return response
-
-            # end
 
         response = jsonify({
             'status': 'failed',
@@ -281,8 +282,6 @@ def put_bucket_list(id):
                                 }})
             response.status_code = 200
             return response
-
-            # end
 
         response = jsonify({
             'status': 'failed',
