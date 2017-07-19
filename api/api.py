@@ -1,4 +1,5 @@
 from flask import request, jsonify
+from sqlalchemy import or_
 import re
 
 __all__ = ["login", "register", "add_bucket_list", "get_bucket_lists",
@@ -48,45 +49,60 @@ def register():
     email = data['email']
     username = data['username']
     password = data['password']
+    validations = {}
 
     if not first_name.isalpha():
-        response = jsonify({'status': 'failed',
-                            'message': 'First name must be string '
-                                       'alphabet type'})
-        response.status_code = 400
-        return response
+        validations['invalid_first_name'] = 'First name must be of ' \
+                                    'string alphabet type'
+
+    if not first_name:
+        validations['first_name_required'] = 'First name should not ' \
+                                    'should not be left blank'
 
     if not last_name.isalpha():
-        response = jsonify({'status': 'failed',
-                            'message': 'Last name must be string '
-                                       'alphabet type'})
-        response.status_code = 400
-        return response
+        validations['invalid_last_name'] = 'Last name must be of ' \
+                                    'string alphabet type'
+
+    if not last_name:
+        validations['last_name_required'] = 'Last name should not ' \
+                                    'should not be left blank'
+
+    users_with_username = User.query.filter_by(username=username)
+    if users_with_username.count() > 0:
+        validations['username_exists'] = 'Username already exists'
+
+    users_with_email = User.query.filter_by(email=email)
+    if users_with_email.count() > 0:
+        validations['email_exists'] = 'Email already exists'
 
     if not username.isalpha():
-        response = jsonify({'status': 'failed',
-                            'message': 'username must be string '
-                                       'alphabet type'})
-        response.status_code = 400
-        return response
+        validations['invalid_username'] = 'Username must be of ' \
+                                    'string alphabet type'
 
-    if not username or not password:
-        response = jsonify({'status': 'failed',
-                            'error': 'Username or password should'
-                                     ' not be left blank'})
-        response.status_code = 400
-        return response
+    if not username:
+        validations['username_required'] = 'Username should not ' \
+                                    'should not be left blank'
+
+    if not password:
+        validations['password_required'] = 'Password should not ' \
+                                    'should not be left blank'
 
     if not EMAIL_REGEX.match(email):
-        response = jsonify({'status': 'failed',
-                            'message': 'Please specify valid email'
-                                       'address'})
-        return response
+        validations['email_pattern'] = 'Please specify a ' \
+                                    'valid email'
 
     if len(password) < 6:
+        validations['password_length'] = 'Password is too short'
+
+    if validations:
         response = jsonify({'status': 'failed',
-                            'error': 'Password is too short,'
-                            'it must be more than 6 characters'})
+                            'message': {
+                                'validations': {
+                                    key: validations[key]
+                                    for key in validations
+                                }
+                            }
+                            })
         response.status_code = 400
         return response
 
