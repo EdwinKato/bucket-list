@@ -84,6 +84,14 @@ class User(db.Model):
             'username': self.username
         }
 
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
 
 class BucketList(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -123,6 +131,14 @@ class BucketList(db.Model):
             'user_id': self.user.id
         }
 
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
 
 class Item(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -161,3 +177,11 @@ class Item(db.Model):
             'date_created': self.date_created,
             'bucket_list_id': self.bucket_list.id
         }
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
