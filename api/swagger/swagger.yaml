@@ -95,13 +95,13 @@ paths:
           description: "There are no bucket lists for the user"
         401:
           description: Please provide a valid auth token
-  /bucketlists/{id}:
+  /bucketlists/{bucket_list_id}:
     get:
       tags: [BucketList]
       operationId: api.get_bucket_list
       summary: Get bucket list by id
       parameters:
-        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/bucket_list_id'
       responses:
         200:
           description: Your request was processed successfully
@@ -118,7 +118,7 @@ paths:
       operationId: api.put_bucket_list
       summary: Update an existing bucket list
       parameters:
-        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/bucket_list_id'
         - name: bucketlist
           in: body
           schema:
@@ -135,7 +135,7 @@ paths:
       operationId: api.delete_bucket_list
       summary: Remove a bucketlist
       parameters:
-        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/bucket_list_id'
       responses:
         204:
           description: No Content
@@ -143,13 +143,13 @@ paths:
           description: Bucket list not found
         401:
           description: Please provide a valid auth token
-  /bucketlists/{id}/items:
+  /bucketlists/{bucket_list_id}/items:
     post:
       tags: [BucketList]
       operationId: api.create_item_in_bucket_list
       summary: Create a new item in bucket list
       parameters:
-        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/bucket_list_id'
         - name: item
           in: body
           schema:
@@ -166,7 +166,7 @@ paths:
       operationId: api.get_items_in_bucket_list
       summary: Get items in the given bucket list
       parameters:
-        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/bucket_list_id'
         - name: start
           description: The position from which we want the data to be returned
           in: query
@@ -193,13 +193,13 @@ paths:
           description: Bucket list not found
         401:
           description: Please provide a valid auth token
-  /bucketlists/{id}/items/{item_id}:
+  /bucketlists/{bucket_list_id}/items/{item_id}:
     put:
       tags: [BucketList]
       operationId: api.update_bucket_list_item
       summary: Update an existing bucket list item
       parameters:
-        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/bucket_list_id'
         - $ref: '#/parameters/item_id'
         - name: item
           in: body
@@ -217,7 +217,7 @@ paths:
       operationId: api.delete_bucket_list_item
       summary: Remove a bucketlist
       parameters:
-        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/bucket_list_id'
         - $ref: '#/parameters/item_id'
       responses:
         204:
@@ -228,8 +228,8 @@ paths:
           description: Please provide a valid auth token
 
 parameters:
-  id:
-    name: id
+  bucket_list_id:
+    name: bucket_list_id
     description: Bucket list's Unique identifier
     in: path
     type: integer
@@ -373,9 +373,9 @@ definitions:
         example: "Done"
         minLength: 1
         maxLength: 12
-      id:
+      bucket_list_id:
         type: integer
-        description: id of the bucket lis to which the item belongs
+        description: id of the bucket list to which the item belongs
         example: 1
         readOnly: true
       date_created:

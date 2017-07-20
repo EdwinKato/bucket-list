@@ -1,11 +1,9 @@
-import unittest
 import json
 
 from api.test import BaseTestCase
 
 
 class TestLogin(BaseTestCase):
-
 
     def test_login(self):
         """ Test for login of registered-user """

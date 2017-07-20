@@ -23,6 +23,8 @@ SUCCESSFUL_LOGIN = "The user has been successfully logged into the system"
 
 
 def login():
+    """Logs a user in"""
+
     data = request.get_json()
     username = data['username']
     password = data['password']
@@ -47,6 +49,8 @@ def login():
 
 
 def register():
+    """Register a user"""
+
     data = request.get_json()
     first_name = data['first_name']
     last_name = data['last_name']
@@ -57,19 +61,19 @@ def register():
 
     if not first_name.isalpha():
         validations['invalid_first_name'] = 'First name must be of ' \
-                                    'string alphabet type'
+            'string alphabet type'
 
     if not first_name:
         validations['first_name_required'] = 'First name should not ' \
-                                    'should not be left blank'
+            'should not be left blank'
 
     if not last_name.isalpha():
         validations['invalid_last_name'] = 'Last name must be of ' \
-                                    'string alphabet type'
+            'string alphabet type'
 
     if not last_name:
         validations['last_name_required'] = 'Last name should not ' \
-                                    'should not be left blank'
+            'should not be left blank'
 
     users_with_username = User.query.filter_by(username=username)
     if users_with_username.count() > 0:
@@ -81,19 +85,19 @@ def register():
 
     if not username.isalpha():
         validations['invalid_username'] = 'Username must be of ' \
-                                    'string alphabet type'
+            'string alphabet type'
 
     if not username:
         validations['username_required'] = 'Username should not ' \
-                                    'should not be left blank'
+            'should not be left blank'
 
     if not password:
         validations['password_required'] = 'Password should not ' \
-                                    'should not be left blank'
+            'should not be left blank'
 
     if not EMAIL_REGEX.match(email):
         validations['email_pattern'] = 'Please specify a ' \
-                                    'valid email'
+            'valid email'
 
     if len(password) < 6:
         validations['password_length'] = 'Password is too short'
@@ -126,6 +130,8 @@ def register():
 
 
 def add_bucket_list():
+    """Create a new bucket list"""
+
     auth_header = request.headers.get('Authorization')
     if auth_header:
         auth_token = auth_header.split(" ")[1]
@@ -171,6 +177,8 @@ def add_bucket_list():
 
 
 def get_bucket_lists():
+    """Return the created bucket lists"""
+
     start = int(request.args.get('start'))\
         if request.args.get('start')\
         else 1
@@ -190,10 +198,16 @@ def get_bucket_lists():
             bucket_lists = user.bucket_lists
             if bucket_lists:
                 if search_by:
-                    bucket_lists = \
-                        bucket_lists.filter(or_(BucketList.title.like(search_by),
-                                                BucketList.description.like(search_by)))
-                response = jsonify(get_paginated_list(bucket_lists, "bucketlists", start, limit, "bucket_lists"))
+                    bucket_lists = bucket_lists.filter(
+                        or_(BucketList.title.like(search_by),
+                            BucketList.description.like(search_by)))
+                response = jsonify(
+                    get_paginated_list(
+                        bucket_lists,
+                        "bucketlists",
+                        start,
+                        limit,
+                        "bucket_lists"))
                 response.status_code = 200
                 return response
             response = jsonify({'status': 'success',
@@ -216,7 +230,9 @@ def get_bucket_lists():
         return response
 
 
-def get_bucket_list(id):
+def get_bucket_list(bucket_list_id):
+    """Get a single bucket list"""
+
     auth_header = request.headers.get('Authorization')
     if auth_header:
         auth_token = auth_header.split(" ")[1]
@@ -227,7 +243,7 @@ def get_bucket_list(id):
         if not isinstance(decoded_token, str):
             user = User.query.filter_by(id=decoded_token).first()
             bucket_list = BucketList.query.filter_by(
-                id=id, user_id=user.id).first()
+                id=bucket_list_id, user_id=user.id).first()
             if bucket_list:
                 response = jsonify({'status': 'success',
                                     'data': bucket_list.serialize(),
@@ -253,7 +269,9 @@ def get_bucket_list(id):
         return response
 
 
-def put_bucket_list(id):
+def put_bucket_list(bucket_list_id):
+    """Update this bucket list"""
+
     auth_header = request.headers.get('Authorization')
     if auth_header:
         auth_token = auth_header.split(" ")[1]
@@ -265,7 +283,7 @@ def put_bucket_list(id):
             user = User.query.filter_by(id=decoded_token).first()
             data = request.get_json()
             bucket_list = BucketList.query.filter_by(
-                id=id, user_id=user.id).first()
+                id=bucket_list_id, user_id=user.id).first()
             if not bucket_list:
                 response = jsonify({'status': 'failed',
                                     'message': 'Bucket list not found'})
@@ -303,7 +321,9 @@ def put_bucket_list(id):
         return response
 
 
-def delete_bucket_list(id):
+def delete_bucket_list(bucket_list_id):
+    """Delete a single bucket list"""
+
     auth_header = request.headers.get('Authorization')
     if auth_header:
         auth_token = auth_header.split(" ")[1]
@@ -314,7 +334,7 @@ def delete_bucket_list(id):
         if not isinstance(decoded_token, str):
             user = User.query.filter_by(id=decoded_token).first()
             bucket_list = BucketList.query.filter_by(
-                id=id, user_id=user.id).first()
+                id=bucket_list_id, user_id=user.id).first()
             if not bucket_list:
                 response = jsonify({'status': 'failed',
                                     'message': 'Bucket list not found'})
@@ -337,7 +357,9 @@ def delete_bucket_list(id):
         return response
 
 
-def create_item_in_bucket_list(id):
+def create_item_in_bucket_list(bucket_list_id):
+    """Create a new item in bucket list"""
+
     auth_header = request.headers.get('Authorization')
     if auth_header:
         auth_token = auth_header.split(" ")[1]
@@ -348,7 +370,7 @@ def create_item_in_bucket_list(id):
         if not isinstance(decoded_token, str):
             user = User.query.filter_by(id=decoded_token).first()
             bucket_list = BucketList.query.filter_by(
-                id=id, user_id=user.id).first()
+                id=bucket_list_id, user_id=user.id).first()
             if not bucket_list:
                 response = jsonify({'status': 'failed',
                                     'message': 'Bucket list not found'})
@@ -381,7 +403,9 @@ def create_item_in_bucket_list(id):
         return response
 
 
-def get_items_in_bucket_list(id):
+def get_items_in_bucket_list(bucket_list_id):
+    """Get items in a bucket list"""
+
     start = int(request.args.get('start'))\
         if request.args.get('start')\
         else 1
@@ -399,7 +423,7 @@ def get_items_in_bucket_list(id):
         if not isinstance(decoded_token, str):
             user = User.query.filter_by(id=decoded_token).first()
             bucket_list = BucketList.query.filter_by(
-                id=id, user_id=user.id).first()
+                id=bucket_list_id, user_id=user.id).first()
             if not bucket_list:
                 response = jsonify({'status': 'failed',
                                     'message': 'Bucket list not found'})
@@ -412,8 +436,14 @@ def get_items_in_bucket_list(id):
                     items.filter(or_(Item.title.like(search_by),
                                      Item.description.like(search_by)))
 
-            path = "bucketlists/" + str(id)
-            response = jsonify(get_paginated_list(items, path, start, limit, "items"))
+            path = "bucketlists/" + str(bucket_list_id)
+            response = jsonify(
+                get_paginated_list(
+                    items,
+                    path,
+                    start,
+                    limit,
+                    "items"))
             response.status_code = 200
             return response
 
@@ -431,7 +461,8 @@ def get_items_in_bucket_list(id):
         return response
 
 
-def update_bucket_list_item(id, item_id):
+def update_bucket_list_item(bucket_list_id, item_id):
+    """Update a bucket list item"""
 
     auth_header = request.headers.get('Authorization')
     if auth_header:
@@ -443,7 +474,7 @@ def update_bucket_list_item(id, item_id):
         if not isinstance(decoded_token, str):
             user = User.query.filter_by(id=decoded_token).first()
             bucket_list = BucketList.query.filter_by(
-                id=id, user_id=user.id).first()
+                id=bucket_list_id, user_id=user.id).first()
             if not bucket_list:
                 response = jsonify({'status': 'failed',
                                     'message': 'Bucket list not found'})
@@ -487,7 +518,9 @@ def update_bucket_list_item(id, item_id):
         return response
 
 
-def delete_bucket_list_item(id, item_id):
+def delete_bucket_list_item(bucket_list_id, item_id):
+    """Delete an item in a bucket list"""
+
     auth_header = request.headers.get('Authorization')
     if auth_header:
         auth_token = auth_header.split(" ")[1]
@@ -498,7 +531,7 @@ def delete_bucket_list_item(id, item_id):
         if not isinstance(decoded_token, str):
             user = User.query.filter_by(id=decoded_token).first()
             bucket_list = BucketList.query.filter_by(
-                id=id, user_id=user.id).first()
+                id=bucket_list_id, user_id=user.id).first()
             if not bucket_list:
                 response = jsonify({'status': 'failed',
                                     'message': 'Bucket list not found'})
@@ -529,36 +562,42 @@ def delete_bucket_list_item(id, item_id):
 
 
 def get_paginated_list(list_items, path, start, limit, data_name):
-        count = list_items.count()
-        response = {
-            'start': start,
-            'limit': limit,
-            'count': count,
-            'status': 'success',
-            'message': SUCCESS,
-        }
+    """Returns a paginated response"""
 
-        # make previous url
-        if start == 1:
-            response['previous'] = ''
-        else:
-            start_copy = max(1, start - limit)
-            limit_copy = start - 1
-            response['previous'] = current_app.config.get('SITE_URL') + path + '?start=%d&limit=%d' % (start_copy, limit_copy)
+    count = list_items.count()
+    response = {
+        'start': start,
+        'limit': limit,
+        'count': count,
+        'status': 'success',
+        'message': SUCCESS,
+    }
 
-        # make next url
-        if start + limit > count:
-            response['next'] = ''
-        else:
-            start_copy = start + limit
-            response['next'] = current_app.config.get('SITE_URL') + path + '?start=%d&limit=%d' % (start_copy, limit)
+    # make previous url
+    if start == 1:
+        response['previous'] = ''
+    else:
+        start_copy = max(1, start - limit)
+        limit_copy = start - 1
+        response['previous'] = current_app.config.get(
+            'SITE_URL') + path + '?start=%d&limit=%d'\
+                                 % (start_copy, limit_copy)
 
-        # Construct result according to bounds
-        page = list_items[(start - 1):(start - 1 + limit)]
-        response['data'] = {
-            data_name: [data.serialize() for data in page]
-        }
-        return response
+    # make next url
+    if start + limit > count:
+        response['next'] = ''
+    else:
+        start_copy = start + limit
+        response['next'] = current_app.config.get(
+            'SITE_URL') + path + '?start=%d&limit=%d' % (start_copy, limit)
+
+    # Construct result according to bounds
+    page = list_items[(start - 1):(start - 1 + limit)]
+    response['data'] = {
+        data_name: [data.serialize() for data in page]
+    }
+    return response
+
 
 from api.models import User, BucketList, Item
 from api import db
