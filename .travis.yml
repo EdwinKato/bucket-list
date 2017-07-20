@@ -8,6 +8,7 @@ install:
 script:
   - "python -m unittest discover -s api/tests/"
   - "coverage run -m unittest discover -s api/tests/"
+  - "python-codacy-coverage -r coverage.xml"
 after_success: coveralls
 notifications:
   slack: andela:czTH1K9R39l0e6MwUUi4RnFc
