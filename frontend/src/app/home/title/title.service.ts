@@ -4,7 +4,7 @@ import { Http } from '@angular/http';
 @Injectable()
 export class Title {
 
-  public value = 'Angular 2';
+  public value = 'yobucketlist';
 
   constructor(
     public http: Http

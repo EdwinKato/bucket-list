@@ -15,6 +15,8 @@ const DefinePlugin = require('webpack/lib/DefinePlugin');
 const NamedModulesPlugin = require('webpack/lib/NamedModulesPlugin');
 const LoaderOptionsPlugin = require('webpack/lib/LoaderOptionsPlugin');
 
+
+
 /**
  * Webpack Constants
  */
@@ -186,6 +188,23 @@ module.exports = function (options) {
       //   { filepath: helpers.root(`dll/${DllBundlesPlugin.resolveFile('polyfills')}`) },
       //   { filepath: helpers.root(`dll/${DllBundlesPlugin.resolveFile('vendor')}`) }
       // ]),
+
+      new AddAssetHtmlPlugin([
+        { filepath: helpers.root('src/assets/js', 'jquery-3.1.0.min.js'), includeSourcemap: false },
+        { filepath: helpers.root('src/assets/js', 'bootstrap.min.js'), includeSourcemap: false },
+        { filepath: helpers.root('src/assets/js', 'arrive.min.js'), includeSourcemap: false },
+        { filepath: helpers.root('src/assets/js', 'material.min.js'), includeSourcemap: false },
+        { filepath: helpers.root('src/assets/js', 'bootstrap-notify.js'), includeSourcemap: false },
+        { filepath: helpers.root('src/assets/js', 'material-dashboard.js'), includeSourcemap: false },
+        { filepath: helpers.root('src/assets/js', 'demo.js'), includeSourcemap: false },
+
+        { filepath: helpers.root('node_modules/core-js/client', 'shim.min.js'), includeSourcemap: false },
+        { filepath: helpers.root('node_modules/zone.js/dist', 'zone.js'), includeSourcemap: false },
+        { filepath: helpers.root('node_modules/reflect-metadata', 'Reflect.js'), includeSourcemap: false }
+        // { filepath: helpers.root('node_modules/systemjs/dist', 'system.src.js'), includeSourcemap: false },
+        // { filepath: helpers.root('node_modules/jquery/dist', 'jquery.js'), includeSourcemap: false }
+        
+      ]),
 
       /**
        * Plugin: NamedModulesPlugin (experimental)

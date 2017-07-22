@@ -29,8 +29,23 @@ import { AboutComponent } from './about';
 import { NoContentComponent } from './no-content';
 import { XLargeDirective } from './home/x-large';
 
-import '../styles/styles.scss';
-import '../styles/headings.css';
+// Template
+import { DashboardComponent } from './dashboard/dashboard.component';
+
+import { DashboardModule } from './dashboard/dashboard.module';
+import { SidebarModule } from './sidebar/sidebar.module';
+import { FooterModule } from './shared/footer/footer.module';
+import { NavbarModule} from './shared/navbar/navbar.module';
+
+import '../styles/styles.scss'
+// import '../styles/bootstrap.min.css'
+import '../styles/material-dashboard.scss'
+import '../styles/demo.css'
+
+import * as $ from 'jquery';
+
+window["$"] = $;
+window["jQuery"] = $;
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -51,6 +66,7 @@ type StoreType = {
   bootstrap: [ AppComponent ],
   declarations: [
     AppComponent,
+    DashboardComponent,
     AboutComponent,
     HomeComponent,
     NoContentComponent,
@@ -61,6 +77,10 @@ type StoreType = {
    */
   imports: [
     BrowserModule,
+    DashboardModule,
+    SidebarModule,
+    NavbarModule,
+    FooterModule,
     FormsModule,
     HttpModule,
     RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules })

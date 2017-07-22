@@ -7,76 +7,61 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { AppState } from './app.service';
+import $ from 'jquery';
+import {LocationStrategy, PlatformLocation, Location} from '@angular/common';
 
 /**
  * App Component
  * Top Level Component
  */
+// @Component({
+//   selector: 'app',
+//   encapsulation: ViewEncapsulation.None,
+//   styleUrls: [
+//     './app.component.css'
+//   ],
+//   templateUrl: 'app.component.html'
+// })
+// export class AppComponent implements OnInit {
+//   public cover = 'assets/img/cover.jpeg';
+//   public name = 'yobucketlist';
+//   public url = 'https://yobucketlist.herokuapp.com';
+
+//   constructor(
+//     public appState: AppState
+//   ) {}
+
+//   public ngOnInit() {
+//     console.log('Initial App State', this.appState.state);
+//     $.getScript('../assets/js/material-dashboard.js');
+//     $.getScript('../assets/js/initMenu.js');
+//   }
+
+// }
+
 @Component({
-  selector: 'app',
-  encapsulation: ViewEncapsulation.None,
-  styleUrls: [
-    './app.component.css'
-  ],
-  template: `
-    <nav>
-      <a [routerLink]=" ['./'] "
-        routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-        Index
-      </a>
-      <a [routerLink]=" ['./home'] "
-        routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-        Home
-      </a>
-      <a [routerLink]=" ['./detail'] "
-        routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-        Detail
-      </a>
-      <a [routerLink]=" ['./barrel'] "
-        routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-        Barrel
-      </a>
-      <a [routerLink]=" ['./about'] "
-        routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-        About
-      </a>
-    </nav>
-
-    <main>
-      <router-outlet></router-outlet>
-    </main>
-
-    <pre class="app-state">this.appState.state = {{ appState.state | json }}</pre>
-
-    <footer>
-      <span>WebPack Angular 2 Starter by <a [href]="url">@AngularClass</a></span>
-      <div>
-        <a [href]="url">
-          <img [src]="angularclassLogo" width="25%">
-        </a>
-      </div>
-    </footer>
-  `
+    selector: 'app',
+    moduleId: "module.id",
+    templateUrl: 'app.component.html'
 })
-export class AppComponent implements OnInit {
-  public angularclassLogo = 'assets/img/angularclass-avatar.png';
-  public name = 'Angular 2 Webpack Starter';
-  public url = 'https://twitter.com/AngularClass';
 
-  constructor(
-    public appState: AppState
-  ) {}
-
-  public ngOnInit() {
-    console.log('Initial App State', this.appState.state);
-  }
-
+export class AppComponent implements OnInit{
+    location: Location;
+    constructor(location:Location) {
+        this.location = location;
+    }
+    ngOnInit(){
+        $.getScript('../assets/js/material-dashboard.js');
+        $.getScript('../assets/js/initMenu.js');
+    }
+    public isMaps(path){
+        var titlee = this.location.prepareExternalUrl(this.location.path());
+        titlee = titlee.slice( 1 );
+        if(path == titlee){
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
 }
-
-/**
- * Please review the https://github.com/AngularClass/angular2-examples/ repo for
- * more angular app examples that you may copy/paste
- * (The examples may not be updated as quickly. Please open an issue on github for us to update it)
- * For help or questions please contact us at @AngularClass on twitter
- * or our chat on Slack at https://AngularClass.com/slack-join
- */
