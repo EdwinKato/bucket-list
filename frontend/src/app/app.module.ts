@@ -24,10 +24,7 @@ import { ROUTES } from './app.routes';
 import { AppComponent } from './app.component';
 import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { AppState, InternalStateType } from './app.service';
-import { HomeComponent } from './home';
-import { AboutComponent } from './about';
 import { NoContentComponent } from './no-content';
-import { XLargeDirective } from './home/x-large';
 
 // Template
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -38,7 +35,7 @@ import { FooterModule } from './shared/footer/footer.module';
 import { NavbarModule} from './shared/navbar/navbar.module';
 
 import '../styles/styles.scss'
-// import '../styles/bootstrap.min.css'
+import '../styles/material-dashboard.css'
 import '../styles/material-dashboard.scss'
 import '../styles/demo.css'
 
@@ -67,10 +64,7 @@ type StoreType = {
   declarations: [
     AppComponent,
     DashboardComponent,
-    AboutComponent,
-    HomeComponent,
-    NoContentComponent,
-    XLargeDirective
+    NoContentComponent
   ],
   /**
    * Import Angular's modules.
