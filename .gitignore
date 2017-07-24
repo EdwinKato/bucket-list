@@ -151,17 +151,18 @@ npm-debug.log
 /tsd_typings/
 
 # Dist #
-/dist
-/public/__build__/
-/src/*/__build__/
-/__build__/**
-/public/dist/
-/src/*/dist/
-/dist/**
-/.awcache
+dist/
+public/__build__/
+src/*/__build__/
+__build__/**
+public/dist/
+src/*/dist/
+dist/**
+.awcache/
 .webpack.json
 /compiled/
 dll/
+
 
 # Doc #
 /doc/
@@ -176,3 +177,5 @@ dll/
 *.css.shim.ts
 *.ngsummary.json
 *.shim.ngstyle.ts
+
+

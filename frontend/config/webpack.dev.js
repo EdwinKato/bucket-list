@@ -199,7 +199,6 @@ module.exports = function (options) {
         { filepath: helpers.root('src/assets/js', 'demo.js'), includeSourcemap: false },
 
         { filepath: helpers.root('node_modules/core-js/client', 'shim.min.js'), includeSourcemap: false },
-        { filepath: helpers.root('node_modules/zone.js/dist', 'zone.js'), includeSourcemap: false },
         { filepath: helpers.root('node_modules/reflect-metadata', 'Reflect.js'), includeSourcemap: false }
         // { filepath: helpers.root('node_modules/systemjs/dist', 'system.src.js'), includeSourcemap: false },
         // { filepath: helpers.root('node_modules/jquery/dist', 'jquery.js'), includeSourcemap: false }
