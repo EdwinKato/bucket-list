@@ -2,23 +2,21 @@ import { Route } from '@angular/router';
 import { DashboardComponent } from './dashboard.component';
 import { HomeComponent } from './home/home.component';
 import { UserComponent } from './user/user.component';
-import { BucketListsComponent } from './bucket-lists/bucket-lists.component';
-import { BucketListDetailComponent } from './bucket-lists/bucket-list-detail.component';
+import { LoginComponent } from '../login/login.component';
 import { ItemsComponent } from './items/items.component';
+import { AuthGuard } from '../services/auth-guard.service';
 
 export const MODULE_ROUTES: Route[] =[
-    { path: 'dashboard', component: HomeComponent },
-    { path: 'user', component: UserComponent },
-    { path: 'bucket-lists', component: BucketListsComponent },
-    { path: 'bucket-list-detail', component: BucketListDetailComponent },
-    { path: 'items', component: ItemsComponent },
-    { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
+    { path: 'dashboard', component: HomeComponent, canActivate: [AuthGuard] },
+    { path: 'user', component: UserComponent, canActivate: [AuthGuard] },
+    { path: 'login', component: LoginComponent },
+    { path: 'items', component: ItemsComponent, canActivate: [AuthGuard] },
+    { path: '', redirectTo: 'login', pathMatch: 'full' }
 ]
 
 export const MODULE_COMPONENTS = [
     HomeComponent,
     UserComponent,
-    BucketListsComponent,
-    BucketListDetailComponent,
+    LoginComponent,
     ItemsComponent,
 ]

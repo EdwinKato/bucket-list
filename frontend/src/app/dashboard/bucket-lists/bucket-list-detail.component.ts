@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core'
-import { BucketList} from './BucketList'
+import { BucketList} from '../../models/bucket-list'
 
 
 @Component({

@@ -1,0 +1,47 @@
+<div class="main-content">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header" data-background-color="red">
+                    <h4 class="title">Bucket list</h4>
+                    <p class="category">Edit your bucket list</p>
+                </div>
+                <div class="card-content">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group form-black label-floating is-empty">
+                                    <label class="control-label">Title</label>
+                                    <input type="text" [(ngModel)]="bucketList.title" class="form-control" name="title">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group form-black label-floating is-empty">
+                                    <label class="control-label">Description</label>
+                                    <input type="text" [(ngModel)]="bucketList.description" class="form-control" name="description">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group form-black label-floating is-empty">
+                                    <label class="control-label">Status</label>
+                                    <input type="text" class="form-control" [(ngModel)]="bucketList.status" name="status">
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="material-icons right btn btn-danger pull-right">Save</button>
+                        <div class="clearfix"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
