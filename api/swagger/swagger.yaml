@@ -186,7 +186,7 @@ paths:
           minLength: 1
       responses:
         200:
-          description: Bucket list has been successfully updated
+          description: Your request was processed successfully
           schema:
             $ref: "#/definitions/BucketList"
         404:
@@ -194,6 +194,22 @@ paths:
         401:
           description: Please provide a valid auth token
   /bucketlists/{bucket_list_id}/items/{item_id}:
+    get:
+      tags: [BucketList]
+      operationId: api.get_bucket_list_item
+      summary: Get an existing bucket list item
+      parameters:
+        - $ref: '#/parameters/bucket_list_id'
+        - $ref: '#/parameters/item_id'
+      responses:
+        200:
+          description: Your request was processed successfully
+          schema:
+            $ref: "#/definitions/Item"
+        404:
+          description: Bucket list item not found
+        401:
+          description: Please provide a valid auth token
     put:
       tags: [BucketList]
       operationId: api.update_bucket_list_item
