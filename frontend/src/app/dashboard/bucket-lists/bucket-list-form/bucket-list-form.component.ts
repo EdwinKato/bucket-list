@@ -4,7 +4,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { BucketList } from '../../../models/bucket-list';
 import { BucketListsService } from '../../../services/bucket-lists.service';
-import { BasicValidators } from '../../../utils/basic-validators';
 
 @Component({
   selector: 'app-bucket-list-form',

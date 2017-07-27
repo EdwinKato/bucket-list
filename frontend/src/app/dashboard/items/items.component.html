@@ -28,9 +28,9 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let item of items">
-                                <td>{{item.id}}</td>
-                                <td>{{item.title}}</td>
-                                <td>{{item.description}}</td>
+                                <td>{{ item.id }}</td>
+                                <td>{{ item.title }}</td>
+                                <td>{{ item.description }}</td>
                                 <td class="text-danger">{{ item.status }}</td>
                                 <td>
                                     <a routerLink="/layout/bucket-lists/{{bucket_list_id}}/items/{{item.id}}">

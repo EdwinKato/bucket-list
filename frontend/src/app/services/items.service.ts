@@ -16,42 +16,48 @@ export class ItemsService {
 
   constructor(private http: Http) {
     // set token if saved in local storage
-    var currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    let currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.token = currentUser && currentUser.token;
     this.headers = getHeaders();
     this.headers.set('Authorization', `Bearer ${this.token}`);
   }
 
-  getItems(bucket_list_id){
-    return this.http.get(this.getBucketListUrl(bucket_list_id), {headers: this.headers})
-      .map(response => response.json());
+  public getItems(bucket_list_id) {
+    return this.http.get(this.getBucketListUrl(bucket_list_id), { headers: this.headers })
+      .map((response) => response.json());
   }
 
-  getItem(bucket_list_id, item_id){
-    return this.http.get(this.getItemUrl(bucket_list_id, item_id), {headers: this.headers})
-      .map(response => response.json());
+  public getItem(bucket_list_id, item_id) {
+    return this.http.get(this.getItemUrl(bucket_list_id, item_id), { headers: this.headers })
+      .map((response) => response.json());
   }
 
-  addItem(bucket_list_id, item){
-    return this.http.post(this.getBucketListUrl(bucket_list_id), JSON.stringify(item), {headers: this.headers})
-      .map(response => response.json());
+  public addItem(bucket_list_id, item) {
+    return this.http.post(
+      this.getBucketListUrl(bucket_list_id),
+      JSON.stringify(item), { headers: this.headers }
+    )
+      .map((response) => response.json());
   }
 
-  updateItem(bucket_list_id, item){
-    return this.http.put(this.getItemUrl(bucket_list_id, item.id), JSON.stringify(item), {headers: this.headers})
-      .map(response => response.json());
+  public updateItem(bucket_list_id, item) {
+    return this.http.put(
+      this.getItemUrl(bucket_list_id, item.id),
+      JSON.stringify(item), { headers: this.headers }
+    )
+      .map((response) => response.json());
   }
 
-  deleteItem(bucket_list_id, item_id){
-    return this.http.delete(this.getItemUrl(bucket_list_id, item_id), {headers: this.headers})
-      .map(response => response.json());
+  public deleteItem(bucket_list_id, item_id) {
+    return this.http.delete(this.getItemUrl(bucket_list_id, item_id), { headers: this.headers })
+      .map((response) => response.json());
   }
 
-  private getItemUrl(id, item_id){
-    return this.url + "/" + id + "/items/" + item_id;
+  private getItemUrl(id, item_id) {
+    return this.getBucketListUrl(id) + '/' + item_id;
   }
 
-  private getBucketListUrl(id){
-    return this.url + "/" + id + "/items";
+  private getBucketListUrl(id) {
+    return this.url + '/' + id + '/items';
   }
 }

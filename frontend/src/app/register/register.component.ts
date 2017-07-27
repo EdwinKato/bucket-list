@@ -1,28 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
- 
+
 import { AuthenticationService } from '../services/authentication.service';
- 
+
 @Component({
-    moduleId: "",
     templateUrl: 'register.component.html'
 })
- 
+
 export class RegisterComponent implements OnInit {
-    model: any = {};
-    loading = false;
-    error = '';
- 
+    private model: any = {};
+    private loading = false;
+    private error = '';
+
     constructor(
         private router: Router,
         private authenticationService: AuthenticationService) { }
- 
-    ngOnInit() {
+
+    public ngOnInit() {
         // reset login status
         this.authenticationService.logout();
     }
- 
-    register() {
+
+    private register() {
         this.loading = true;
         this.authenticationService.register(
             this.model.email,
@@ -31,15 +30,15 @@ export class RegisterComponent implements OnInit {
             this.model.username,
             this.model.password
             )
-            .subscribe(result => {
+            .subscribe((result) => {
                 if (result === true) {
                     this.router.navigate(['/layout/dashboard']);
                 } else {
                     this.error = 'Registration failed, Please try again';
                 }
             },
-            error => {
-                console.log(error)
+            (error) => {
+                console.log(error);
                 this.error = 'Registration failed, Please try again';
             }
             );
