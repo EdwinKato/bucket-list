@@ -1,18 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Item } from '../../models/Item'
+import { Router, ActivatedRoute } from '@angular/router';
 
-const ITEM: Item[] = [
-  { id: 11, title: 'Travel', description: 'Places i want to visit', status: 'Pending' },
-  { id: 12, title: 'Movies', description: 'Movies i want to watch this year', status: 'Pending' },
-  { id: 13, title: 'Travel', description: 'Places i want to visit', status: 'Pending' },
-  { id: 14, title: 'Travel', description: 'Places i want to visit', status: 'Pending' },
-  { id: 15, title: 'Travel', description: 'Places i want to visit', status: 'Pending' },
-  { id: 16, title: 'Travel', description: 'Places i want to visit', status: 'Pending' },
-  { id: 17, title: 'Travel', description: 'Places i want to visit', status: 'Pending' },
-  { id: 18, title: 'Travel', description: 'Places i want to visit', status: 'Pending' },
-  { id: 19, title: 'Travel', description: 'Places i want to visit', status: 'Pending' },
-  { id: 20, title: 'Travel', description: 'Places i want to visit', status: 'Pending' },
-];
+import { Item } from '../../models/Item'
+import { ItemsService } from '../../services/items.service';
+
 
 @Component({
     selector: 'user-cmp',
@@ -21,13 +12,55 @@ const ITEM: Item[] = [
 })
 
 export class ItemsComponent implements OnInit{
-    bucketlists = ITEM;
-    selectedBucketList: Item;
-    ngOnInit(){
-        // $.getScript('../../../assets/js/material-dashboard.js');
+    items: Item[];
+    bucket_list_title: string;
+    message = "";
+    bucket_list_id: number
 
+    constructor(
+        private router: Router,
+        private route: ActivatedRoute,
+        private itemsService: ItemsService
+    ) {
     }
-    onSelect(bucketlist: Item): void {
-        this.selectedBucketList = bucketlist;
+
+    ngOnInit() {
+        var id = this.route.params.subscribe(params => {
+            this.bucket_list_id = params['id'];
+
+            if (!this.bucket_list_id)
+                return;
+
+            this.itemsService.getItems(this.bucket_list_id)
+                .subscribe(response => {
+                    if(response.count === 0){
+                        this.message = "There no items in this bucket list"
+                    }
+                    this.items = response.data.items;
+                    if (response.status == 404) {
+                        this.router.navigate(['NotFound']);
+                    }
+                });
+        });
     }
+
+    deleteItem(item) {
+        if (confirm("Are you sure you want to delete " + item.title + "?")) {
+            var index = this.items.indexOf(item);
+            this.items.splice(index, 1);
+
+            this.itemsService.deleteItem(this.bucket_list_id, item.id)
+                .subscribe(response => {
+                    if(response.status_code == 204){
+                        this.message = "Successfully deleted"
+                    }
+                },
+                err => {
+                    alert("Could not delete bucket list.");
+                    // Revert the view back to its original state
+                    this.items.splice(index, 0, item);
+                });
+        }
+    }
+
 }

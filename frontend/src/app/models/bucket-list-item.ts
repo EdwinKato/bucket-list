@@ -1,4 +1,4 @@
-export class BucketList {
+export class BucketListItem {
     public id: number;
     public title: string;
     public status: string;

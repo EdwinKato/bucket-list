@@ -39,7 +39,7 @@ export class BucketListsComponent implements OnInit{
         this.selectedBucketList = bucketlist;
     }
 
-    deleteUser(bucketList) {
+    deleteBucketList(bucketList) {
         if (confirm("Are you sure you want to delete " + bucketList.title + "?")) {
             var index = this.bucketLists.indexOf(bucketList);
             this.bucketLists.splice(index, 1);

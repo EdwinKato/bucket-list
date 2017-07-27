@@ -40,12 +40,12 @@
                                         </a>
                                     </td>
                                     <td>
-                                        <a (click)="deleteUser(bucketlist)" href="">
+                                        <a (click)="deleteBucketList(bucketlist)" href="">
                                             <i class="material-icons">delete</i>
                                         </a>
                                     </td>
                                     <td>
-                                        <a href="">
+                                        <a routerLink="/layout/bucket-lists/{{bucketlist.id}}/items">
                                             <i class="material-icons">list</i>
                                         </a>
                                     </td>

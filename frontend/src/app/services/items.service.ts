@@ -8,7 +8,7 @@ import { Observable } from 'rxjs/Rx';
 import { getHeaders } from '../utils/utils'
 
 @Injectable()
-export class BucketListsService {
+export class ItemsService {
   public token: string;
   public headers: Headers;
 

@@ -9,6 +9,7 @@ import { BucketListsModule } from "./bucket-lists/bucket-lists.module";
 import { AuthGuard } from '../services/auth-guard.service';
 import { AuthenticationService } from '../services/authentication.service';
 import { UserService } from '../services/user.service';
+import { ItemsService } from '../services/items.service';
 
 @NgModule({
     imports: [
@@ -22,7 +23,8 @@ import { UserService } from '../services/user.service';
     providers: [
         AuthGuard,
         AuthenticationService,
-        UserService
+        UserService,
+        ItemsService
     ]
 
 })
