@@ -5,11 +5,12 @@ import { AuthenticationService } from '../services/authentication.service';
  
 @Component({
     moduleId: "",
-    templateUrl: 'login.component.html'
+    templateUrl: 'register.component.html'
 })
  
-export class LoginComponent implements OnInit {
+export class RegisterComponent implements OnInit {
     model: any = {};
+    loading = false;
     error = '';
  
     constructor(
@@ -21,18 +22,25 @@ export class LoginComponent implements OnInit {
         this.authenticationService.logout();
     }
  
-    login() {
-        this.authenticationService.login(this.model.username, this.model.password)
+    register() {
+        this.loading = true;
+        this.authenticationService.register(
+            this.model.email,
+            this.model.firstname,
+            this.model.lastname,
+            this.model.username,
+            this.model.password
+            )
             .subscribe(result => {
                 if (result === true) {
                     this.router.navigate(['/layout/dashboard']);
                 } else {
-                    this.error = 'Username or password is incorrect';
+                    this.error = 'Registration failed, Please try again';
                 }
             },
             error => {
                 console.log(error)
-                this.error = 'Username or password is incorrect';
+                this.error = 'Registration failed, Please try again';
             }
             );
     }

@@ -25,15 +25,12 @@ import { AppComponent } from './app.component';
 import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { AppState, InternalStateType } from './app.service';
 import { NoContentComponent } from './no-content';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+
 
 // Template
-// import { DashboardComponent } from './dashboard/dashboard.component';
 import { LayoutModule } from './layout/layout.module';
-
-// import { DashboardModule } from './dashboard/dashboard.module';
-// import { SidebarModule } from './sidebar/sidebar.module';
-// import { FooterModule } from './shared/footer/footer.module';
-// import { NavbarModule} from './shared/navbar/navbar.module';
 
 import '../styles/styles.scss'
 import '../styles/material-dashboard.css'
@@ -64,7 +61,9 @@ type StoreType = {
   bootstrap: [ AppComponent ],
   declarations: [
     AppComponent,
-    NoContentComponent
+    NoContentComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   /**
    * Import Angular's modules.

@@ -1,50 +1,69 @@
 <div class="main-content">
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-7">
-            <div class="card">
-                <div class="card-header" data-background-color="red">
-                    <h4 class="title">Bucket lists</h4>
-                    <p class="category">Here is a list of your bucket lists</p>
-                </div>
-                <div class="card-content table-responsive">
-                    <table class="table table-hover">
-                        <thead class="text-danger">
-                            <tr>
-                                <th>id</th>
-                                <th>Title</th>
-                                <th>Description</th>
-                                <th>Status</th>
-                                <th>Edit</th>
-                                <th>Delete</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let bucketlist of bucketLists" [class.active]="bucketlist === selectedBucketList" (click)="onSelect(bucketlist)">
-                                <td>{{bucketlist.id}}</td>
-                                <td>{{bucketlist.title}}</td>
-                                <td>{{bucketlist.description}}</td>
-                                <td class="text-danger">{{bucketlist.status}}</td>
-                                <td>
-                                    <a [routerLink]="['/bucket-lists', bucketlist.id]">
-                                        <i class="material-icons">mode_edit</i>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-7">
+                <div class="card">
+                    <div class="card-header" data-background-color="red">
+                        <h4 class="title">Bucket lists</h4>
+                        <p class="category">Here is a list of your bucket lists</p>
+                    </div>
+                    <div class="card-content table-responsive">
+                        <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+                            <a class="btn-floating btn-large waves-effect waves-light green"
+                                routerLink="/layout/bucket-lists/new">
+                                Create new bucket list<i class="material-icons">add</i>
+                            </a>
+                        </div>
+                        <div *ngIf="message" class="alert alert-success">{{message}}</div>
+                        <table class="table table-hover">
+                            <thead class="text-danger">
+                                <tr>
+                                    <th>id</th>
+                                    <th>Title</th>
+                                    <th>Description</th>
+                                    <th>Status</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                    <th>View items</th>
+                                    <th>Add item</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let bucketlist of bucketLists" [class.active]="bucketlist === selectedBucketList" (click)="onSelect(bucketlist)">
+                                    <td>{{bucketlist.id}}</td>
+                                    <td>{{bucketlist.title}}</td>
+                                    <td>{{bucketlist.description}}</td>
+                                    <td class="text-danger">{{bucketlist.status}}</td>
+                                    <td>
+                                        <a [routerLink]="['/layout/bucket-lists', bucketlist.id]">
+                                            <i class="material-icons">mode_edit</i>
                                         </a>
-                                </td>
-                                <td>
-                                    <a (click)="deleteUser(bucketlist)" href="">
-                                        <i class="material-icons">delete</i>
-                                    </a>
-                                </td>
-                            </tr>
-                        </tbody>
-                        <div class="clearfix"></div>
-                    </table>
+                                    </td>
+                                    <td>
+                                        <a (click)="deleteUser(bucketlist)" href="">
+                                            <i class="material-icons">delete</i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="">
+                                            <i class="material-icons">list</i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="">
+                                            <i class="material-icons">queue</i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <div class="clearfix"></div>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-5">
-            <bucket-list-detail [bucketlist]="selectedBucketList" ></bucket-list-detail>
+            <div class="col-md-5">
+                <bucket-list-detail [bucketlist]="selectedBucketList" ></bucket-list-detail>
+            </div>
         </div>
     </div>
-</div>
 </div>

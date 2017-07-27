@@ -14,20 +14,24 @@ import { BUCKETLISTS } from '../../models/mock-bucket-lists';
 export class BucketListsComponent implements OnInit{
     bucketLists: BucketList[];
     selectedBucketList: BucketList;
+    count: number;
+    response: any;
+    message = '';
 
     constructor(private bucketListsService: BucketListsService) { }
 
-    // getBucketLists(): void {
-    //     this.bucketListsService.getBucketLists().then(bucketLists => this.bucketLists = bucketLists);
-    // }
-
     ngOnInit(): void {
-        // this.getBucketLists();
 
-        // this.bucketListsService.getBucketLists()
-        //     .subscribe(data => this.bucketLists = data);
-
-        this.bucketLists = BUCKETLISTS;
+        this.bucketListsService.getBucketLists()
+            .subscribe(data => {
+                this.bucketLists = data.data.bucket_lists
+                this.count = data.count;
+                this.response = data;
+            },
+            error => {
+                console.log(error)
+            }
+            );
 
     }
 
@@ -41,7 +45,12 @@ export class BucketListsComponent implements OnInit{
             this.bucketLists.splice(index, 1);
 
             this.bucketListsService.deleteBucketList(bucketList.id)
-                .subscribe(null,
+                .subscribe(response => {
+                    if(response.status_code == 204){
+                        this.message = "Successfully deleted"
+                    }
+                },
+                // .subscribe(null,
                 err => {
                     alert("Could not delete bucket list.");
                     // Revert the view back to its original state

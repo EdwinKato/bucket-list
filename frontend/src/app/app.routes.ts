@@ -5,6 +5,7 @@ import { LayoutComponent } from './layout/layout.component';
 import { HomeComponent } from './dashboard/home/home.component';
 import { UserComponent } from './dashboard/user/user.component';
 import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 import { ItemsComponent } from './dashboard/items/items.component';
 import { BucketListsComponent } from './dashboard/bucket-lists/bucket-lists.component';
 import { BucketListDetailComponent } from './dashboard/bucket-lists/bucket-list-detail.component';
@@ -24,5 +25,6 @@ export const ROUTES: Routes = [
     ]
   },
   { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
   { path: '', redirectTo: 'login', pathMatch: 'full' }
 ];

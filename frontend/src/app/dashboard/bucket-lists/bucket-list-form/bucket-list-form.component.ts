@@ -15,63 +15,45 @@ export class BucketListFormComponent implements OnInit {
   form: FormGroup;
   title: string;
   bucketList: BucketList = new BucketList();
+  id: number;
 
   constructor(
-    formBuilder: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
     private bucketListsService: BucketListsService
   ) {
-    this.form = formBuilder.group({
-      name: ['', [
-        Validators.required,
-        Validators.minLength(3)
-      ]],
-      email: ['', [
-        Validators.required,
-        BasicValidators.email
-        //Validators.pattern("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
-      ]],
-      phone: [],
-      address: formBuilder.group({
-        street: ['', Validators.minLength(3)],
-        suite: [],
-        city: ['', Validators.maxLength(30)],
-        zipcode: ['', Validators.pattern('^([0-9]){5}([-])([0-9]){4}$')]
-      })
-    });
   }
 
   ngOnInit() {
     var id = this.route.params.subscribe(params => {
-      var id = params['id'];
+      this.id = params['id'];
 
-      this.title = id ? 'Edit User' : 'New User';
+      this.title = this.id ? 'Edit bucket list' : 'New bucket list';
 
-      if (!id)
+      if (!this.id)
         return;
 
-      this.bucketListsService.getBucketList(id)
-        .subscribe(
-          bucketList => this.bucketList = bucketList,
-          response => {
-            if (response.status == 404) {
-              this.router.navigate(['NotFound']);
-            }
-          });
+      this.bucketListsService.getBucketList(this.id)
+        .subscribe(response => {
+          this.bucketList = response.data;
+          if (response.status == 404) {
+            this.router.navigate(['NotFound']);
+          }
+        });
     });
   }
 
   save() {
-    var result,
-        bucketListValue = this.form.value;
+    let result: any;
+    console.log(this.bucketList.title)
 
-    if (bucketListValue.id){
-      result = this.bucketListsService.updateBucketList(bucketListValue);
+    if (this.id){
+      result = this.bucketListsService.updateBucketList(this.bucketList);
     } else {
-      result = this.bucketListsService.addBucketList(bucketListValue);
+      result = this.bucketListsService.addBucketList(this.bucketList);
     }
 
-    result.subscribe(data => this.router.navigate(['bucketLists']));
+    result.subscribe(data => this.router.navigate(['layout/bucket-lists']));
+
   }
 }
