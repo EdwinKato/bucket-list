@@ -27,12 +27,13 @@ import { AppState, InternalStateType } from './app.service';
 import { NoContentComponent } from './no-content';
 
 // Template
-import { DashboardComponent } from './dashboard/dashboard.component';
+// import { DashboardComponent } from './dashboard/dashboard.component';
+import { LayoutModule } from './layout/layout.module';
 
-import { DashboardModule } from './dashboard/dashboard.module';
-import { SidebarModule } from './sidebar/sidebar.module';
-import { FooterModule } from './shared/footer/footer.module';
-import { NavbarModule} from './shared/navbar/navbar.module';
+// import { DashboardModule } from './dashboard/dashboard.module';
+// import { SidebarModule } from './sidebar/sidebar.module';
+// import { FooterModule } from './shared/footer/footer.module';
+// import { NavbarModule} from './shared/navbar/navbar.module';
 
 import '../styles/styles.scss'
 import '../styles/material-dashboard.css'
@@ -63,7 +64,6 @@ type StoreType = {
   bootstrap: [ AppComponent ],
   declarations: [
     AppComponent,
-    DashboardComponent,
     NoContentComponent
   ],
   /**
@@ -71,12 +71,9 @@ type StoreType = {
    */
   imports: [
     BrowserModule,
-    DashboardModule,
-    SidebarModule,
-    NavbarModule,
-    FooterModule,
     FormsModule,
     HttpModule,
+    LayoutModule,
     RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules })
   ],
 

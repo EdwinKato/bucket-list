@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Item } from './Item'
+import { Item } from '../../models/Item'
 
 const ITEM: Item[] = [
   { id: 11, title: 'Travel', description: 'Places i want to visit', status: 'Pending' },
