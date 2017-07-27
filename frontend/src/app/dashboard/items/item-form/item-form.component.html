@@ -5,7 +5,7 @@
             <div class="card">
                 <div class="card-header" data-background-color="red">
                     <h4 class="title">Bucket list item</h4>
-                    <p class="category">Edit your item</p>
+                    <p class="category">{{ title }}</p>
                 </div>
                 <div class="card-content">
                     <form name="form" (ngSubmit)="save()" #f="ngForm" novalidate>

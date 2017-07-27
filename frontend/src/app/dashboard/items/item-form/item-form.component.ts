@@ -15,6 +15,7 @@ export class ItemFormComponent implements OnInit {
   private item: BucketListItem = new BucketListItem();
   private bucket_list_id: number;
   private item_id: number;
+  private title: string;
 
   constructor(
     private router: Router,
@@ -24,11 +25,10 @@ export class ItemFormComponent implements OnInit {
   }
 
   public ngOnInit() {
-    const id = this.route.params.subscribe(params => {
+    const id = this.route.params.subscribe((params) => {
       this.bucket_list_id = params['id'];
       this.item_id = params['item_id'];
-      console.log("Item id is:" + this.item_id)
-      console.log("bUCKET id is:" + this.bucket_list_id)
+      this.title = this.item_id ? 'Edit bucket list item' : 'New bucket list item';
 
       if (!this.bucket_list_id || !this.item_id) {
         return;
@@ -46,7 +46,6 @@ export class ItemFormComponent implements OnInit {
 
   private save() {
     let result: any;
-    console.log(this.item.title);
 
     if (this.bucket_list_id && this.item_id) {
       result = this.itemsService.updateItem(this.bucket_list_id, this.item);
@@ -55,7 +54,7 @@ export class ItemFormComponent implements OnInit {
     }
 
     result.subscribe((data) => this.router.navigate(
-      ['layout/bucket-lists/`${this.bucket_list_id}`/items'])
+      ['layout/bucket-lists/' + this.bucket_list_id + '/items'])
     );
 
   }

@@ -12,10 +12,10 @@ import { BasicValidators } from '../../../utils/basic-validators';
 })
 export class BucketListFormComponent implements OnInit {
 
-  form: FormGroup;
-  title: string;
-  bucketList: BucketList = new BucketList();
-  id: number;
+  private form: FormGroup;
+  private bucketList: BucketList = new BucketList();
+  private id: number;
+  private title = 'Edit your bucket list';
 
   constructor(
     private router: Router,
@@ -24,30 +24,31 @@ export class BucketListFormComponent implements OnInit {
   ) {
   }
 
-  ngOnInit() {
-    var id = this.route.params.subscribe(params => {
+  public ngOnInit() {
+    const id = this.route.params.subscribe(params => {
       this.id = params['id'];
 
       this.title = this.id ? 'Edit bucket list' : 'New bucket list';
 
-      if (!this.id)
+      if (!this.id) {
         return;
+      }
 
       this.bucketListsService.getBucketList(this.id)
-        .subscribe(response => {
+        .subscribe((response) => {
           this.bucketList = response.data;
-          if (response.status == 404) {
+          if (response.status === 404) {
             this.router.navigate(['NotFound']);
           }
         });
     });
   }
 
-  save() {
+  private save() {
     let result: any;
     console.log(this.bucketList.title)
 
-    if (this.id){
+    if (this.id) {
       result = this.bucketListsService.updateBucketList(this.bucketList);
     } else {
       result = this.bucketListsService.addBucketList(this.bucketList);
