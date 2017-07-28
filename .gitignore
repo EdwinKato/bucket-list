@@ -137,7 +137,7 @@ Icon?
 Thumbs.db
 
 # Node Files #
-/node_modules/
+frontend/node_modules/
 /bower_components/
 npm-debug.log
 /npm-debug.log.*
@@ -170,6 +170,8 @@ dll/
 # IDE #
 .idea/
 *.swp
+frontend/.vscode
+frontend/.editorconfig
 
 
 # Angular #
