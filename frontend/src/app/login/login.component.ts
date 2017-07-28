@@ -1,5 +1,12 @@
-import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import {
+    Component, OnInit, Directive, forwardRef,
+    Attribute, OnChanges, SimpleChanges, Input
+} from '@angular/core';
+import {
+    NG_VALIDATORS, Validator,
+    Validators, AbstractControl, ValidatorFn
+} from '@angular/forms';
 
 import { AuthenticationService } from '../services/authentication.service';
 
