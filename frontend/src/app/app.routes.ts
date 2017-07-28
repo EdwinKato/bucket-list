@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 
 import { NoContentComponent } from './no-content';
 import { LayoutComponent } from './layout/layout.component';
-import { HomeComponent } from './dashboard/home/home.component';
 import { UserComponent } from './dashboard/user/user.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
@@ -17,7 +16,6 @@ import { AuthGuard } from './services/auth-guard.service';
 export const ROUTES: Routes = [
   {
     path: 'layout', component: LayoutComponent, children: [
-      { path: 'dashboard', component: HomeComponent },
       { path: 'user', component: UserComponent, canActivate: [AuthGuard] },
       { path: 'bucketlists', component: BucketListsComponent, pathMatch: 'full' },
       { path: 'bucketlists/new', component: BucketListFormComponent, canActivate: [AuthGuard] },

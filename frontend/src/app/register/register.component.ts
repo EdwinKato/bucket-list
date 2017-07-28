@@ -32,7 +32,7 @@ export class RegisterComponent implements OnInit {
             )
             .subscribe((result) => {
                 if (result === true) {
-                    this.router.navigate(['/layout/dashboard']);
+                    this.router.navigate(['/layout/bucketlists']);
                 } else {
                     this.error = 'Registration failed, Please try again';
                 }
