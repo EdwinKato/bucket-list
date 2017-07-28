@@ -307,7 +307,6 @@ definitions:
       - last_name
       - email
       - username
-      - password
     properties:
       id:
         type: integer
