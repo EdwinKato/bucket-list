@@ -21,7 +21,9 @@
                         </div>
                         <div class="form-group">
                             <label for="status" class="control-label">Status</label>
-                            <input type="text" class="form-control" name="status" [(ngModel)]="item.status" required />
+                            <select class="form-control" required [(ngModel)]="item.status" name="status">
+                                <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
+                            </select>
                             <span class="help-block"></span>
                         </div>
                         <div class="form-group">

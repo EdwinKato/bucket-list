@@ -16,6 +16,7 @@ export class ItemFormComponent implements OnInit {
   private bucket_list_id: number;
   private item_id: number;
   private title: string;
+  private statuses = ['Done', 'Pending'];
 
   constructor(
     private router: Router,

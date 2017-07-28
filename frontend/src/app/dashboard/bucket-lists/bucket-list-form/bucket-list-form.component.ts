@@ -15,6 +15,7 @@ export class BucketListFormComponent implements OnInit {
   private bucketList: BucketList = new BucketList();
   private id: number;
   private title = 'Edit your bucket list';
+  private statuses = ['Done', 'Pending'];
 
   constructor(
     private router: Router,
