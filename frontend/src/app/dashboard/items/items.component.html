@@ -13,7 +13,7 @@
                             <div class="col-md-6">
                                 <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
                                     <a class="btn-floating btn-large waves-effect waves-light green"
-                                        routerLink="/layout/bucket-lists/{{ bucket_list_id }}/items/new">
+                                        routerLink="/layout/bucketlists/{{ bucket_list_id }}/items/new">
                                         Create new item in bucket list<i class="material-icons">add</i>
                                     </a>
                                 </div>
@@ -48,7 +48,7 @@
                                 <td>{{ item.description }}</td>
                                 <td class="text-danger">{{ item.status }}</td>
                                 <td>
-                                    <a routerLink="/layout/bucket-lists/{{bucket_list_id}}/items/{{item.id}}">
+                                    <a routerLink="/layout/bucketlists/{{bucket_list_id}}/items/{{item.id}}">
                                         <i class="material-icons">mode_edit</i>
                                     </a>
                                 </td>

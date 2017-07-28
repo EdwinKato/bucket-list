@@ -37,7 +37,7 @@ export class UserComponent implements OnInit {
       let result = this.userService.updateUser(this.user);
 
       result.subscribe((data) => this.router.navigate(
-          ['layout/bucket-lists/'])
+          ['layout/bucketlists/'])
       );
 
   }

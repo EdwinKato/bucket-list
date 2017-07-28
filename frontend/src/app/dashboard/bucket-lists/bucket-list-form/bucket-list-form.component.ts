@@ -54,7 +54,7 @@ export class BucketListFormComponent implements OnInit {
       result = this.bucketListsService.addBucketList(this.bucketList);
     }
 
-    result.subscribe(data => this.router.navigate(['layout/bucket-lists']));
+    result.subscribe(data => this.router.navigate(['layout/bucketlists']));
 
   }
 }

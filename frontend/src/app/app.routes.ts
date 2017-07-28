@@ -19,22 +19,22 @@ export const ROUTES: Routes = [
     path: 'layout', component: LayoutComponent, children: [
       { path: 'dashboard', component: HomeComponent },
       { path: 'user', component: UserComponent, canActivate: [AuthGuard] },
-      { path: 'bucket-lists', component: BucketListsComponent, pathMatch: 'full' },
-      { path: 'bucket-lists/new', component: BucketListFormComponent, canActivate: [AuthGuard] },
+      { path: 'bucketlists', component: BucketListsComponent, pathMatch: 'full' },
+      { path: 'bucketlists/new', component: BucketListFormComponent, canActivate: [AuthGuard] },
       {
-        path: 'bucket-list-detail',
+        path: 'bucketlist-detail',
         component: BucketListDetailComponent,
         canActivate: [AuthGuard]
       },
-      { path: 'bucket-lists/:id', component: BucketListFormComponent, canActivate: [AuthGuard] },
-      { path: 'bucket-lists/:id/items', component: ItemsComponent, canActivate: [AuthGuard] },
+      { path: 'bucketlists/:id', component: BucketListFormComponent, canActivate: [AuthGuard] },
+      { path: 'bucketlists/:id/items', component: ItemsComponent, canActivate: [AuthGuard] },
       {
-        path: 'bucket-lists/:id/items/new',
+        path: 'bucketlists/:id/items/new',
         component: ItemFormComponent,
         canActivate: [AuthGuard]
       },
       {
-        path: 'bucket-lists/:id/items/:item_id',
+        path: 'bucketlists/:id/items/:item_id',
         component: ItemFormComponent,
         canActivate: [AuthGuard]
       }

@@ -55,7 +55,7 @@ export class ItemFormComponent implements OnInit {
     }
 
     result.subscribe((data) => this.router.navigate(
-      ['layout/bucket-lists/' + this.bucket_list_id + '/items'])
+      ['layout/bucketlists/' + this.bucket_list_id + '/items'])
     );
 
   }

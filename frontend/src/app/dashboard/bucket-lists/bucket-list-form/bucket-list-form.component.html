@@ -24,13 +24,12 @@
                             <select class="form-control" required [(ngModel)]="bucketList.status" name="status">
                                 <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
                             </select>
-                            <!--<input type="text" class="form-control" name="status" [(ngModel)]="bucketList.status" required />-->
                             <span class="help-block"></span>
                         </div>
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <a routerLink="/layout/bucket-lists" routerLinkActive="active" class="btn btn-danger btn-block">Cancel</a>
+                                    <a routerLink="/layout/bucketlists" routerLinkActive="active" class="btn btn-danger btn-block">Cancel</a>
                                 </div>
                                 <div class="col-md-6">
                                     <button class="btn btn-success btn-block">Save</button>
