@@ -1,18 +1,33 @@
 <div class="main-content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-7">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-header" data-background-color="red">
                         <h4 class="title">Bucket lists</h4>
                         <p class="category">Here is a list of your bucket lists</p>
                     </div>
                     <div class="card-content table-responsive">
-                        <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-                            <a class="btn-floating btn-large waves-effect waves-light green"
-                                routerLink="/layout/bucket-lists/new">
-                                Create new bucket list<i class="material-icons">add</i>
-                            </a>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+                                    <a class="btn-floating btn-large waves-effect waves-light green"
+                                        routerLink="/layout/bucket-lists/new">
+                                        Create new bucket list<i class="material-icons">add</i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <form class="navbar-form navbar-right" role="search" (ngSubmit)="search()" #f="ngForm" novalidate>
+                                    <div class="form-group form-black is-empty">
+                                        <input type="text" class="form-control" placeholder="Search" name="search" [(ngModel)]="searchQuery" required>
+                                        <span class="material-input"></span>
+                                    </div>
+                                    <button type="submit" class="btn btn-white btn-round btn-just-icon">
+                                        <i class="material-icons">search</i><div class="ripple-container"></div>
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                         <div *ngIf="message" class="alert alert-success">{{ message }}</div>
                         <table class="table table-hover">

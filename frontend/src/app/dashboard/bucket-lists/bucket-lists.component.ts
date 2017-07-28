@@ -16,6 +16,7 @@ export class BucketListsComponent implements OnInit {
     private count: number;
     private response: any;
     private message = '';
+    private searchQuery = '';
 
     constructor(private bucketListsService: BucketListsService) { }
 
@@ -55,5 +56,20 @@ export class BucketListsComponent implements OnInit {
                 });
         }
     }
+
+  private search() {
+
+      this.bucketListsService.searchBucketLists(this.searchQuery)
+          .subscribe((data) => {
+              this.bucketLists = data.data.bucket_lists;
+              this.count = data.count;
+              this.response = data;
+          },
+          (error) => {
+              console.log(error);
+          }
+          );
+
+  }
 
 }

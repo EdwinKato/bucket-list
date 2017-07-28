@@ -27,6 +27,11 @@ export class ItemsService {
       .map((response) => response.json());
   }
 
+  public searchItems(id, query) {
+    return this.http.get(this.getSearchUrl(id, query), { headers: this.headers })
+      .map((response) => response.json());
+  }
+
   public getItem(bucket_list_id, item_id) {
     return this.http.get(this.getItemUrl(bucket_list_id, item_id), { headers: this.headers })
       .map((response) => response.json());
@@ -59,5 +64,9 @@ export class ItemsService {
 
   private getBucketListUrl(id) {
     return this.url + '/' + id + '/items';
+  }
+
+  private getSearchUrl(id, query) {
+    return this.getBucketListUrl(id) + '?q=' + query;
   }
 }

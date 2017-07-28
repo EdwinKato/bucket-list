@@ -13,7 +13,8 @@ export class ItemsComponent implements OnInit{
     private items: BucketListItem[];
     private bucket_list_title: string;
     private message = '';
-    private bucket_list_id: number
+    private bucket_list_id: number;
+    private searchQuery = '';
 
     constructor(
         private router: Router,
@@ -60,5 +61,20 @@ export class ItemsComponent implements OnInit{
                 });
         }
     }
+
+  private search() {
+
+      this.itemsService.searchItems(this.bucket_list_id, this.searchQuery)
+          .subscribe((response) => {
+              if (response.count === 0) {
+                  this.message = 'There no items in this bucket list';
+              }
+              this.items = response.data.items;
+              if (response.status === 404) {
+                  this.router.navigate(['NotFound']);
+              }
+          });
+
+  }
 
 }

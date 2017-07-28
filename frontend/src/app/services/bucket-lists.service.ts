@@ -27,6 +27,11 @@ export class BucketListsService {
       .map((response) => response.json());
   }
 
+  public searchBucketLists(query) {
+    return this.http.get(this.getSearchUrl(query), { headers: this.headers })
+      .map((response) => response.json());
+  }
+
   public getBucketList(id) {
     return this.http.get(this.getBucketListUrl(id), { headers: this.headers })
       .map((response) => response.json());
@@ -57,5 +62,9 @@ export class BucketListsService {
 
   private getBucketListUrl(id) {
     return this.url + '/' + id;
+  }
+
+  private getSearchUrl(query) {
+    return this.url + '?q=' + query;
   }
 }

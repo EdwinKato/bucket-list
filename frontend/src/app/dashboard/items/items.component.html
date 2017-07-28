@@ -9,12 +9,27 @@
                     <p class="category">Items in busket list {{ bucket_list_title }}</p>
                 </div>
                 <div class="card-content table-responsive">
-                    <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-                        <a class="btn-floating btn-large waves-effect waves-light green"
-                            routerLink="/layout/bucket-lists/{{ bucket_list_id }}/items/new">
-                            Create new item in bucket list<i class="material-icons">add</i>
-                        </a>
-                    </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+                                    <a class="btn-floating btn-large waves-effect waves-light green"
+                                        routerLink="/layout/bucket-lists/{{ bucket_list_id }}/items/new">
+                                        Create new item in bucket list<i class="material-icons">add</i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <form class="navbar-form navbar-right" role="search" (ngSubmit)="search()" #f="ngForm" novalidate>
+                                    <div class="form-group form-black is-empty">
+                                        <input type="text" class="form-control" placeholder="Search" name="search" [(ngModel)]="searchQuery" required>
+                                        <span class="material-input"></span>
+                                    </div>
+                                    <button type="submit" class="btn btn-white btn-round btn-just-icon">
+                                        <i class="material-icons">search</i><div class="ripple-container"></div>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
                     <table class="table table-hover">
                         <thead class="text-danger">
                             <tr>
