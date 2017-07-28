@@ -46,6 +46,36 @@ paths:
           description: User has been successfully created
         400:
           description: "Bad request"
+  /user:
+    get:
+      tags: [User]
+      operationId: api.get_user
+      summary: Get current user details
+      responses:
+        200:
+          description: Your request was processed successfully
+          schema:
+            $ref: "#/definitions/User"
+        404:
+          description: User not found
+        401:
+          description: Please provide a valid auth token
+    put:
+      tags: [User]
+      operationId: api.update_user
+      summary: Update current user details
+      parameters:
+        - name: user
+          in: body
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        200:
+          description: User details have been successfully updated
+        401:
+          description: Please provide a valid auth token
+        404:
+          description: User not found
   /bucketlists:
     post:
       tags: [BucketList]
