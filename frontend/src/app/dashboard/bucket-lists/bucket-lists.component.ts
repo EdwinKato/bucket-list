@@ -12,7 +12,6 @@ import { BUCKETLISTS } from '../../models/mock-bucket-lists';
 
 export class BucketListsComponent implements OnInit {
     private bucketLists: BucketList[];
-    private selectedBucketList: BucketList;
     private count: number;
     private response: any;
     private message = '';
@@ -33,10 +32,6 @@ export class BucketListsComponent implements OnInit {
             }
             );
 
-    }
-
-    private onSelect(bucketlist: BucketList): void {
-        this.selectedBucketList = bucketlist;
     }
 
     private deleteBucketList(bucketList) {

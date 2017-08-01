@@ -8,7 +8,6 @@ import { RegisterComponent } from './register/register.component';
 import { ItemsComponent } from './dashboard/items/items.component';
 import { ItemFormComponent } from './dashboard/items/item-form/item-form.component';
 import { BucketListsComponent } from './dashboard/bucket-lists/bucket-lists.component';
-import { BucketListDetailComponent } from './dashboard/bucket-lists/bucket-list-detail.component';
 import { BucketListFormComponent }
   from './dashboard/bucket-lists/bucket-list-form/bucket-list-form.component';
 import { AuthGuard } from './services/auth-guard.service';
@@ -19,11 +18,6 @@ export const ROUTES: Routes = [
       { path: 'user', component: UserComponent, canActivate: [AuthGuard] },
       { path: 'bucketlists', component: BucketListsComponent, pathMatch: 'full' },
       { path: 'bucketlists/new', component: BucketListFormComponent, canActivate: [AuthGuard] },
-      {
-        path: 'bucketlist-detail',
-        component: BucketListDetailComponent,
-        canActivate: [AuthGuard]
-      },
       { path: 'bucketlists/:id', component: BucketListFormComponent, canActivate: [AuthGuard] },
       { path: 'bucketlists/:id/items', component: ItemsComponent, canActivate: [AuthGuard] },
       {

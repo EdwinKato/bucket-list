@@ -44,7 +44,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let bucketlist of bucketLists" [class.active]="bucketlist === selectedBucketList" (click)="onSelect(bucketlist)">
+                                <tr *ngFor="let bucketlist of bucketLists">
                                     <td>{{ bucketlist.id }}</td>
                                     <td>{{ bucketlist.title }}</td>
                                     <td>{{ bucketlist.description }}</td>
@@ -75,9 +75,6 @@
                         </table>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-5">
-                <bucket-list-detail [bucketlist]="selectedBucketList" ></bucket-list-detail>
             </div>
         </div>
     </div>
