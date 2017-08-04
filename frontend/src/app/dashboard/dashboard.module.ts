@@ -30,4 +30,3 @@ import { BucketListsService } from '../services/bucket-lists.service';
 })
 
 export class DashboardModule {}
-
