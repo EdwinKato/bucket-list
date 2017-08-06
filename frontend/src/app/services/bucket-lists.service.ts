@@ -12,7 +12,7 @@ export class BucketListsService {
   public token: string;
   public headers: Headers;
 
-  private url: string = 'http://127.0.0.1:5000/api/v1/bucketlists';
+  private url: string = 'http://0.0.0.0:5000/api/v1/bucketlists';
 
   constructor(private http: Http) {
     // set token if saved in local storage
@@ -22,8 +22,13 @@ export class BucketListsService {
     this.headers.set('Authorization', `Bearer ${this.token}`);
   }
 
-  public getBucketLists() {
-    return this.http.get(this.url, { headers: this.headers })
+  public getBucketLists(start, limit, url?: string) {
+		let paginatedUrl = this.url + '?start=' + start + '&limit=' + limit;
+		if (url) {
+			paginatedUrl = url;
+		}
+
+    return this.http.get(paginatedUrl, { headers: this.headers })
       .map((response) => response.json());
   }
 

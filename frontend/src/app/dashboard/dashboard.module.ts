@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule }   from '@angular/forms';
+import { Ng2PaginationModule } from 'ng2-pagination';
 
 import { DashboardComponent } from './dashboard.component';
 import { MODULE_COMPONENTS } from './dashboard.routes';
@@ -15,7 +16,8 @@ import { BucketListsService } from '../services/bucket-lists.service';
     imports: [
         CommonModule,
         FormsModule,
-        RouterModule
+        RouterModule,
+        Ng2PaginationModule
     ],
     declarations: [ MODULE_COMPONENTS ],
     exports: [ DashboardComponent ],

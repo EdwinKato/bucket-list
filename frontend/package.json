@@ -70,6 +70,7 @@
     "ie-shim": "^0.1.0",
     "jquery": "^3.2.1",
     "ng-chartist": "^1.1.1",
+    "ng2-pagination": "^2.0.2",
     "reflect-metadata": "^0.1.10",
     "rxjs": "~5.0.2",
     "zone.js": "0.8.5"
@@ -133,6 +134,7 @@
     "tslint": "~4.5.1",
     "tslint-loader": "^3.5.2",
     "typedoc": "^0.7.1",
+    "typescript": "~2.2.2",
     "url-loader": "^0.5.8",
     "webpack": "~2.6.1",
     "webpack-dev-middleware": "^1.10.1",

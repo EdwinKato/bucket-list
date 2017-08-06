@@ -9,7 +9,7 @@
                     </div>
                     <div class="card-content table-responsive">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
                                     <a class="btn-floating btn-large waves-effect waves-light green"
                                         routerLink="/layout/bucketlists/new">
@@ -17,7 +17,15 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+							<div class="col-md-4">
+                                <form class="navbar-form navbar-right">
+                                    <div class="form-group form-black is-empty">
+                                        <input type="text" class="form-control" placeholder="Items per page" name="limit" [(ngModel)]="limit" (ngModelChange)="do_pagination($event)">
+                                        <span class="material-input"></span>
+                                    </div>
+                                </form>
+							</div>
+                            <div class="col-md-4">
                                 <form class="navbar-form navbar-right" role="search" (ngSubmit)="search()" #f="ngForm" novalidate>
                                     <div class="form-group form-black is-empty">
                                         <input type="text" class="form-control" placeholder="Search" name="search" [(ngModel)]="searchQuery" required>
@@ -44,7 +52,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let bucketlist of bucketLists">
+                                <tr *ngFor="let bucketlist of bucketLists | paginate: { itemsPerPage: limit, currentPage: page, totalItems: count}">
                                     <td>{{ bucketlist.id }}</td>
                                     <td>{{ bucketlist.title }}</td>
                                     <td>{{ bucketlist.description }}</td>
@@ -71,8 +79,13 @@
                                     </td>
                                 </tr>
                             </tbody>
-                            <div class="clearfix"></div>
-                        </table>
+							<div class="clearfix"></div>
+							</table>
+							<pagination-controls
+								(pageChange)="page = getServerData($event)"
+								directionLinks="true"
+								autohide="true">
+							</pagination-controls>
                     </div>
                 </div>
             </div>

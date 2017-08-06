@@ -11,14 +11,7 @@ WORKDIR /usr/src/app
 COPY package.json /usr/src/app
 
 # Install dependencies
-# RUN npm install
 RUN rm -rf node_modules && npm install && npm cache clean && rm -rf ~/.npm
 
 # Get all the code needed to run the app
 COPY . /usr/src/app
-
-# Expose the port the app runs in
-EXPOSE 4200
-
-# Serve the app
-# CMD ["npm", "start"]
