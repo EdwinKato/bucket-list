@@ -62,7 +62,6 @@ export class BucketListsComponent implements OnInit {
 				console.log(error);
 			}
 			);
-
 	}
 
 	private deleteBucketList(bucketList) {

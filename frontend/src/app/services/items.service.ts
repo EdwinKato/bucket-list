@@ -22,8 +22,13 @@ export class ItemsService {
     this.headers.set('Authorization', `Bearer ${this.token}`);
   }
 
-  public getItems(bucket_list_id) {
-    return this.http.get(this.getBucketListUrl(bucket_list_id), { headers: this.headers })
+  public getItems(bucket_list_id, start, limit, url?: string) {
+		let paginatedUrl = this.getBucketListUrl(bucket_list_id) + '?start=' + start + '&limit=' + limit;
+		if (url) {
+			paginatedUrl = url;
+		}
+
+    return this.http.get(paginatedUrl, { headers: this.headers })
       .map((response) => response.json());
   }
 
@@ -58,12 +63,12 @@ export class ItemsService {
       .map((response) => response.json());
   }
 
-  private getItemUrl(id, item_id) {
-    return this.getBucketListUrl(id) + '/' + item_id;
+  public getBucketListUrl(id) {
+    return this.url + '/' + id + '/items';
   }
 
-  private getBucketListUrl(id) {
-    return this.url + '/' + id + '/items';
+  private getItemUrl(id, item_id) {
+    return this.getBucketListUrl(id) + '/' + item_id;
   }
 
   private getSearchUrl(id, query) {
