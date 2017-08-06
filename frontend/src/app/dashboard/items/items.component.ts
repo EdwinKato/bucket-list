@@ -74,6 +74,7 @@ export class ItemsComponent implements OnInit {
 			.subscribe((response) => {
 				if (response.count === 0) {
 					this.message = 'There no items in this bucket list';
+					this.empty = false;
 				}
 				this.items = response.data.items;
 				if (response.status === 404) {
