@@ -18,6 +18,7 @@ export class ItemsComponent implements OnInit {
 	private count: number;
 	private limit = 20;
 	private page: number;
+	private empty = true;
 
 	constructor(
 		private router: Router,
@@ -38,6 +39,7 @@ export class ItemsComponent implements OnInit {
 				.subscribe((response) => {
 					if (response.count === 0) {
 						this.message = 'There no items in this bucket list';
+						this.empty = false;
 					}
 					this.items = response.data.items;
 					this.count = response.count;

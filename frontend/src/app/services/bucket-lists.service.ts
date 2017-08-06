@@ -12,7 +12,7 @@ export class BucketListsService {
   public token: string;
   public headers: Headers;
 
-  private url: string = 'http://0.0.0.0:5000/api/v1/bucketlists';
+  public url: string = 'http://0.0.0.0:5000/api/v1/bucketlists';
 
   constructor(private http: Http) {
     // set token if saved in local storage

@@ -20,7 +20,6 @@ export class BucketListsComponent implements OnInit {
 	private next = '';
 	private iteration = 0;
 	private page: number;
-	private baseUrl = 'http://0.0.0.0:5000/api/v1/bucketlists'
 
 	constructor(private bucketListsService: BucketListsService) { }
 
@@ -45,7 +44,7 @@ export class BucketListsComponent implements OnInit {
 		const start = (page === 1)
 			? 1
 			: (page - 1) * this.limit + 1;
-		return this.baseUrl + '?start=' + start + '&limit=' + this.limit;
+		return this.bucketListsService.url + '?start=' + start + '&limit=' + this.limit;
 	}
 
 	private getServerData(event) {
@@ -117,7 +116,6 @@ export class BucketListsComponent implements OnInit {
 				console.log(error);
 			}
 			);
-
 	}
 
 }
