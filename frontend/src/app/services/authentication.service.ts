@@ -27,6 +27,7 @@ export class AuthenticationService {
                 console.log("response is:" + response)
                 if (token) {
                     // set token property
+					localStorage.clear();
                     this.token = token;
 
                     /* store username and jwt token in local storage to keep
@@ -82,5 +83,6 @@ export class AuthenticationService {
         // clear token remove user from local storage to log user out
         this.token = null;
         localStorage.removeItem('currentUser');
+		localStorage.clear();
     }
 }

@@ -28,7 +28,10 @@ $(document).ready(function(){
 
     $sidebar = $('.sidebar');
 
-    $.material.init();
+	if($.material){
+		$.material.init();
+	}
+
 
     window_width = $(window).width();
     // check if there is an image set for the sidebar's background
