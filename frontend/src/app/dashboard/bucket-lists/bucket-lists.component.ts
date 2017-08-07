@@ -13,13 +13,14 @@ import { BUCKETLISTS } from '../../models/mock-bucket-lists';
 export class BucketListsComponent implements OnInit {
 	private bucketLists: BucketList[];
 	private count: number;
-	private limit = 1;
+	private limit = 20;
 	private response: any;
 	private message = '';
 	private searchQuery = '';
 	private next = '';
 	private iteration = 0;
 	private page: number;
+	private empty = true;
 
 	constructor(private bucketListsService: BucketListsService) { }
 
@@ -27,6 +28,10 @@ export class BucketListsComponent implements OnInit {
 
 		this.bucketListsService.getBucketLists(1, this.limit)
 			.subscribe((data) => {
+				if (data.count === 0) {
+					this.message = 'There no bucket lists, Please create one first!';
+					this.empty = false;
+				}
 				this.bucketLists = data.data.bucket_lists;
 				this.next = data.next;
 				this.count = data.count;
@@ -39,7 +44,7 @@ export class BucketListsComponent implements OnInit {
 			);
 	}
 
-	private getPageUrl(page: number){
+	private getPageUrl(page: number) {
 		let numberOfPages = this.count / this.limit;
 		const start = (page === 1)
 			? 1
@@ -85,6 +90,10 @@ export class BucketListsComponent implements OnInit {
 
 		this.bucketListsService.searchBucketLists(this.searchQuery)
 			.subscribe((data) => {
+				if (data.count === 0) {
+					this.message = 'There no bucket lists matching your search criteria';
+					this.empty = false;
+				}
 				this.bucketLists = data.data.bucket_lists;
 				this.count = data.count;
 				this.response = data;
@@ -97,7 +106,7 @@ export class BucketListsComponent implements OnInit {
 	}
 
 	private do_pagination(newValue) {
-		if (!newValue){
+		if (!newValue) {
 			this.limit = 0;
 		}
 

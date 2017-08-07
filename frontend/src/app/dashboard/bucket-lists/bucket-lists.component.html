@@ -38,47 +38,48 @@
                             </div>
                         </div>
                         <div *ngIf="message" class="alert alert-success">{{ message }}</div>
-                        <table class="table table-hover">
-                            <thead class="text-danger">
-                                <tr>
-                                    <th>id</th>
-                                    <th>Title</th>
-                                    <th>Description</th>
-                                    <th>Status</th>
-                                    <th>Edit</th>
-                                    <th>Delete</th>
-                                    <th>View items</th>
-                                    <th>Add item</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let bucketlist of bucketLists | paginate: { itemsPerPage: limit, currentPage: page, totalItems: count}">
-                                    <td>{{ bucketlist.id }}</td>
-                                    <td>{{ bucketlist.title }}</td>
-                                    <td>{{ bucketlist.description }}</td>
-                                    <td class="text-danger">{{ bucketlist.status }}</td>
-                                    <td>
-                                        <a [routerLink]="['/layout/bucketlists', bucketlist.id]">
-                                            <i class="material-icons">mode_edit</i>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a (click)="deleteBucketList(bucketlist)" href="/layout/bucketlists">
-                                            <i class="material-icons">delete</i>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a routerLink="/layout/bucketlists/{{bucketlist.id}}/items">
-                                            <i class="material-icons">list</i>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a routerLink="/layout/bucketlists/{{ bucketlist.id }}/items/new">
-                                            <i class="material-icons">queue</i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </tbody>
+						<div *ngIf="empty">
+							<table class="table table-hover">
+								<thead class="text-danger">
+									<tr>
+										<th>id</th>
+										<th>Title</th>
+										<th>Description</th>
+										<th>Status</th>
+										<th>Edit</th>
+										<th>Delete</th>
+										<th>View items</th>
+										<th>Add item</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr *ngFor="let bucketlist of bucketLists | paginate: { itemsPerPage: limit, currentPage: page, totalItems: count}">
+										<td>{{ bucketlist.id }}</td>
+										<td>{{ bucketlist.title }}</td>
+										<td>{{ bucketlist.description }}</td>
+										<td class="text-danger">{{ bucketlist.status }}</td>
+										<td>
+											<a [routerLink]="['/layout/bucketlists', bucketlist.id]">
+												<i class="material-icons">mode_edit</i>
+											</a>
+										</td>
+										<td>
+											<a (click)="deleteBucketList(bucketlist)" href="/layout/bucketlists">
+												<i class="material-icons">delete</i>
+											</a>
+										</td>
+										<td>
+											<a routerLink="/layout/bucketlists/{{bucketlist.id}}/items">
+												<i class="material-icons">list</i>
+											</a>
+										</td>
+										<td>
+											<a routerLink="/layout/bucketlists/{{ bucketlist.id }}/items/new">
+												<i class="material-icons">queue</i>
+											</a>
+										</td>
+									</tr>
+								</tbody>
 							<div class="clearfix"></div>
 							</table>
 							<pagination-controls
@@ -86,6 +87,7 @@
 								directionLinks="true"
 								autohide="true">
 							</pagination-controls>
+						</div>
                     </div>
                 </div>
             </div>

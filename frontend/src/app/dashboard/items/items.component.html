@@ -3,7 +3,6 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div *ngIf="message" class="alert alert-info">{{message}}</div>
                 <div class="card-header" data-background-color="red">
                     <h4 class="title">items</h4>
                     <p class="category">Items in busket list {{ bucket_list_title }}</p>
@@ -42,6 +41,7 @@
 								</div>
 							</div>
                         </div>
+					<div *ngIf="message" class="alert alert-success">{{ message }}</div>
 					<div *ngIf="empty">
 						<table class="table table-hover">
 							<thead class="text-danger">
