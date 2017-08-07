@@ -36,7 +36,6 @@ $(document).ready(function(){
     window_width = $(window).width();
     // check if there is an image set for the sidebar's background
     //  Activate the tooltips
-    $('[rel="tooltip"]').tooltip();
 
 
     $('.form-control').on("focus", function(){
