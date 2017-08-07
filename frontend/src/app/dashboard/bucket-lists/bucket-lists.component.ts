@@ -69,35 +69,18 @@ export class BucketListsComponent implements OnInit {
 	}
 
 	private deleteBucketList(bucketList) {
-
-		const index = this.bucketLists.indexOf(bucketList);
-		this.bucketLists.splice(index, 1);
-
-		this.bucketListsService.deleteBucketList(bucketList.id)
-			.subscribe((response) => {
-				debugger;
-				this.message = 'Successfully deleted';
-			},
-			(err) => {
-				alert('Could not delete bucket list.');
-				this.bucketLists.splice(index, 0, bucketList);
-			});
-
-		// if (confirm('Are you sure you want to delete ' + bucketList.title + '?')) {
-		// 	const index = this.bucketLists.indexOf(bucketList);
-		// 	this.bucketLists.splice(index, 1);
-
-		// 	this.bucketListsService.deleteBucketList(bucketList.id)
-		// 		.subscribe((response) => {
-		// 			if (response.status_code === 204) {
-		// 				this.message = 'Successfully deleted';
-		// 			}
-		// 		},
-		// 		(err) => {
-		// 			alert('Could not delete bucket list.');
-		// 			this.bucketLists.splice(index, 0, bucketList);
-		// 		});
-		// }
+		if (confirm('Are you sure you want to delete ' + bucketList.title + '?')) {
+			const index = this.bucketLists.indexOf(bucketList);
+			this.bucketLists.splice(index, 1);
+			this.bucketListsService.deleteBucketList(bucketList.id)
+				.subscribe((response) => {
+					this.message = 'Successfully deleted';
+				},
+				(err) => {
+					alert('Could not delete bucket list.');
+					this.bucketLists.splice(index, 0, bucketList);
+				});
+		}
 	}
 
 	private search() {

@@ -372,7 +372,10 @@ def delete_bucket_list(bucket_list_id):
                 response.status_code = 404
                 return response
             bucket_list.delete()
-            return '', 204
+
+            response = jsonify(INVALID_TOKEN_RESPONSE)
+            response.status_code = 204
+            return response
         response = jsonify(decoded_token['response'])
         response.status_code = 401
         return response

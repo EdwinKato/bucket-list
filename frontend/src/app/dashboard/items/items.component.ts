@@ -58,9 +58,7 @@ export class ItemsComponent implements OnInit {
 
 			this.itemsService.deleteItem(this.bucket_list_id, item.id)
 				.subscribe((response) => {
-					if (response.status_code === 204) {
-						this.message = 'Successfully deleted';
-					}
+					this.message = 'Successfully deleted';
 				},
 				(error) => {
 					alert('Could not delete item.');
@@ -83,7 +81,7 @@ export class ItemsComponent implements OnInit {
 			});
 	}
 
-	private getPageUrl(page: number){
+	private getPageUrl(page: number) {
 		let numberOfPages = this.count / this.limit;
 		const start = (page === 1)
 			? 1
@@ -107,7 +105,7 @@ export class ItemsComponent implements OnInit {
 	}
 
 	private do_pagination(newValue) {
-		if (!newValue){
+		if (!newValue) {
 			this.limit = 0;
 		}
 
