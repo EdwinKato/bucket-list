@@ -1,2 +1,2 @@
-release: python backend/manage.py db upgrade
-web: gunicorn backend/manage:application --log-file
+release: python manage.py db upgrade
+web: gunicorn manage:application --log-file
