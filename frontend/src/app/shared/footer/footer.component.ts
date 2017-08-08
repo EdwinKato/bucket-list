@@ -1,10 +1,12 @@
-import { Component, HostBinding } from '@angular/core';
+import {
+	Component
+} from '@angular/core';
 
 @Component({
-    selector: 'footer-cmp',
-    templateUrl: 'footer.component.html'
+	selector: 'footer-cmp',
+	templateUrl: 'footer.component.html'
 })
 
 export class FooterComponent {
-    private test: Date = new Date();
+	public test: Date = new Date();
 }

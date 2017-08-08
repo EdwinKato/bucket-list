@@ -1,6 +1,13 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { Idle, DEFAULT_INTERRUPTSOURCES } from '@ng-idle/core';
+import {
+	Component
+} from '@angular/core';
+import {
+	Router
+} from '@angular/router';
+import {
+	Idle,
+	DEFAULT_INTERRUPTSOURCES
+} from '@ng-idle/core';
 
 @Component({
 	selector: 'dashboard-cmp',
@@ -8,9 +15,8 @@ import { Idle, DEFAULT_INTERRUPTSOURCES } from '@ng-idle/core';
 })
 
 export class DashboardComponent {
-	idleState = '';
-	timedOut = false;
-	lastPing?: Date = null;
+	public idleState = '';
+	public timedOut = false;
 
 	constructor(private idle: Idle, private router: Router) {
 		idle.setIdle(600);
@@ -23,14 +29,16 @@ export class DashboardComponent {
 			this.timedOut = true;
 			router.navigateByUrl('/login');
 		});
-		idle.onIdleStart.subscribe(() => this.idleState = 'You\'ve gone idle!');
+		idle.onIdleStart.subscribe(
+			() => this.idleState = 'You\'ve gone idle!');
 		idle.onTimeoutWarning.subscribe(
-			(countdown) => this.idleState = 'You will time out in ' + countdown + ' seconds!');
+			(countdown) => this.idleState =
+				'You will time out in ' + countdown + ' seconds!');
 
 		this.reset();
 	}
 
-	reset() {
+	public reset() {
 		this.idle.watch();
 		this.idleState = '';
 		this.timedOut = false;
