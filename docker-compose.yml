@@ -2,7 +2,9 @@ version: '2'
 
 services:
   api:
-    build: ./backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.worker
     command: python backend/manage.py runserver --host=0.0.0.0
     volumes:
       - .:/api
@@ -11,11 +13,13 @@ services:
     networks:
       - bucketlist
 
-  angular2: # name of the first service
-    build: ./frontend # specify the directory of the Dockerfile
+  angular2:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.web
     command: npm run server:dev:hmr
     ports:
-      - "3000:3000" # specify port
+      - "3000:3000"
     networks:
       - bucketlist
 networks:
