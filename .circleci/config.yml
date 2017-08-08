@@ -29,10 +29,3 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "SHA256:LBr/k/H7lc7MhjhGwylznCCz6pQ8JYGwPGhXdLcyA+4"
-      - deploy:
-          name: Deploy Master to Heroku
-          command: |
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              git push heroku master
-              heroku restart
-            fi

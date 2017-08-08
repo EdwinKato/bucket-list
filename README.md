@@ -35,6 +35,16 @@ Create migrations and upgrade
 
 All done! Now, start your server by running `python manage.py runserver`.
 
+## Running using docker
+Download [Docker](https://www.docker.com/products/overview). If you are on Mac or Windows, [Docker Compose](https://docs.docker.com/compose) will be automatically installed. On Linux, make sure you have the latest version of [Compose](https://docs.docker.com/compose/install/).
+
+To run the project locally,
+navigate to the root directory of the project in the terminal and run the following commands
+
+```docker-compose build```
+
+```docker-compose up```
+
 ### Supported End points
 
 Endpoint | Functionality| Access
