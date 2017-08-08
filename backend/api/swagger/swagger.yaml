@@ -46,6 +46,36 @@ paths:
           description: User has been successfully created
         400:
           description: "Bad request"
+  /user:
+    get:
+      tags: [User]
+      operationId: api.get_user
+      summary: Get current user details
+      responses:
+        200:
+          description: Your request was processed successfully
+          schema:
+            $ref: "#/definitions/User"
+        404:
+          description: User not found
+        401:
+          description: Please provide a valid auth token
+    put:
+      tags: [User]
+      operationId: api.update_user
+      summary: Update current user details
+      parameters:
+        - name: user
+          in: body
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        200:
+          description: User details have been successfully updated
+        401:
+          description: Please provide a valid auth token
+        404:
+          description: User not found
   /bucketlists:
     post:
       tags: [BucketList]
@@ -186,7 +216,7 @@ paths:
           minLength: 1
       responses:
         200:
-          description: Bucket list has been successfully updated
+          description: Your request was processed successfully
           schema:
             $ref: "#/definitions/BucketList"
         404:
@@ -194,6 +224,22 @@ paths:
         401:
           description: Please provide a valid auth token
   /bucketlists/{bucket_list_id}/items/{item_id}:
+    get:
+      tags: [BucketList]
+      operationId: api.get_bucket_list_item
+      summary: Get an existing bucket list item
+      parameters:
+        - $ref: '#/parameters/bucket_list_id'
+        - $ref: '#/parameters/item_id'
+      responses:
+        200:
+          description: Your request was processed successfully
+          schema:
+            $ref: "#/definitions/Item"
+        404:
+          description: Bucket list item not found
+        401:
+          description: Please provide a valid auth token
     put:
       tags: [BucketList]
       operationId: api.update_bucket_list_item
@@ -261,7 +307,6 @@ definitions:
       - last_name
       - email
       - username
-      - password
     properties:
       id:
         type: integer

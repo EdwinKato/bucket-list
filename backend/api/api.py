@@ -7,7 +7,8 @@ from sqlalchemy import or_
 __all__ = ["login", "register", "add_bucket_list", "get_bucket_lists",
            "get_bucket_list", "put_bucket_list", "delete_bucket_list",
            "create_item_in_bucket_list", "get_items_in_bucket_list",
-           "update_bucket_list_item", "delete_bucket_list_item"]
+           "update_bucket_list_item", "delete_bucket_list_item",
+           "get_bucket_list_item", "get_user", "update_user"]
 
 '''
  201  ok resulting to  creation of something
@@ -138,6 +139,71 @@ def register():
                         'token': auth_token.decode()})
     response.status_code = 201
     return response
+
+
+def get_user():
+    """Get user details"""
+
+    auth_token = get_auth_token(request)
+    if auth_token:
+        decoded_token = decode_token(auth_token)
+        if decoded_token['valid']:
+            user = decoded_token['user']
+            if user:
+                response = jsonify({'status': 'success',
+                                    'data': user.serialize(),
+                                    'message': SUCCESS
+                                    })
+                response.status_code = 200
+                return response
+            response = jsonify(UNKNOWN_USER_RESPONSE)
+            response.status_code = 404
+            return response
+        response = jsonify(decoded_token['response'])
+        response.status_code = 401
+        return response
+    else:
+        response = jsonify(INVALID_TOKEN_RESPONSE)
+        response.status_code = 401
+        return response
+
+
+def update_user():
+    """Update user details"""
+
+    auth_token = get_auth_token(request)
+    if auth_token:
+        decoded_token = decode_token(auth_token)
+        if decoded_token['valid']:
+            user = decoded_token['user']
+            if user:
+                data = request.get_json()
+                if data['first_name']:
+                    user.first_name = data['first_name']
+                if data['last_name']:
+                    user.last_name = data['last_name']
+                if data['username']:
+                    user.username = data['username']
+                if data['email']:
+                    user.email = data['email']
+                db.session.commit()
+                response = jsonify({'status': 'success',
+                                    'data': user.serialize(),
+                                    'message': SUCCESS
+                                    })
+                response.status_code = 200
+                return response
+
+            response = jsonify(UNKNOWN_USER_RESPONSE)
+            response.status_code = 404
+            return response
+        response = jsonify(decoded_token['response'])
+        response.status_code = 401
+        return response
+    else:
+        response = jsonify(INVALID_TOKEN_RESPONSE)
+        response.status_code = 401
+        return response
 
 
 def add_bucket_list():
@@ -306,7 +372,10 @@ def delete_bucket_list(bucket_list_id):
                 response.status_code = 404
                 return response
             bucket_list.delete()
-            return '', 204
+
+            response = jsonify(INVALID_TOKEN_RESPONSE)
+            response.status_code = 204
+            return response
         response = jsonify(decoded_token['response'])
         response.status_code = 401
         return response
@@ -341,6 +410,48 @@ def create_item_in_bucket_list(bucket_list_id):
                                 'data': {'item': item.serialize()}
                                 })
             response.status_code = 201
+            return response
+        response = jsonify(decoded_token['response'])
+        response.status_code = 401
+        return response
+    else:
+        response = jsonify(INVALID_TOKEN_RESPONSE)
+        response.status_code = 401
+        return response
+
+
+def get_bucket_list_item(bucket_list_id, item_id):
+    """Get a single bucket list item"""
+
+    auth_token = get_auth_token(request)
+    if auth_token:
+        decoded_token = decode_token(auth_token)
+        if decoded_token['valid']:
+            user = decoded_token['user']
+            bucket_list = BucketList.query.filter_by(
+                id=bucket_list_id, user_id=user.id).first()
+            if not bucket_list:
+                response = jsonify(BUCKET_LIST_NOT_FOUND)
+                response.status_code = 404
+                return response
+
+            list_item = [
+                item for item in bucket_list.items if item.id == item_id]
+            if not list_item:
+                response = jsonify({'status': 'failed',
+                                    'message': 'Bucket list item not found'})
+                response.status_code = 404
+                return response
+            else:
+                item = list_item[0]
+                response = jsonify({'status': 'success',
+                                    'data': item.serialize(),
+                                    'message': SUCCESS
+                                    })
+                response.status_code = 200
+                return response
+            response = jsonify(BUCKET_LIST_NOT_FOUND)
+            response.status_code = 404
             return response
         response = jsonify(decoded_token['response'])
         response.status_code = 401

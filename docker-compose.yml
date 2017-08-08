@@ -1,0 +1,23 @@
+version: '2'
+
+services:
+  api:
+    build: ./backend
+    command: python backend/manage.py runserver --host=0.0.0.0
+    volumes:
+      - .:/api
+    ports:
+      - "5000:5000"
+    networks:
+      - bucketlist
+
+  angular2: # name of the first service
+    build: ./frontend # specify the directory of the Dockerfile
+    command: npm run server:dev:hmr
+    ports:
+      - "3000:3000" # specify port
+    networks:
+      - bucketlist
+networks:
+  bucketlist:
+    driver: bridge
