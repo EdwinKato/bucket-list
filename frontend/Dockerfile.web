@@ -10,8 +10,13 @@ WORKDIR /usr/src/app
 # Copy dependency definitions
 COPY package.json /usr/src/app
 
+RUN npm config set registry http://registry.npmjs.org
+
 # Install dependencies
 RUN rm -rf node_modules && npm install && npm cache clean && rm -rf ~/.npm
 
 # Get all the code needed to run the app
 COPY . /usr/src/app
+
+EXPOSE 80
+CMD ["npm", "run", "server:dev:hmr"]
