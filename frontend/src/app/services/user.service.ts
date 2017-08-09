@@ -11,13 +11,16 @@ import 'rxjs/add/operator/map';
 import {
 	getHeaders
 } from '../utils/utils';
+import {
+	API_URL
+} from '../utils/utils';
 
 @Injectable()
 export class UserService {
 	public token: string;
 	public headers: Headers;
 
-	private url: string = 'http://127.0.0.1:5000/api/v1/user';
+	private url: string = API_URL + 'user';
 
 	constructor(private http: Http) {
 		// set token if saved in local storage

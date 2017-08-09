@@ -18,5 +18,5 @@ RUN rm -rf node_modules && npm install && npm cache clean && rm -rf ~/.npm
 # Get all the code needed to run the app
 COPY . /usr/src/app
 
-EXPOSE 80
+EXPOSE 3000
 CMD ["npm", "run", "server:dev:hmr"]

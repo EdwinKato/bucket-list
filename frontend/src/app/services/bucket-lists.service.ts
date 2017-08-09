@@ -12,13 +12,16 @@ import 'rxjs/add/operator/catch';
 import {
 	getHeaders
 } from '../utils/utils';
+import {
+	API_URL
+} from '../utils/utils';
 
 @Injectable()
 export class BucketListsService {
 	public token: string;
 	public headers: Headers;
 
-	public url: string = 'http://0.0.0.0:5000/api/v1/bucketlists';
+	public url: string = API_URL + 'bucketlists';
 
 	constructor(private http: Http) {
 		// set token if saved in local storage

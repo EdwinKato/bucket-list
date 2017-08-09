@@ -8,3 +8,5 @@ export function getHeaders() {
 	headers.append('Access-Control-Allow-Origin', '*');
 	return headers;
 }
+
+export const API_URL = 'https://yobucketlist.herokuapp.com/api/v1/';
