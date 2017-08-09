@@ -47,7 +47,10 @@
     "webdriver:start": "npm run webdriver-manager start",
     "webdriver:update": "webdriver-manager update",
     "webpack-dev-server": "node --max_old_space_size=4096 node_modules/webpack-dev-server/bin/webpack-dev-server.js",
-    "webpack": "node --max_old_space_size=4096 node_modules/webpack/bin/webpack.js"
+    "webpack": "node --max_old_space_size=4096 node_modules/webpack/bin/webpack.js",
+	"heroku-prebuild": "npm install -g http-server",
+  	"heroku-postbuild": "npm run build",
+	"start:heroku": "http-server dist/"
   },
   "dependencies": {
     "@angular/animations": "~4.1.2",
