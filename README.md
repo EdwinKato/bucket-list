@@ -5,6 +5,11 @@
 
 A simple python application to manage the list of items on an individual's bucket-list. 
 
+## online project links
+
+[Flask api backend](https://yobucketlist.herokuapp.com/api/v1/ui/)
+
+[Angular2 frontend](https://yo-bucketlist.herokuapp.com)
 
 ## Installation
  
