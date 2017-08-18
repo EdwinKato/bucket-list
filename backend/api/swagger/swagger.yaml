@@ -1,0 +1,431 @@
+swagger: '2.0'
+info:
+  title: Bucket list API
+  version: "0.1.0"
+  description: The api specification document to the online bucket list management system
+  contact:
+    email: edwin.kato@andela.com
+basePath: "/api/v1"
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /auth/login:
+    post:
+      tags: [User]
+      summary: Logs a user into the system and returns an access token
+      operationId: api.login
+      parameters:
+        - name: body
+          in: body
+          required: true
+          description: Login credentials
+          schema:
+            $ref: '#/definitions/Login'
+      responses:
+        200:
+          description: The user has been successfully logged into the system
+          schema:
+            $ref: '#/definitions/User'
+        400:
+          description: Bad request
+  /auth/register:
+    post:
+      tags: [User]
+      summary: Add a new user to the system
+      operationId: api.register
+      parameters:
+        - name: User
+          description: Details of user to be added to the system
+          in: body
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        200:
+          description: User has been successfully created
+        400:
+          description: "Bad request"
+  /user:
+    get:
+      tags: [User]
+      operationId: api.get_user
+      summary: Get current user details
+      responses:
+        200:
+          description: Your request was processed successfully
+          schema:
+            $ref: "#/definitions/User"
+        404:
+          description: User not found
+        401:
+          description: Please provide a valid auth token
+    put:
+      tags: [User]
+      operationId: api.update_user
+      summary: Update current user details
+      parameters:
+        - name: user
+          in: body
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        200:
+          description: User details have been successfully updated
+        401:
+          description: Please provide a valid auth token
+        404:
+          description: User not found
+  /bucketlists:
+    post:
+      tags: [BucketList]
+      summary: Add a new bucket list
+      operationId: api.add_bucket_list
+      parameters:
+        - name: Bucket list
+          description: Title and description of the bucket list
+          in: body
+          schema:
+            $ref: '#/definitions/BucketList'
+      responses:
+        201:
+          description: Your request was processed successfully
+        401:
+          description: Please provide a valid auth token
+    get:
+      tags: [BucketList]
+      operationId: api.get_bucket_lists
+      summary: Get bucket lists
+      parameters:
+        - name: start
+          description: The position from which we want the data to be returned
+          in: query
+          type: integer
+          minimum: 0
+          default: 1
+        - name: limit
+          description: The maximum number of items to return from that start
+          in: query
+          type: integer
+          minimum: 0
+          default: 20
+        - name: q
+          description: Search by value
+          in: query
+          type: string
+          minLength: 1
+      responses:
+        200:
+          description: Your request was processed successfully
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/BucketList'
+        404:
+          description: "There are no bucket lists for the user"
+        401:
+          description: Please provide a valid auth token
+  /bucketlists/{bucket_list_id}:
+    get:
+      tags: [BucketList]
+      operationId: api.get_bucket_list
+      summary: Get bucket list by id
+      parameters:
+        - $ref: '#/parameters/bucket_list_id'
+      responses:
+        200:
+          description: Your request was processed successfully
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/BucketList'
+        404:
+          description: "There are no bucket lists for the user"
+        401:
+          description: Please provide a valid auth token
+    put:
+      tags: [BucketList]
+      operationId: api.put_bucket_list
+      summary: Update an existing bucket list
+      parameters:
+        - $ref: '#/parameters/bucket_list_id'
+        - name: bucketlist
+          in: body
+          schema:
+            $ref: '#/definitions/BucketList'
+      responses:
+        200:
+          description: Bucket list has been successfully updated
+        401:
+          description: Please provide a valid auth token
+        404:
+          description: Bucket list not found
+    delete:
+      tags: [BucketList]
+      operationId: api.delete_bucket_list
+      summary: Remove a bucketlist
+      parameters:
+        - $ref: '#/parameters/bucket_list_id'
+      responses:
+        204:
+          description: No Content
+        404:
+          description: Bucket list not found
+        401:
+          description: Please provide a valid auth token
+  /bucketlists/{bucket_list_id}/items:
+    post:
+      tags: [BucketList]
+      operationId: api.create_item_in_bucket_list
+      summary: Create a new item in bucket list
+      parameters:
+        - $ref: '#/parameters/bucket_list_id'
+        - name: item
+          in: body
+          schema:
+            $ref: '#/definitions/Item'
+      responses:
+        201:
+          description: Your request was processed successfully
+        404:
+          description: Bucket list not found
+        401:
+          description: Please provide a valid auth token
+    get:
+      tags: [BucketList]
+      operationId: api.get_items_in_bucket_list
+      summary: Get items in the given bucket list
+      parameters:
+        - $ref: '#/parameters/bucket_list_id'
+        - name: start
+          description: The position from which we want the data to be returned
+          in: query
+          type: integer
+          minimum: 0
+          default: 1
+        - name: limit
+          description: The maximum number of items to return from that start
+          in: query
+          type: integer
+          minimum: 0
+          default: 20
+        - name: q
+          description: Search by value
+          in: query
+          type: string
+          minLength: 1
+      responses:
+        200:
+          description: Your request was processed successfully
+          schema:
+            $ref: "#/definitions/BucketList"
+        404:
+          description: Bucket list not found
+        401:
+          description: Please provide a valid auth token
+  /bucketlists/{bucket_list_id}/items/{item_id}:
+    get:
+      tags: [BucketList]
+      operationId: api.get_bucket_list_item
+      summary: Get an existing bucket list item
+      parameters:
+        - $ref: '#/parameters/bucket_list_id'
+        - $ref: '#/parameters/item_id'
+      responses:
+        200:
+          description: Your request was processed successfully
+          schema:
+            $ref: "#/definitions/Item"
+        404:
+          description: Bucket list item not found
+        401:
+          description: Please provide a valid auth token
+    put:
+      tags: [BucketList]
+      operationId: api.update_bucket_list_item
+      summary: Update an existing bucket list item
+      parameters:
+        - $ref: '#/parameters/bucket_list_id'
+        - $ref: '#/parameters/item_id'
+        - name: item
+          in: body
+          schema:
+            $ref: '#/definitions/Item'
+      responses:
+        200:
+          description: Bucket list has been successfully updated
+        404:
+          description: Bucket list not found
+        401:
+          description: Please provide a valid auth token
+    delete:
+      tags: [BucketList]
+      operationId: api.delete_bucket_list_item
+      summary: Remove a bucketlist
+      parameters:
+        - $ref: '#/parameters/bucket_list_id'
+        - $ref: '#/parameters/item_id'
+      responses:
+        204:
+          description: No Content
+        404:
+          description: Bucket list not found
+        401:
+          description: Please provide a valid auth token
+
+parameters:
+  bucket_list_id:
+    name: bucket_list_id
+    description: Bucket list's Unique identifier
+    in: path
+    type: integer
+    required: true
+  item_id:
+    name: item_id
+    description: Item's unique identifier
+    in: path
+    type: integer
+    required: true
+  username:
+    name: username
+    description: User's username
+    in: path
+    type: string
+    required: true
+  password:
+    name: password
+    description: User's password
+    in: path
+    type: string
+    required: true
+
+definitions:
+  User:
+    type: object
+    required:
+      - first_name
+      - last_name
+      - email
+      - username
+    properties:
+      id:
+        type: integer
+        description: Unique identifier
+        example: 1
+        readOnly: true
+      first_name:
+        type: string
+        description: First name of the user
+        example: "Edwin"
+        minLength: 2
+        maxLength: 30
+      last_name:
+        type: string
+        description: Last name of the user
+        example: "Kato"
+        minLength: 2
+        maxLength: 30
+      email:
+        type: string
+        description: Email of the user
+        example: "edwin.kato@andela.com"
+        minLength: 1
+      username:
+        type: string
+        description: Username of the user
+        example: "EdwinKato"
+        minLength: 1
+        maxLength: 12
+      password:
+        type: string
+        description: Password of the user
+        example: "qwerty@123"
+        minLength: 6
+  Login:
+    type: object
+    required:
+      - username
+      - password
+    properties:
+      username:
+        type: string
+        minLength: 1
+        maxLength: 12
+      password:
+        type: string
+        minLength: 6
+  BucketList:
+    type: object
+    required:
+      - title
+      - description
+      - status
+    properties:
+      id:
+        type: integer
+        description: Unique identifier
+        example: 1
+        readOnly: true
+      title:
+        type: string
+        description: Bucket list title
+        example: "Leisure"
+        minLength: 1
+        maxLength: 100
+      description:
+        type: string
+        description: Description of bucket list
+        example: "Leisure activities i have to do before i die"
+        minLength: 1
+      status:
+        type: string
+        description: Status of bucket list item
+        example: "Done"
+        minLength: 1
+        maxLength: 12
+      date_created:
+        type: string
+        format: date-time
+        description: Creation time
+        example: "2017-07-07T15:49:51.230+02:00"
+        readOnly: true
+  Item:
+    type: object
+    required:
+      - title
+      - description
+      - status
+    properties:
+      id:
+        type: integer
+        description: Unique identifier
+        example: 1
+        readOnly: true
+      title:
+        type: string
+        description: Bucket list item title
+        example: "Sky diving"
+        minLength: 1
+        maxLength: 100
+      description:
+        type: string
+        description: Description of bucket list item
+        example: "Jump down from an airplane while it is flying and parachuting myself to the ground"
+        minLength: 1
+      status:
+        type: string
+        description: Status of bucket list item
+        example: "Done"
+        minLength: 1
+        maxLength: 12
+      bucket_list_id:
+        type: integer
+        description: id of the bucket list to which the item belongs
+        example: 1
+        readOnly: true
+      date_created:
+        type: string
+        format: date-time
+        description: Creation time
+        example: "2017-07-07T15:49:51.230+02:00"
+        readOnly: true
