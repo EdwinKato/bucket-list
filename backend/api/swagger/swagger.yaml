@@ -15,7 +15,7 @@ paths:
     post:
       tags: [User]
       summary: Logs a user into the system and returns an access token
-      operationId: api.login
+      operationId: backend.api.login
       parameters:
         - name: body
           in: body
@@ -34,7 +34,7 @@ paths:
     post:
       tags: [User]
       summary: Add a new user to the system
-      operationId: api.register
+      operationId: backend.api.register
       parameters:
         - name: User
           description: Details of user to be added to the system
@@ -49,7 +49,7 @@ paths:
   /user:
     get:
       tags: [User]
-      operationId: api.get_user
+      operationId: backend.api.get_user
       summary: Get current user details
       responses:
         200:
@@ -62,7 +62,7 @@ paths:
           description: Please provide a valid auth token
     put:
       tags: [User]
-      operationId: api.update_user
+      operationId: backend.api.update_user
       summary: Update current user details
       parameters:
         - name: user
@@ -80,7 +80,7 @@ paths:
     post:
       tags: [BucketList]
       summary: Add a new bucket list
-      operationId: api.add_bucket_list
+      operationId: backend.api.add_bucket_list
       parameters:
         - name: Bucket list
           description: Title and description of the bucket list
@@ -94,7 +94,7 @@ paths:
           description: Please provide a valid auth token
     get:
       tags: [BucketList]
-      operationId: api.get_bucket_lists
+      operationId: backend.api.get_bucket_lists
       summary: Get bucket lists
       parameters:
         - name: start
@@ -128,7 +128,7 @@ paths:
   /bucketlists/{bucket_list_id}:
     get:
       tags: [BucketList]
-      operationId: api.get_bucket_list
+      operationId: backend.api.get_bucket_list
       summary: Get bucket list by id
       parameters:
         - $ref: '#/parameters/bucket_list_id'
@@ -145,7 +145,7 @@ paths:
           description: Please provide a valid auth token
     put:
       tags: [BucketList]
-      operationId: api.put_bucket_list
+      operationId: backend.api.put_bucket_list
       summary: Update an existing bucket list
       parameters:
         - $ref: '#/parameters/bucket_list_id'
@@ -162,7 +162,7 @@ paths:
           description: Bucket list not found
     delete:
       tags: [BucketList]
-      operationId: api.delete_bucket_list
+      operationId: backend.api.delete_bucket_list
       summary: Remove a bucketlist
       parameters:
         - $ref: '#/parameters/bucket_list_id'
@@ -176,7 +176,7 @@ paths:
   /bucketlists/{bucket_list_id}/items:
     post:
       tags: [BucketList]
-      operationId: api.create_item_in_bucket_list
+      operationId: backend.api.create_item_in_bucket_list
       summary: Create a new item in bucket list
       parameters:
         - $ref: '#/parameters/bucket_list_id'
@@ -193,7 +193,7 @@ paths:
           description: Please provide a valid auth token
     get:
       tags: [BucketList]
-      operationId: api.get_items_in_bucket_list
+      operationId: backend.api.get_items_in_bucket_list
       summary: Get items in the given bucket list
       parameters:
         - $ref: '#/parameters/bucket_list_id'
@@ -226,7 +226,7 @@ paths:
   /bucketlists/{bucket_list_id}/items/{item_id}:
     get:
       tags: [BucketList]
-      operationId: api.get_bucket_list_item
+      operationId: backend.api.get_bucket_list_item
       summary: Get an existing bucket list item
       parameters:
         - $ref: '#/parameters/bucket_list_id'
@@ -242,7 +242,7 @@ paths:
           description: Please provide a valid auth token
     put:
       tags: [BucketList]
-      operationId: api.update_bucket_list_item
+      operationId: backend.api.update_bucket_list_item
       summary: Update an existing bucket list item
       parameters:
         - $ref: '#/parameters/bucket_list_id'
@@ -260,7 +260,7 @@ paths:
           description: Please provide a valid auth token
     delete:
       tags: [BucketList]
-      operationId: api.delete_bucket_list_item
+      operationId: backend.api.delete_bucket_list_item
       summary: Remove a bucketlist
       parameters:
         - $ref: '#/parameters/bucket_list_id'

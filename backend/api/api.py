@@ -671,5 +671,5 @@ def decode_token(auth_token):
     }
 
 
-from api.models import User, BucketList, Item
-from api import db
+from backend.api.models import User, BucketList, Item
+from backend.api import db

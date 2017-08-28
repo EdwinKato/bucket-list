@@ -3,7 +3,7 @@ import connexion
 from os.path import dirname, abspath
 import os
 
-from config import config
+from backend.config import config
 
 db = SQLAlchemy()
 static_url = dirname(dirname(dirname(abspath(__file__))))
@@ -30,4 +30,4 @@ def create_app(config_name):
     return application
 
 
-from api.api import *
+from backend.api.api import *

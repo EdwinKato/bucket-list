@@ -3,7 +3,7 @@ from passlib.context import CryptContext
 from datetime import datetime, timedelta
 import jwt
 
-from api import db
+from backend.api import db
 
 
 class User(db.Model):
