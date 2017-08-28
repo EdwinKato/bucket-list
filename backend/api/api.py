@@ -1,14 +1,16 @@
-from flask import request, jsonify
-from flask import current_app
+from flask import request, jsonify, current_app, send_from_directory, redirect
 import re
+import os
+from os.path import dirname, abspath
+from flask.views import MethodView
 
 from sqlalchemy import or_
 
-__all__ = ["login", "register", "add_bucket_list", "get_bucket_lists",
+__all__ = ["index", "login", "register", "add_bucket_list", "get_bucket_lists",
            "get_bucket_list", "put_bucket_list", "delete_bucket_list",
            "create_item_in_bucket_list", "get_items_in_bucket_list",
            "update_bucket_list_item", "delete_bucket_list_item",
-           "get_bucket_list_item", "get_user", "update_user"]
+           "get_bucket_list_item", "get_user", "update_user", "Frontend"]
 
 '''
  201  ok resulting to  creation of something
@@ -33,6 +35,20 @@ BUCKET_LIST_NOT_FOUND = {
     'status': 'failed',
     'message': 'Bucket list not found'
 }
+
+
+class Frontend(MethodView):
+
+    def get(self, filename):
+        root = dirname(dirname(dirname(abspath(__file__))))
+        print("Root is:" + root)
+        return send_from_directory(os.path.join(root, 'frontend', 'dist'),
+                                   filename)
+
+
+def index():
+    """Redirect to Angular frontend"""
+    return redirect("/index.html", code=302)
 
 
 def login():
