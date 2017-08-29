@@ -1,0 +1,54 @@
+<body background="/assets/img/ice-mountain.jpg">
+
+	<div id="login-overlay" class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="myModalLabel">Login to <b>yobucketlist.herokuapp.com</b></h4> or go back to our
+				<a routerLink="/layout/bucketlists" routerLinkActive="active">main site</a>.
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="well">
+							<form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
+								<div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
+									<label for="username" class="control-label">Username</label>
+									<input type="text" class="form-control" id="username" name="username" [(ngModel)]="model.username" #username="ngModel" required />
+									<div *ngIf="f.submitted && !username.valid" class="help-block">Username is required</div>
+									<span class="help-block"></span>
+								</div>
+								<div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
+									<label for="password" class="control-label">Password</label>
+									<input type="password" class="form-control" id="password" name="password" [(ngModel)]="model.password" #password="ngModel" minlength="6" required/>
+									<div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div>
+									<span class="help-block"></span>
+								</div>
+								<div id="loginErrorMsg" class="alert alert-error hide">Wrong username or password</div>
+								<div class="checkbox">
+									<label>
+                                      <input type="checkbox" name="remember" id="remember"> Remember login
+                                  </label>
+									<p class="help-block">(if this is a private computer)</p>
+								</div>
+								<div class="form-group">
+									<button class="btn btn-success btn-block">Login</button>
+								</div>
+								<div *ngIf="error" class="alert alert-danger">{{error}}</div>
+							</form>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<p class="lead">Register now for <span class="text-success">FREE</span></p>
+						<ul class="list-unstyled" style="line-height: 2">
+							<li><span class="fa fa-check text-success"></span> Manage your bucket lists</li>
+							<li><span class="fa fa-check text-success"></span> Add items to your bucket lists</li>
+							<li><span class="fa fa-check text-success"></span> Analyse progress on your bucket lists</li>
+							<li><span class="fa fa-check text-success"></span> Save your favorite bucket lists</li>
+						</ul>
+						<p><a routerLink="/register" routerLinkActive="active" class="btn btn-info btn-block">Yes please, register now!</a></p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
