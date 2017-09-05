@@ -1,52 +1,48 @@
-<div>
-    <div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card custom-primary-color">
-                    <div class="card-header grey" data-background-color="red">
-                      <div class="row">
-                        <div class="col-md-11">
-                          <h4 class="title">Bucket lists</h4>
-                          <p class="category">Here is a list of your bucket lists</p>
-                        </div>
-                        <div class="col-md-1 pull-right">
-                          <a routerLink="/layout/bucketlists/new">
-                            <span class="fa fa-plus-circle text-success h1-responsive font-bold"></span>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="card-content table-responsive">
-                        <div class="row">
-                            <div class="col-md-4">
-                            </div>
-							<div class="col-md-4">
-                                <form class="navbar-form navbar-right">
-                                    <div class="form-group form-black is-empty">
-                                        <input type="text" class="form-control" placeholder="Items per page" name="limit" [(ngModel)]="limit" (ngModelChange)="do_pagination($event)">
-                                        <span class="material-input"></span>
-                                    </div>
-                                </form>
+<div class="move-right">
+	<div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card custom-primary-color">
+					<div class="card-header indigo" data-background-color="red">
+						<div class="row">
+							<div class="col-md-10">
+								<h4 class="title">Bucket lists</h4>
+								<p class="category">Here is a list of your bucket lists</p>
 							</div>
-                            <div class="col-md-4">
-                                <form class="navbar-form navbar-right" role="search" (ngSubmit)="search()" #f="ngForm" novalidate>
-                                    <div class="form-group form-black is-empty">
-                                        <input type="text" class="form-control" placeholder="Search" name="search" [(ngModel)]="searchQuery" required>
-                                        <span class="material-input"></span>
-                                    </div>
-                                    <button type="submit" class="btn btn-white btn-round btn-just-icon">
-                                        <i class="material-icons">search</i><div class="ripple-container"></div>
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-                        <div *ngIf="message" class="alert alert-success">{{ message }}</div>
+							<div class="col-md-2 btn-floating btn-lg purple-gradient">
+								<a routerLink="/layout/bucketlists/new">
+                            <span class="fa fa-plus-circle text-success h1-responsive font-bold "></span>
+                </a>
+							</div>
+						</div>
+					</div>
+					<div class="card-content table-responsive form-padding">
+						<div class="row">
+							<div class="col-md-4">
+							</div>
+							<div class="col-md-4">
+								<form class="navbar-form navbar-right">
+									<div class="form-group form-black is-empty">
+										<input type="text" class="form-control" placeholder="Items per page" name="limit" [(ngModel)]="limit" (ngModelChange)="do_pagination($event)">
+										<span class="material-input"></span>
+									</div>
+								</form>
+							</div>
+							<div class="col-md-4">
+								<form class="navbar-form navbar-right" role="search" (ngSubmit)="search()" #f="ngForm" novalidate>
+									<div class="form-group form-black is-empty">
+										<input type="text" class="form-control" placeholder="Search" name="search" [(ngModel)]="searchQuery" required>
+										<span class="material-input"></span>
+									</div>
+								</form>
+							</div>
+						</div>
+						<div *ngIf="message" class="alert alert-success">{{ message }}</div>
 						<div *ngIf="empty">
-							<table class="table table-sm table-hover">
+							<table class="table table-sm table-hover form-padding">
 								<thead class="">
 									<tr>
 										<th>Title</th>
-										<th>Description</th>
 										<th>Status</th>
 										<th>Edit</th>
 										<th>Delete</th>
@@ -57,7 +53,6 @@
 								<tbody>
 									<tr *ngFor="let bucketlist of bucketLists | paginate: { itemsPerPage: limit, currentPage: page, totalItems: count}">
 										<td>{{ bucketlist.title }}</td>
-										<td>{{ bucketlist.description }}</td>
 										<td class="white-text">{{ bucketlist.status }}</td>
 										<td>
 											<a [routerLink]="['/layout/bucketlists', bucketlist.id]">
@@ -81,17 +76,14 @@
 										</td>
 									</tr>
 								</tbody>
-							<div class="clearfix"></div>
+								<div class="clearfix"></div>
 							</table>
-							<pagination-controls
-								(pageChange)="page = getServerData($event)"
-								directionLinks="true"
-								autohide="true">
+							<pagination-controls (pageChange)="page = getServerData($event)" directionLinks="true" autohide="true">
 							</pagination-controls>
 						</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
