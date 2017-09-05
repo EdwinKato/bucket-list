@@ -46,8 +46,6 @@
 										<th>Status</th>
 										<th>Edit</th>
 										<th>Delete</th>
-										<th>View items</th>
-										<th>Add item</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -62,16 +60,6 @@
 										<td>
 											<a (click)="deleteBucketList(bucketlist)" class="pointer">
 												<i class="fa fa-trash-o text-white"></i>
-											</a>
-										</td>
-										<td>
-											<a routerLink="/layout/bucketlists/{{bucketlist.id}}/items">
-												<i class="fa fa-list text-white"></i>
-											</a>
-										</td>
-										<td>
-											<a routerLink="/layout/bucketlists/{{ bucketlist.id }}/items/new">
-												<i class="fa fa-plus text-white"></i>
 											</a>
 										</td>
 									</tr>
