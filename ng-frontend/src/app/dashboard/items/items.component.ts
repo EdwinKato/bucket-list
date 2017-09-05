@@ -24,6 +24,7 @@ export class ItemsComponent implements OnInit {
 	public items: BucketListItem[];
 	public message = '';
 	@Input() bucketListId: number;
+	@Input() bucketListTitle: string;
 	public searchQuery = '';
 	public count: number;
 	public limit = 20;
