@@ -1,6 +1,7 @@
 import {
 	Component,
-	OnInit
+	OnInit,
+  Input
 } from '@angular/core';
 import {
 	Router,
@@ -15,14 +16,14 @@ import {
 } from '../../services/items.service';
 
 @Component({
-	selector: 'user-cmp',
+	selector: 'app-items',
 	templateUrl: 'items.component.html'
 })
 
 export class ItemsComponent implements OnInit {
 	public items: BucketListItem[];
 	public message = '';
-	public bucketListId: number;
+	@Input() bucketListId: number;
 	public searchQuery = '';
 	public count: number;
 	public limit = 20;
@@ -36,15 +37,30 @@ export class ItemsComponent implements OnInit {
 	) {}
 
 	public ngOnInit() {
-		const id = this.route.params.subscribe((params) => {
-			this.bucketListId = params['id'];
+		// const id = this.route.params.subscribe((params) => {
+    //   this.bucketListId = params['id'];
+    //
+    //   if (!this.bucketListId) {
+    //     return;
+    //   }
+    //
+    //   this.itemsService.getItems(this.bucketListId, 1, this.limit)
+    //     .subscribe((response) => {
+    //       if (response.count === 0) {
+    //         this.message = 'There no items in this bucket list';
+    //         this.empty = false;
+    //       }
+    //       this.items = response.data.items;
+    //       this.count = response.count;
+    //       this.page = 1;
+    //       if (response.status === 404) {
+    //         this.router.navigate(['NotFound']);
+    //       }
+    //     });
+    // });
 
-			if (!this.bucketListId) {
-				return;
-			}
-
-			this.itemsService.getItems(this.bucketListId, 1, this.limit)
-				.subscribe((response) => {
+		this.itemsService.getItems(this.bucketListId, 1, this.limit)
+			.subscribe((response) => {
 					if (response.count === 0) {
 						this.message = 'There no items in this bucket list';
 						this.empty = false;
@@ -55,8 +71,12 @@ export class ItemsComponent implements OnInit {
 					if (response.status === 404) {
 						this.router.navigate(['NotFound']);
 					}
-				});
-		});
+				},
+				(error) => {
+					console.log(error);
+				}
+			);
+
 	}
 
 	public deleteItem(item) {

@@ -11,7 +11,7 @@ import {
 } from '../../services/bucket-lists.service';
 
 @Component({
-	selector: 'bucketlists',
+	selector: 'app-bucketlists',
 	templateUrl: 'bucket-lists.component.html'
 
 })
@@ -24,6 +24,8 @@ export class BucketListsComponent implements OnInit {
 	public message = '';
 	public searchQuery = '';
 	public empty = true;
+	public hasSelectedBucketList = false;
+	public selectedBucketList: BucketList;
 	private response: any;
 	private next = '';
 
@@ -124,6 +126,11 @@ export class BucketListsComponent implements OnInit {
 				}
 			);
 	}
+
+  public onSelect(bucketList: BucketList): void {
+    this.selectedBucketList = bucketList;
+    this.hasSelectedBucketList = true;
+  }
 
 	private getPageUrl(page: number) {
 		const start = (page === 1) ?

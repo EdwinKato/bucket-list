@@ -1,7 +1,7 @@
 <div class="move-right">
 	<div>
 		<div class="row">
-			<div class="col-md-12">
+			<div class="" [ngClass]="{'col-md-12': hasSelectedBucketList === false, 'col-md-6': hasSelectedBucketList}">
 				<div class="card custom-primary-color">
 					<div class="card-header indigo" data-background-color="red">
 						<div class="row">
@@ -51,7 +51,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr *ngFor="let bucketlist of bucketLists | paginate: { itemsPerPage: limit, currentPage: page, totalItems: count}">
+									<tr *ngFor="let bucketlist of bucketLists | paginate: { itemsPerPage: limit, currentPage: page, totalItems: count}" (click)="onSelect(bucketlist)">
 										<td>{{ bucketlist.title }}</td>
 										<td class="white-text">{{ bucketlist.status }}</td>
 										<td>
@@ -84,6 +84,9 @@
 					</div>
 				</div>
 			</div>
+      <div class="col-md-6" *ngIf="selectedBucketList">
+        <app-items [bucketListId]="selectedBucketList.id"></app-items>
+      </div>
 		</div>
 	</div>
 </div>
