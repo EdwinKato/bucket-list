@@ -1,28 +1,25 @@
 import {
-	Component,
-	OnInit
+  Component,
+  OnInit
 } from '@angular/core';
-import * as $ from "jquery";
 import {
-	Location
+  Location
 } from '@angular/common';
 
 @Component({
-	selector: 'app-root',
-	templateUrl: 'app.component.html'
+  selector: 'app-root',
+  templateUrl: './app.component.html'
 })
 
 export class AppComponent implements OnInit {
 
-	public location: Location;
+  public location: Location;
 
-	constructor(location: Location) {
-		this.location = location;
-	}
+  constructor(location: Location) {
+    this.location = location;
+  }
 
-	public ngOnInit() {
-		$.getScript('../assets/js/material-dashboard.js');
-		$.getScript('../assets/js/initMenu.js');
-	}
+  public ngOnInit() {
+  }
 
 }

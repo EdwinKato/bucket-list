@@ -11,6 +11,7 @@ import {
 } from '../services/authentication.service';
 
 @Component({
+  selector: 'app-login',
 	templateUrl: 'login.component.html'
 })
 
@@ -29,7 +30,7 @@ export class LoginComponent implements OnInit {
 
 	public login() {
 		this.authenticationService
-			.login(this.model.username, this.model.password)
+			.login(this.model.login_username, this.model.login_password)
 			.subscribe((result) => {
 					if (result === true) {
 						this.router.navigate(['/layout/bucketlists']);

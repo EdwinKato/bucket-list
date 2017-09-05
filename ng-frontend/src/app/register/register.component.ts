@@ -11,6 +11,7 @@ import {
 } from '../services/authentication.service';
 
 @Component({
+  selector: 'app-register',
 	templateUrl: 'register.component.html'
 })
 

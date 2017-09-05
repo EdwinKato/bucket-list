@@ -1,3 +1,5 @@
+html,
+body,
 .view {
     height: 100%;
 }
@@ -38,6 +40,37 @@ footer.page-footer {
 .flex-center {
     color: #fff;
 }
+
+.default-background-color {
+  background-color: #404040 !important;
+}
+
+.default-background-text-color {
+  background-color: #f5f5f5;
+}
+
+.form-padding {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.tab-padding {
+  padding-top: 50px;
+}
+
+.modal-position {
+  width: 500px;
+  height: 500px;
+}
+
+.custom-primary-color {
+  background-color: #292b2c !important;
+}
+
+.custom-footer {
+  margin-top: 0px !important;
+}
+
 
 .view {
     background: url("https://mdbootstrap.com/img/Photos/Others/img%20(50).jpg")no-repeat center center fixed;

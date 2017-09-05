@@ -1,54 +1,93 @@
-<body background="/assets/img/ice-mountain.jpg">
+<!--Mask-->
+<div class="view hm-black-light" xmlns="http://www.w3.org/1999/html">
 
-	<div id="login-overlay" class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h4 class="modal-title" id="myModalLabel">Login to <b>yobucketlist.herokuapp.com</b></h4> or go back to our
-				<a routerLink="/layout/bucketlists" routerLinkActive="active">main site</a>.
-			</div>
-			<div class="modal-body">
-				<div class="row">
-					<div class="col-xs-6">
-						<div class="well">
-							<form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
-								<div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
-									<label for="username" class="control-label">Username</label>
-									<input type="text" class="form-control" id="username" name="username" [(ngModel)]="model.username" #username="ngModel" required />
-									<div *ngIf="f.submitted && !username.valid" class="help-block">Username is required</div>
-									<span class="help-block"></span>
+	<div class="full-bg-img flex-center">
+    <div class="row">
+      <div class="col-lg-4 col-md-12 white-text">
+        <h1 class="h4-responsive font-bold">Online tool to help you track and manage your bucket lists</h1>
+          <ul class="list-unstyled" style="line-height: 2">
+							<li class="h4-responsive font-bold"><span class="fa fa-check text-success h1-responsive font-bold"></span> Simple</li>
+							<li class="h4-responsive font-bold"><span class="fa fa-check text-success h1-responsive font-bold"></span> Powerful</li>
+							<li class="h4-responsive font-bold"><span class="fa fa-check text-success h1-responsive font-bold"></span> Slick design</li>
+							<li class="h4-responsive font-bold"><span class="fa fa-check text-success h1-responsive font-bold"></span> Easy to use</li>
+          </ul>
+        <!--<div class="row">-->
+          <!--<div class="col-md-4">-->
+            <!--<i class="fa fa-user fa-5x text-success"></i>-->
+            <!--<h6>Slick Design</h6>-->
+          <!--</div>-->
+          <!--<div class="col-md-4">-->
+            <!--<i class="fa fa-user fa-5x text-success"></i>-->
+            <!--<h6>Easy to Use</h6>-->
+          <!--</div>-->
+          <!--<div class="col-md-4">-->
+            <!--<i class="fa fa-user fa-5x text-success"></i>-->
+            <!--<h6>Easy to Use</h6>-->
+          <!--</div>-->
+
+        <!--</div>-->
+      </div>
+		<div class="col-lg-8 col-md-12">
+			<ul class="animated fadeInUp modal-position pull-right">
+				<li>
+					<h1 class="h1-responsive font-bold">Sign in to continue</h1>
+				</li>
+				<li>
+					<div class="row">
+						<div class="col-md-12">
+							<!-- Nav tabs -->
+							<ul class="nav nav-tabs nav-justified btn-default white-text" role="tablist">
+								<li class="nav-item">
+									<a class="nav-link active" data-toggle="tab" href="#login" role="tab"><i class="fa fa-user"></i> Login</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" data-toggle="tab" href="#register" role="tab"><i class="fa fa-heart"></i> Register</a>
+								</li>
+							</ul>
+							<!-- Tab panels -->
+							<div class="tab-content card card-cascade tab-padding custom-primary-color">
+								<!--Panel 1-->
+								<div class="tab-pane fade in show active" id="login" role="tabpanel">
+									<!-- Form login -->
+									<form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
+
+										<div class="md-form form-padding" [ngClass]="{ 'has-error': f.submitted && !login_username.valid }">
+											<input type="text" class="form-control white-text" id="login_username" name="login_username" [(ngModel)]="model.login_username" #login_username="ngModel" required />
+											<label for="login_username" class="control-label form-padding">Username</label>
+											<div *ngIf="f.submitted && !login_username.valid" class="help-block">Username is required</div>
+											<span class="help-block"></span>
+										</div>
+
+										<div class="md-form form-padding" [ngClass]="{ 'has-error': f.submitted && !login_password.valid }">
+											<input type="password" class="form-control white-text" id="login_password" name="login_password" [(ngModel)]="model.login_password" #login_password="ngModel" minlength="6" required/>
+											<label for="login_password" class="control-label form-padding">Your password</label>
+											<div *ngIf="f.submitted && !login_password.valid" class="help-block">Password is required</div>
+											<span class="help-block"></span>
+										</div>
+
+										<div class="text-center">
+											<button class="btn btn-default">Login</button>
+										</div>
+										<div *ngIf="error" class="alert alert-danger">{{error}}</div>
+									</form>
+									<!-- Form login -->
 								</div>
-								<div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
-									<label for="password" class="control-label">Password</label>
-									<input type="password" class="form-control" id="password" name="password" [(ngModel)]="model.password" #password="ngModel" minlength="6" required/>
-									<div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div>
-									<span class="help-block"></span>
+								<!--/.Panel 1-->
+								<!--Panel 2-->
+								<div class="tab-pane fade" id="register" role="register">
+									<app-register></app-register>
 								</div>
-								<div id="loginErrorMsg" class="alert alert-error hide">Wrong username or password</div>
-								<div class="checkbox">
-									<label>
-                                      <input type="checkbox" name="remember" id="remember"> Remember login
-                                  </label>
-									<p class="help-block">(if this is a private computer)</p>
-								</div>
-								<div class="form-group">
-									<button class="btn btn-success btn-block">Login</button>
-								</div>
-								<div *ngIf="error" class="alert alert-danger">{{error}}</div>
-							</form>
+								<!--/.Panel 2-->
+							</div>
 						</div>
 					</div>
-					<div class="col-xs-6">
-						<p class="lead">Register now for <span class="text-success">FREE</span></p>
-						<ul class="list-unstyled" style="line-height: 2">
-							<li><span class="fa fa-check text-success"></span> Manage your bucket lists</li>
-							<li><span class="fa fa-check text-success"></span> Add items to your bucket lists</li>
-							<li><span class="fa fa-check text-success"></span> Analyse progress on your bucket lists</li>
-							<li><span class="fa fa-check text-success"></span> Save your favorite bucket lists</li>
-						</ul>
-						<p><a routerLink="/register" routerLinkActive="active" class="btn btn-info btn-block">Yes please, register now!</a></p>
-					</div>
-				</div>
-			</div>
-		</div>
 
+				</li>
+			</ul>
+		</div>
 	</div>
+  </div>
+</div>
+<!--/.Mask-->
+
+

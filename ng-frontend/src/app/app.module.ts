@@ -33,13 +33,15 @@ import {
 import {
 	LayoutModule
 } from './layout/layout.module';
+import { SampleComponent } from './sample/sample.component';
 
 @NgModule({
   declarations: [
 		AppComponent,
 		NoContentComponent,
 		LoginComponent,
-		RegisterComponent
+		RegisterComponent,
+		SampleComponent
   ],
 	imports: [
 		BrowserModule,
