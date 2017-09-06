@@ -7,10 +7,6 @@ import {
 import {
 	FormGroup,
 } from '@angular/forms';
-import {
-	Router,
-	ActivatedRoute
-} from '@angular/router';
 
 import {
 	BucketListItem
@@ -19,7 +15,7 @@ import {
 	ItemsService
 } from '../../../services/items.service';
 
-declare var $: any
+declare let $: any;
 
 @Component({
 	selector: 'app-item-form',
@@ -36,8 +32,6 @@ export class ItemFormComponent implements OnInit, OnChanges {
 	public statuses = ['Done', 'Pending'];
 
 	constructor(
-		private router: Router,
-		private route: ActivatedRoute,
 		private itemsService: ItemsService
 	) {}
 
@@ -66,9 +60,6 @@ export class ItemFormComponent implements OnInit, OnChanges {
 		} else {
 			result = this.itemsService.addItem(this.bucketListId, this.item);
 		}
-
-		// result.subscribe((data) => this.router.navigate(
-		// 	['layout/bucketlists/']));
 
 		result.subscribe((data) => ($('#modalEditItem').modal('hide')));
 

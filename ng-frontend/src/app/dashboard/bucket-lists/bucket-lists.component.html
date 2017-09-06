@@ -10,7 +10,7 @@
 								<p class="category">Here is a list of your bucket lists</p>
 							</div>
 							<div class="col-md-2 btn-floating btn-lg purple-gradient">
-								<a (click)="onClickNew()"  data-toggle="modal" data-target="#modalRegister" data-container="body" data-backdrop="false">
+								<a (click)="onClickNew()"  data-toggle="modal" data-target="#modalEditBucketList" data-container="body" data-backdrop="false">
                             <span class="fa fa-plus-circle text-success h1-responsive font-bold "></span>
                 </a>
 							</div>
@@ -53,7 +53,7 @@
 										<td>{{ bucketlist.title }}</td>
 										<td class="white-text">{{ bucketlist.status }}</td>
 										<td>
-											<a (click)="onClickEdit(bucketlist)" data-toggle="modal" data-target="#modalRegister" data-container="body" data-backdrop="false">
+											<a (click)="onClickEdit(bucketlist)" data-toggle="modal" data-target="#modalEditBucketList" data-container="body" data-backdrop="false">
 												<i class="fa fa-pencil-square-o text-white"></i>
 											</a>
 										</td>

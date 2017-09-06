@@ -18,6 +18,8 @@ import {
 	BucketListsService
 } from '../../../services/bucket-lists.service';
 
+declare let $: any;
+
 @Component({
 	selector: 'app-bucket-list-form',
 	templateUrl: './bucket-list-form.component.html'
@@ -32,7 +34,6 @@ export class BucketListFormComponent implements OnInit, OnChanges {
 	public statuses = ['Done', 'Pending'];
 
 	constructor(
-		private router: Router,
 		private bucketListsService: BucketListsService
 	) {}
 
@@ -60,8 +61,7 @@ export class BucketListFormComponent implements OnInit, OnChanges {
 			result = this.bucketListsService.addBucketList(this.bucketList);
 		}
 
-		result.subscribe(
-			(data) => this.router.navigate(['layout/bucketlists']));
+		result.subscribe((data) => ($('#modalEditBucketList').modal('hide')));
 
 	}
 }
