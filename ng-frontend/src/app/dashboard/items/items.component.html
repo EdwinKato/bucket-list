@@ -40,7 +40,7 @@
 									</div>
 								</div>
 							</div>
-							<div *ngIf="message" class="alert alert-success">{{ message }}</div>
+							<div *ngIf="empty === false" class="alert alert-success">{{ message }}</div>
 							<div *ngIf="empty">
 								<table class="table table-sm table-hover form-padding">
 									<thead class="">

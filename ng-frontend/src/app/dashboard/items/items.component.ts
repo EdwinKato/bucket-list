@@ -1,7 +1,8 @@
 import {
 	Component,
 	OnInit,
-  Input
+	OnChanges,
+	Input
 } from '@angular/core';
 import {
 	Router,
@@ -20,7 +21,7 @@ import {
 	templateUrl: 'items.component.html'
 })
 
-export class ItemsComponent implements OnInit {
+export class ItemsComponent implements OnInit, OnChanges {
 	public items: BucketListItem[];
 	public message = '';
 	@Input() bucketListId: number;
@@ -38,33 +39,15 @@ export class ItemsComponent implements OnInit {
 	) {}
 
 	public ngOnInit() {
-		// const id = this.route.params.subscribe((params) => {
-    //   this.bucketListId = params['id'];
-    //
-    //   if (!this.bucketListId) {
-    //     return;
-    //   }
-    //
-    //   this.itemsService.getItems(this.bucketListId, 1, this.limit)
-    //     .subscribe((response) => {
-    //       if (response.count === 0) {
-    //         this.message = 'There no items in this bucket list';
-    //         this.empty = false;
-    //       }
-    //       this.items = response.data.items;
-    //       this.count = response.count;
-    //       this.page = 1;
-    //       if (response.status === 404) {
-    //         this.router.navigate(['NotFound']);
-    //       }
-    //     });
-    // });
 
 		this.itemsService.getItems(this.bucketListId, 1, this.limit)
 			.subscribe((response) => {
 					if (response.count === 0) {
 						this.message = 'There no items in this bucket list';
 						this.empty = false;
+					} else {
+						this.message = '';
+						this.empty = true;
 					}
 					this.items = response.data.items;
 					this.count = response.count;
@@ -78,6 +61,29 @@ export class ItemsComponent implements OnInit {
 				}
 			);
 
+	}
+
+	public ngOnChanges(...args: any[]) {
+		this.itemsService.getItems(this.bucketListId, 1, this.limit)
+			.subscribe((response) => {
+					if (response.count === 0) {
+						this.message = 'There no items in this bucket list';
+						this.empty = false;
+					} else {
+						this.message = '';
+						this.empty = true;
+					}
+					this.items = response.data.items;
+					this.count = response.count;
+					this.page = 1;
+					if (response.status === 404) {
+						this.router.navigate(['NotFound']);
+					}
+				},
+				(error) => {
+					console.log(error);
+				}
+			);
 	}
 
 	public deleteItem(item) {
@@ -153,8 +159,8 @@ export class ItemsComponent implements OnInit {
 		const start = (page === 1) ?
 			1 :
 			(page - 1) * this.limit + 1;
-		return this.itemsService.getBucketListUrl(this.bucketListId)
-			+ '?start=' + start + '&limit=' + this.limit;
+		return this.itemsService.getBucketListUrl(this.bucketListId) +
+			'?start=' + start + '&limit=' + this.limit;
 	}
 
 }

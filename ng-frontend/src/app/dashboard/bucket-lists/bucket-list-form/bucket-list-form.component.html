@@ -42,9 +42,6 @@
             </div>
             <!--Footer-->
             <div class="modal-footer">
-                <!--<div class="options text-center text-md-right mt-1">-->
-                    <!--<p>Already have an account? <a href="#">Log In</a></p>-->
-                <!--</div>-->
                 <button type="button" class="btn btn-outline-info waves-effect ml-auto" data-dismiss="modal">Close</button>
             </div>
         </div>
@@ -52,51 +49,3 @@
     </div>
 </div>
 <!--Modal: Register Form-->
-
-
-<!--
-<div class="modal fade" id="modalLRForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header" data-background-color="red">
-                    <h4 class="title">Bucket list</h4>
-                    <p class="category">{{ title }}</p>
-                </div>
-                <div class="card-content">
-                    <form name="form" (ngSubmit)="save()" #f="ngForm" novalidate>
-                        <div class="form-group">
-                            <label for="title" class="control-label">Title</label>
-                            <input type="text" id="title" class="form-control" name="title" [(ngModel)]="bucketList.title" required />
-                            <span class="help-block"></span>
-                        </div>
-                        <div class="form-group">
-                            <label for="description" class="control-label">Description</label>
-                            <input type="text" id="description" class="form-control" name="description" [(ngModel)]="bucketList.description" required />
-                            <span class="help-block"></span>
-                        </div>
-                        <div class="form-group">
-                            <label for="status" class="control-label">Status</label>
-                            <select class="form-control" id="status" required [(ngModel)]="bucketList.status" name="status">
-                                <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
-                            </select>
-                            <span class="help-block"></span>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <a routerLink="/layout/bucketlists" routerLinkActive="active" class="btn btn-danger btn-block">Cancel</a>
-                                </div>
-                                <div class="col-md-6">
-                                    <button class="btn btn-success btn-block">Save</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
--->
-
