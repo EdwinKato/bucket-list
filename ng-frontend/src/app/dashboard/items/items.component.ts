@@ -31,6 +31,9 @@ export class ItemsComponent implements OnInit, OnChanges {
 	public limit = 20;
 	public page: number;
 	public empty = true;
+	public selectedItem: BucketListItem;
+	public hasSelectedItem = false;
+	public isNewItem = true;
 
 	constructor(
 		private router: Router,
@@ -130,6 +133,20 @@ export class ItemsComponent implements OnInit, OnChanges {
 					this.router.navigate(['NotFound']);
 				}
 			});
+	}
+
+	public onItemSelect(item: BucketListItem): void {
+		this.selectedItem = item;
+		this.hasSelectedItem = true;
+	}
+
+	public onItemClickEdit(item: BucketListItem): void {
+		this.onItemSelect(item);
+		this.isNewItem = false;
+	}
+
+	public onItemClickNew(): void {
+		this.isNewItem = true;
 	}
 
 	public do_pagination(newValue) {

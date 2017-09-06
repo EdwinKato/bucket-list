@@ -53,9 +53,6 @@
 										<td>{{ bucketlist.title }}</td>
 										<td class="white-text">{{ bucketlist.status }}</td>
 										<td>
-											<!--<a [routerLink]="['/layout/bucketlists', bucketlist.id]" (click)="onSelect(bucketlist)">-->
-												<!--<i class="fa fa-pencil-square-o text-white"></i>-->
-											<!--</a>-->
 											<a (click)="onClickEdit(bucketlist)" data-toggle="modal" data-target="#modalRegister" data-container="body" data-backdrop="false">
 												<i class="fa fa-pencil-square-o text-white"></i>
 											</a>

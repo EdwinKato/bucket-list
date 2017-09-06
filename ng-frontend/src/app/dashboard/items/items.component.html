@@ -1,80 +1,82 @@
 <div class="">
-	<div>
-		<div class="row">
-			<div class="col-md-12">
-				<div class="card custom-primary-color">
-					<div class="card-header indigo" data-background-color="red">
-						<div class="row">
-							<div class="col-md-10">
-								<!--<h4 class="title">Items</h4>-->
-								<h4 class="category">Items in {{ bucketListTitle }}</h4>
-							</div>
-							<div class="col-md-2 btn-floating btn-lg purple-gradient">
-								<a routerLink="/layout/bucketlists/{{ bucketListId }}/items/new">
-                                  <span class="fa fa-plus-circle text-success h1-responsive font-bold "></span>
-                      </a>
-							</div>
-						</div>
+<div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card custom-primary-color">
+        <div class="card-header indigo" data-background-color="red">
+          <div class="row">
+            <div class="col-md-10">
+              <!--<h4 class="title">Items</h4>-->
+              <h4 class="category">Items in {{ bucketListTitle }}</h4>
+            </div>
+            <div class="col-md-2 btn-floating btn-lg purple-gradient">
+              <a (click)="onItemClickNew()"  data-toggle="modal" data-target="#modalEditItem" data-container="body" data-backdrop="false">
+                                <span class="fa fa-plus-circle text-success h1-responsive font-bold "></span>
+                    </a>
+            </div>
           </div>
+        </div>
 
-						<div class="card-content table-responsive form-padding">
-							<div class="row">
-								<div class="col-md-12">
-									<div class="row" *ngIf="empty">
-										<div class="col-md-6">
-											<form class="navbar-form navbar-right">
-												<div class="form-group form-black is-empty">
-													<input type="text" class="form-control" placeholder="Items per page" name="limit" [(ngModel)]="limit" (ngModelChange)="do_pagination($event)">
-													<span class="material-input"></span>
-												</div>
-											</form>
-										</div>
-										<div class="col-md-6">
-											<form class="navbar-form navbar-right" role="search" (ngSubmit)="search()" #f="ngForm" novalidate>
-												<div class="form-group form-black is-empty">
-													<input type="text" class="form-control" placeholder="Search" name="search" [(ngModel)]="searchQuery" required>
-													<span class="material-input"></span>
-												</div>
-											</form>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div *ngIf="empty === false" class="alert alert-success">{{ message }}</div>
-							<div *ngIf="empty">
-								<table class="table table-sm table-hover form-padding">
-									<thead class="">
-										<tr>
-											<th>Title</th>
-											<th>Status</th>
-											<th>Edit</th>
-											<th>Delete</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr *ngFor="let item of items | paginate: { itemsPerPage: limit, currentPage: page, totalItems: count}">
-											<td>{{ item.title }}</td>
-											<td class="">{{ item.status }}</td>
-											<td>
-												<a routerLink="/layout/bucketlists/{{bucketListId}}/items/{{item.id}}">
-											    <i class="fa fa-pencil-square-o text-white"></i>
-											  </a>
-											</td>
-											<td>
-												<a (click)="deleteItem(item)" class="pointer">
-											    <i class="fa fa-trash-o text-white"></i>
-											  </a>
-											</td>
-										</tr>
-									</tbody>
-									<div class="clearfix"></div>
-								</table>
-								<pagination-controls (pageChange)="page = getServerData($event)" directionLinks="true" autohide="true">
-								</pagination-controls>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+          <div class="card-content table-responsive form-padding">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="row" *ngIf="empty">
+                  <div class="col-md-6">
+                    <form class="navbar-form navbar-right">
+                      <div class="form-group form-black is-empty">
+                        <input type="text" class="form-control" placeholder="Items per page" name="limit" [(ngModel)]="limit" (ngModelChange)="do_pagination($event)">
+                        <span class="material-input"></span>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="col-md-6">
+                    <form class="navbar-form navbar-right" role="search" (ngSubmit)="search()" #f="ngForm" novalidate>
+                      <div class="form-group form-black is-empty">
+                        <input type="text" class="form-control" placeholder="Search" name="search" [(ngModel)]="searchQuery" required>
+                        <span class="material-input"></span>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="empty === false" class="alert alert-success">{{ message }}</div>
+            <div *ngIf="empty">
+              <table class="table table-sm table-hover form-padding">
+                <thead class="">
+                  <tr>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of items | paginate: { itemsPerPage: limit, currentPage: page, totalItems: count}" (click)="onItemSelect(item)">
+                    <td>{{ item.title }}</td>
+                    <td class="">{{ item.status }}</td>
+                    <td>
+                      <a (click)="onItemClickEdit(item)" data-toggle="modal" data-target="#modalEditItem" data-container="body" data-backdrop="false">
+                        <i class="fa fa-pencil-square-o text-white"></i>
+                      </a>
+                    </td>
+                    <td>
+                      <a (click)="deleteItem(item)" class="pointer">
+                        <i class="fa fa-trash-o text-white"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+                <div class="clearfix"></div>
+              </table>
+              <pagination-controls (pageChange)="page = getServerData($event)" directionLinks="true" autohide="true">
+              </pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-item-form *ngIf="selectedItem" [bucket_list_item]="selectedItem" [isNewItem]="isNewItem" [bucketListId]="selectedItem.id"></app-item-form>
