@@ -26,6 +26,7 @@ export class BucketListsComponent implements OnInit {
 	public empty = true;
 	public hasSelectedBucketList = false;
 	public selectedBucketList: BucketList;
+	public isNewBucketList = true;
 	private response: any;
 	private next = '';
 
@@ -130,6 +131,15 @@ export class BucketListsComponent implements OnInit {
   public onSelect(bucketList: BucketList): void {
     this.selectedBucketList = bucketList;
     this.hasSelectedBucketList = true;
+  }
+
+  public onClickEdit(bucketList: BucketList): void {
+    this.onSelect(bucketList)
+    this.isNewBucketList = false;
+  }
+
+  public onClickNew(): void {
+    this.isNewBucketList = true;
   }
 
 	private getPageUrl(page: number) {

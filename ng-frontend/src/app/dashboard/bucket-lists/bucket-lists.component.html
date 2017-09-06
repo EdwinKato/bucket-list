@@ -6,11 +6,11 @@
 					<div class="card-header indigo" data-background-color="red">
 						<div class="row">
 							<div class="col-md-10">
-								<h4 class="title">Bucket lists</h4>
+								<h4 class="title">My bucket lists</h4>
 								<p class="category">Here is a list of your bucket lists</p>
 							</div>
 							<div class="col-md-2 btn-floating btn-lg purple-gradient">
-								<a routerLink="/layout/bucketlists/new">
+								<a (click)="onClickNew()"  data-toggle="modal" data-target="#modalRegister" data-container="body" data-backdrop="false">
                             <span class="fa fa-plus-circle text-success h1-responsive font-bold "></span>
                 </a>
 							</div>
@@ -53,7 +53,10 @@
 										<td>{{ bucketlist.title }}</td>
 										<td class="white-text">{{ bucketlist.status }}</td>
 										<td>
-											<a [routerLink]="['/layout/bucketlists', bucketlist.id]">
+											<!--<a [routerLink]="['/layout/bucketlists', bucketlist.id]" (click)="onSelect(bucketlist)">-->
+												<!--<i class="fa fa-pencil-square-o text-white"></i>-->
+											<!--</a>-->
+											<a (click)="onClickEdit(bucketlist)" data-toggle="modal" data-target="#modalRegister" data-container="body" data-backdrop="false">
 												<i class="fa fa-pencil-square-o text-white"></i>
 											</a>
 										</td>
@@ -78,3 +81,6 @@
 		</div>
 	</div>
 </div>
+
+<app-bucket-list-form [bucket_list]="selectedBucketList" [isNew]="isNewBucketList"></app-bucket-list-form>
+

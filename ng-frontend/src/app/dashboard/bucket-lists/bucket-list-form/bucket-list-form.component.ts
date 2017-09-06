@@ -1,6 +1,7 @@
 import {
-	Component,
-	OnInit
+  Component,
+  OnInit,
+  Input, OnChanges
 } from '@angular/core';
 import {
 	FormGroup,
@@ -21,21 +22,23 @@ import {
 	selector: 'app-bucket-list-form',
 	templateUrl: './bucket-list-form.component.html'
 })
-export class BucketListFormComponent implements OnInit {
+export class BucketListFormComponent implements OnInit, OnChanges {
 
 	public title = 'Edit your bucket list';
 	public form: FormGroup;
-	public bucketList: BucketList = new BucketList();
+	public bucketList: BucketList;
+	@Input() bucket_list: BucketList;
+	@Input() isNew: boolean;
 	public statuses = ['Done', 'Pending'];
 	private id: number;
 
 	constructor(
 		private router: Router,
-		private route: ActivatedRoute,
 		private bucketListsService: BucketListsService
 	) {}
 
 	public ngOnInit() {
+	  /*
 		const id = this.route.params.subscribe((params) => {
 			this.id = params['id'];
 
@@ -53,12 +56,26 @@ export class BucketListFormComponent implements OnInit {
 					}
 				});
 		});
+		*/
+
+    if (!this.bucket_list) {
+      return;
+    }
+    this.bucketList = this.bucket_list;
 	}
+
+	public ngOnChanges(...args: any[]) {
+	  if (this.isNew) {
+	    this.bucketList = new BucketList();
+    } else {
+	    this.bucketList = this.bucket_list;
+    }
+  }
 
 	public save() {
 		let result: any;
 
-		if (this.id) {
+		if (!this.isNew) {
 			result = this.bucketListsService.updateBucketList(this.bucketList);
 		} else {
 			result = this.bucketListsService.addBucketList(this.bucketList);
