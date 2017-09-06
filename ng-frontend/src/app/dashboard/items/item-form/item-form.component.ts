@@ -19,6 +19,8 @@ import {
 	ItemsService
 } from '../../../services/items.service';
 
+declare var $: any
+
 @Component({
 	selector: 'app-item-form',
 	templateUrl: './item-form.component.html'
@@ -27,7 +29,6 @@ export class ItemFormComponent implements OnInit, OnChanges {
 
 	public form: FormGroup;
 	public item: BucketListItem;
-	// public itemId: number;
 	public title: string;
 	@Input() isNewItem: boolean;
 	@Input() bucket_list_item: BucketListItem;
@@ -41,25 +42,6 @@ export class ItemFormComponent implements OnInit, OnChanges {
 	) {}
 
 	public ngOnInit() {
-		// const id = this.route.params.subscribe((params) => {
-		// 	this.bucketListId = params['id'];
-		// 	this.itemId = params['item_id'];
-		// 	this.title = this.itemId
-		// 		? 'Edit bucket list item'
-		// 		: 'New bucket list item';
-		//
-		// 	if (!this.bucketListId || !this.itemId) {
-		// 		return;
-		// 	}
-		//
-		// 	this.itemsService.getItem(this.bucketListId, this.itemId)
-		// 		.subscribe((response) => {
-		// 			this.item = response.data;
-		// 			if (response.status === 404) {
-		// 				this.router.navigate(['NotFound']);
-		// 			}
-		// 		});
-		// });
 		if (!this.bucket_list_item) {
 			return;
 		}
@@ -85,8 +67,10 @@ export class ItemFormComponent implements OnInit, OnChanges {
 			result = this.itemsService.addItem(this.bucketListId, this.item);
 		}
 
-		result.subscribe((data) => this.router.navigate(
-			['layout/bucketlists/']));
+		// result.subscribe((data) => this.router.navigate(
+		// 	['layout/bucketlists/']));
+
+		result.subscribe((data) => ($('#modalEditItem').modal('hide')));
 
 	}
 }
